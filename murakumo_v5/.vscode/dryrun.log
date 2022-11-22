@@ -1,0 +1,7 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make.exe: �f�B���N�g�� `d:/murakumo/programs/murakumo_v5' �ɓ���܂�
+ 
+make.exe: *** �^�[�Q�b�g���w�肳��Ă��炸, makefile ��������܂���.  ���~.
+
+make.exe: �f�B���N�g�� `d:/murakumo/programs/murakumo_v5' ����o�܂�
+ 

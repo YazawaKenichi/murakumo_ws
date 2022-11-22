@@ -1,0 +1,271 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# ����̓t���[�\�t�g�E�F�A�ł�. ���p�����ɂ��Ă̓\�[�X��
+# ������������.
+# ���Ɛ������̖ړI�ւ̓K�����̔@���Ɋւ�炸, ���ۏ؂ł�.
+
+# This program built for i386-pc-mingw32
+ 
+
+# Make �f�[�^�x�[�X�o�� Thu Aug 25 21:55:33 2022
+
+# �ϐ�
+
+# �����ϐ�
+<D = $(patsubst %/,%,$(dir $<))
+# �����ϐ�
+?F = $(notdir $?)
+# makefile �ϐ�
+MAKEFLAGS = Rrqp
+# �����ϐ�
+?D = $(patsubst %/,%,$(dir $?))
+# �����ϐ�
+@D = $(patsubst %/,%,$(dir $@))
+# ���ϐ�
+HOMEDRIVE = C:
+# �����ϐ�
+@F = $(notdir $@)
+# �����ϐ�
+^D = $(patsubst %/,%,$(dir $^))
+# makefile �ϐ�
+CURDIR := d:/murakumo/programs/murakumo_v5
+# �f�t�H���g
+SHELL := C:/Program Files/Git/usr/bin/sh.exe
+# ���ϐ�
+WINDIR = C:\WINDOWS
+# ���ϐ�
+VSCODE_NLS_CONFIG = {"locale":"ja","availableLanguages":{"*":"ja"},"_languagePackId":"e6c586e25df759b7fd1d7a26b78d86d4.ja","_translationsConfigFile":"C:\\Users\\tonfa\\AppData\\Roaming\\Code\\clp\\e6c586e25df759b7fd1d7a26b78d86d4.ja\\tcf.json","_cacheRoot":"C:\\Users\\tonfa\\AppData\\Roaming\\Code\\clp\\e6c586e25df759b7fd1d7a26b78d86d4.ja","_resolvedLanguagePackCoreLocation":"C:\\Users\\tonfa\\AppData\\Roaming\\Code\\clp\\e6c586e25df759b7fd1d7a26b78d86d4.ja\\da76f93349a72022ca4670c1b84860304616aaa2","_corruptedFile":"C:\\Users\\tonfa\\AppData\\Roaming\\Code\\clp\\e6c586e25df759b7fd1d7a26b78d86d4.ja\\corrupted.info","_languagePackSupport":true}
+# ���ϐ�
+ONEDRIVE = C:\Users\tonfa\OneDrive
+# ���ϐ�
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# makefile �ϐ�
+MAKEFILE_LIST := 
+# ���ϐ�
+TMP = C:\Users\tonfa\AppData\Local\Temp
+# ���ϐ�
+PROGRAMW6432 = C:\Program Files
+# ���ϐ�
+PROGRAMDATA = C:\ProgramData
+# ���ϐ�
+VSCODE_CWD = C:\Users\tonfa\AppData\Local\Programs\Microsoft VS Code
+# ���ϐ�
+OPENCV_DIR = C:\opencv\build
+# ���ϐ�
+PATH = C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Program Files (x86)\Vim\vim82;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK Utility;C:\Program Files\MATLAB\R2021a\bin;C:\Program Files\CMake\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.10\bin;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.07\bin;C:\Users\tonfa\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\tonfa\AppData\Local\Programs\Python\Python39\;C:\Users\tonfa\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\tonfa\AppData\Local\Programs\Python\Python36\;C:\Users\tonfa\AppData\Local\Microsoft\WindowsApps;C:\Users\tonfa\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\tonfa\AppData\Roaming\npm;C:\opencv\build\bin;C:\opencv\build\x64\vc15\bin;C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2021.07;C:\Program Files (x86)\GnuWin32\bin;C:\Users\tonfa\bin;C:\Program Files\7-Zip;D:\ShellScripts\archivecracker;C:\Users\tonfa\.dotnet\tools
+# ���ϐ�
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# ���ϐ�
+PROCESSOR_ARCHITECTURE = x86
+# ���ϐ�
+USERPROFILE = C:\Users\tonfa
+# ���ϐ�
+ALLUSERSPROFILE = C:\ProgramData
+# ���ϐ�
+NUMBER_OF_PROCE 
+SSORS = 4
+# ���ϐ�
+ELECTRON_RUN_AS_NODE = 1
+# �f�t�H���g
+.FEATURES := target-specific order-only second-expansion else-if archives
+# �����ϐ�
+%F = $(notdir $%)
+# ���ϐ�
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_8536_BGBFCDXIFPBIWEZA
+# ���ϐ�
+COMPUTERNAME = YAZAWA-WINDOWS1
+# ���ϐ�
+PROGRAMFILES = C:\Program Files (x86)
+# ���ϐ�
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# ���ϐ�
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# ���ϐ�
+USERNAME = tonfa
+# ���ϐ�
+PUBLIC = C:\Users\Public
+# ���ϐ�
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# ���ϐ�
+VSCODE_CODE_CACHE_PATH = C:\Users\tonfa\AppData\Roaming\Code\CachedData\da76f93349a72022ca4670c1b84860304616aaa2
+# ���ϐ�
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# ���ϐ�
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# ���ϐ�
+LOGONSERVER = \\YAZAWA-WINDOWS1
+# ���ϐ�
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# ���ϐ�
+USERDOMAIN = YAZAWA-WINDOWS1
+# �f�t�H���g
+MAKE = $(MAKE_COMMAND)
+# �f�t�H���g
+MAKECMDGOALS := all
+# �f�t�H���g
+MAKE_VERSION := 3.81
+# makefile �ϐ�
+.DEFAULT_GOAL := 
+# ���ϐ�
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# �����ϐ�
+%D = $(patsubst %/,%,$(dir $%))
+# ���ϐ�
+LOCALAPPDATA = C:\Users\tonfa\AppData\Local
+# ���ϐ�
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+# �f�t�H���g
+MAKE_COMMAND := make.exe
+# ���ϐ�
+PROCESSOR_ARCHITEW6432 = AMD64
+# �f�t�H���g
+.VARIABLES := 
+# �����ϐ�
+*F = $(notdir $*)
+# ���ϐ�
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+# ���ϐ�
+OS = Windows_NT
+# ���ϐ�
+VSCODE_IPC_HOOK = \\.\pipe\4c3401e7fbc3acf34058349e9843a47e-1.70.0-main-sock
+# ���ϐ�
+HOMEPATH = \Users\tonfa
+# ���ϐ�
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# ���ϐ�
+PROMPT = $P$G
+# ���ϐ�
+MFLAGS = -Rrqp
+# �����ϐ�
+*D = $(patsubst %/,%,$(dir $*))
+# ���ϐ�
+SYSTEMROOT = C:\WINDOWS
+# �����ϐ�
++D = $(patsubst %/,%,$(dir $+))
+# �����ϐ�
++F = $(notdir $+)
+# ���ϐ�
+APPDATA = C:\Users\tonfa\AppData\Roaming
+# ���ϐ�
+__COMPAT_LAYER = RunAsAdmin
+# ���ϐ�
+TEMP = C:\Users\tonfa\AppData\Local\Temp
+# ���ϐ�
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# �f�t�H���g
+MAKEFILES := 
+# �����ϐ�
+<F = $(notdir $<)
+# ���ϐ�
+LC_ALL = C
+# �����ϐ�
+^F = $(notdir $^)
+# �f�t�H���g
+SUFFIXES := 
+# ���ϐ�
+SYSTEMDRIVE = C:
+# ���ϐ�
+PROCESSOR_REVISION = 3a09
+# ���ϐ�
+MAKELEVEL := 0
+# ���ϐ�
+PICO_SDK_PATH = ./pico/pico-sdk
+# ���ϐ�
+LANG = C
+# ���ϐ�
+PROCESSOR_LEVEL = 6
+# ���ϐ�
+VSCODE_PID = 8536
+# ���ϐ�
+USERDOMAIN_ROAMINGPROFILE = YAZAWA-WINDOWS1
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=83/1024=8%, Rehash=0, Collisions=9/99=9%
+
+# Pattern-specific Variable Values
+
+# �p�^�[���w��ϐ��̒l�Ȃ�.
+
+# �f�B���N�g��
+
+# C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1624242374): 34 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1635838977): 174 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# . (key d:/murakumo/programs/murakumo_v5, mtime 1653647604): 16 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files\Git\mingw64\bin (key C:/Program Files/Git/mingw64/bin, mtime 1635836779): 112 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1627619303): 11 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\WINDOWS\System32\OpenSSH\: ��Ԃ𒲂ׂ��܂���ł���.
+# C:\WINDOWS (key C:/WINDOWS, mtime 1659780180): 115 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files\Git\usr\bin (key C:/Program Files/Git/usr/bin, mtime 1635836779): 314 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C���� (�����܂ł�).
+# C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin (key C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1639902420): 58 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files (x86)\Vim\vim82 (key C:/Program Files (x86)/Vim/vim82, mtime 1622728738): 56 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1635836779): 8 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1661428191): 2993 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C����.
+
+# 3891 �̃t�@�C��, 0 �̓K�p�s�\�t�@�C���� (12 �̃f�B���N�g����).
+
+# �Öك��[��
+
+# �Öك��[���Ȃ�.
+
+# �t�@�C��
+
+# �^�[�Q�b�g�ł͂���܂���:
+all:
+#  �R�}���h���C���^�[�Q�b�g.
+#  �Öك��[���̒T�����s���܂���.
+#  �t�@�C�������݂��܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# �^�[�Q�b�g�ł͂���܂���:
+.DEFAULT:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+
+# �^�[�Q�b�g�ł͂���܂���:
+makefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  �Öك��[���̒T�����s���܂���.
+#  �t�@�C�������݂��܂���.
+#  �t�@�C���͍X�V����Ă��܂�.
+#  �X�V�Ɏ��s���܂���.
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# �^�[�Q�b�g�ł͂���܂���:
+.SUFFIXES:
+#  �Öك��[���̒T���͍s���܂���ł���.
+#  �C���������`�F�b�N����邱�Ƃ͂���܂���.
+#  �t�@�C���͍X�V����Ă��܂���.
+
+# �^�[�Q�b�g�ł͂���܂���:
+GNUmakefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  �Öك��[���̒T�����s���܂���.
+#  �t�@�C�������݂��܂���.
+#  �t�@�C���͍X�V����Ă��܂�.
+#  �X�V�Ɏ��s���܂���.
+# �ϐ��Z�b�g�̃n�b�V���e�[�u���̏��:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# �t�@�C���n�b�V���e�[�u���̏��:
+# Load=5/1024=0%, Rehash 
+make.exe: *** �^�[�Q�b�g `all' �� make ���郋�[��������܂���.  ���~.
+
+=0, Collisions=0/16=0%
+# VPATH �T���p�X
+
+# `vpath' �T���p�X�͂���܂���
+
+# ��ʂ� (`VPATH' �ϐ�) �T���p�X�Ȃ�.
+
+# # of strings in strcache: 0
+# # of strcache buffers: 0
+# strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
+# strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
+
+# Make �f�[�^�x�[�X�I�� Thu Aug 25 21:55:33 2022
+
+ 
