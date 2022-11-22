@@ -1,0 +1,8 @@
+Switch.c:5:6:switch_set_enter	4	static
+Switch.c:10:6:switch_reset_enter	4	static
+Switch.c:15:6:switch_init	8	static
+Switch.c:20:9:switch_read_enter	4	static
+Switch.c:25:9:switch1_read	8	static
+Switch.c:30:9:switch2_read	8	static
+Switch.c:35:9:switch_read	16	static
+Switch.c:45:6:switch_enter	8	static

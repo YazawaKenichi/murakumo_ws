@@ -32,7 +32,9 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "defines.h"
+#include "print.h"
+#include "IMU.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -47,7 +49,6 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
 /* USER CODE END EM */
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
@@ -56,7 +57,25 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+/* defines.h �?ですでに宣�?済みなので省略 */
+#ifndef EXTERN
+extern ADC_HandleTypeDef hadc1;
+extern DMA_HandleTypeDef hdma_adc1;
 
+extern I2C_HandleTypeDef hi2c1;
+
+extern SPI_HandleTypeDef hspi2;
+
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
+extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim10;
+extern TIM_HandleTypeDef htim11;
+extern TIM_HandleTypeDef htim14;
+
+extern UART_HandleTypeDef huart6;
+#endif /* EXTERN */
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -88,8 +107,6 @@ void Error_Handler(void);
 #define LED_R_GPIO_Port GPIOA
 #define Rotary4_Pin GPIO_PIN_12
 #define Rotary4_GPIO_Port GPIOA
-#define Buzzer_Pin GPIO_PIN_15
-#define Buzzer_GPIO_Port GPIOA
 #define Rotary2_Pin GPIO_PIN_10
 #define Rotary2_GPIO_Port GPIOC
 #define Rotary8_Pin GPIO_PIN_11
@@ -107,6 +124,12 @@ void Error_Handler(void);
 #define DRV2_EN_Pin GPIO_PIN_7
 #define DRV2_EN_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
+
+void main_init();
+void running_start();
+void main_print_while();
+void main_d_print();
+void running_stop();
 
 /* USER CODE END Private defines */
 

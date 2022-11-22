@@ -1,0 +1,9 @@
+course.c:6:6:course_init	4	static
+course.c:12:6:course_start	4	static
+course.c:17:6:course_end	8	static
+course.c:25:8:course_read_length	4	static
+course.c:30:8:course_add_length	16	static
+course.c:36:10:course_read_state_time	4	static
+course.c:41:6:course_increment_state_time	4	static
+course.c:46:8:course_calclate_radius	24	static
+course.c:55:6:course_state_function	8	static

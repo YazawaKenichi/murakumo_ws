@@ -1,0 +1,10 @@
+sidesensor.c:6:9:sidesensor_read	16	static
+sidesensor.c:17:6:sidesensor_start	4	static
+sidesensor.c:27:6:sidesensor_stop	4	static
+sidesensor.c:32:17:sidesensor_read_state	4	static
+sidesensor.c:37:6:sidesensor_set_state	16	static
+sidesensor.c:42:6:sidesensor_right	4	static
+sidesensor.c:56:6:sidesensor_left	4	static
+sidesensor.c:62:6:sidesensor_cross	4	static
+sidesensor.c:68:6:sidesensor_straight	4	static
+sidesensor.c:74:6:sidesensor_function	16	static

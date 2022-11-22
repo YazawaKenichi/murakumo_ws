@@ -1,0 +1,10 @@
+velotrace.c:9:6:velotrace_start	8	static
+velotrace.c:29:6:velotrace_init	16	static
+velotrace.c:39:8:velotrace_read_target	16	static
+velotrace.c:44:8:velotrace_read_gain_kp	16	static
+velotrace.c:49:8:velotrace_read_gain_ki	16	static
+velotrace.c:54:8:velotrace_read_gain_kd	16	static
+velotrace.c:59:6:velotrace_set_gain	16	static
+velotrace.c:69:6:velotrace_set_target	16	static
+velotrace.c:77:8:velotrace_solve	48	static
+velotrace.c:95:6:velotrace_print_values	40	static

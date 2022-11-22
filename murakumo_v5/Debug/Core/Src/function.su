@@ -1,0 +1,2 @@
+function.c:3:8:low_pass_filter	40	static
+function.c:39:8:sigmoid	40	static

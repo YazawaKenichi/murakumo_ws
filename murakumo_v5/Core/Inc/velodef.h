@@ -1,48 +1,7 @@
-#define PLAY 1
+#define __VELODEF_H__   // 今は使われていないヘッダ
 
-#define D_ANALOG 0
-#define D_ANALOGRATE 0
-#define D_MOTOR 0
-#define D_SIDESENS 0	//
-#define D_ENCODER 0	// Debug Encoder
-#define D_PWM 0
-#define D_ROTARY 0
-#define D_PLAYMODE 0
-#define D_SWITCH 0
-#define D_IMU 1
-#define D_FLASH 1
-#define D_LED 0
-#define D_VELOCITY_CONTROL 0
-#define D_VELOCITY_CONTROL_TIMER 0
-#define D_MATH 0
-#define D_SLOWSTART 0
-#define D_SEARCH 1
-#define D_WHILE_PRINT 0
-#define D_COURSE_SAVING 0
-
-#define USE_ANALOG 1
-#define USE_MOTOR 1
-#define USE_SIDESENSOR 1	// Use SideSensor
-#define USE_ENCODER 1
-#define USE_ROTARY 1
-#define USE_SWITCH 1
-#define USE_LED 1
-#define USE_FLASH 1
-#define USE_IMU 1
-#define USE_BUZZER 0
-#define USE_VELOCITY_CONTROL 1
-#define USE_SIGMOID_TRACE 0
-#define USE_DANGERSTOP 0
-#define USE_LR_DIFFERENCE 1
-#define USE_PID_ARRAY 1
-#define USE_COURSE_STATE_TIME 1
-
-#define USE_SLOWSTART 1
-#define USE_WRITE_FLASH 1
-
-// one side only
-#define LENGTH_SAMPLING 1
-#define LEFTMARKER_SAMPLING 0
+#ifndef __VELODEF_H__
+#define __VELODEF_H__
 
 #define NOISY 0
 #define GOD 0
@@ -50,16 +9,23 @@
 
 #if USE_PID_ARRAY
 
-#define VELOCITY_TARGET_LOW 1000
-#define VELOCITY_TARGET_HIGH 1500
-#define VELOCITY_TARGET_MAX 2000
+#define VELOCITY_TARGET_MAX 2000    // m / s
+#define VELOCITY_TARGET_MIN 1000
+#define VELOCITY_KP_MAX 6
+#define VELOCITY_KI_MAX 0.06f
+#define VELOCITY_KD_MAX 0
+#define VELOCITY_KP_MIN 6
+#define VELOCITY_KI_MIN 0.06f
+#define VELOCITY_KD_MIN 0
 
-// 6 0.06
-#define VKP 6
-#define VKI 0.06f
-// #define VKP 0.5f
-// #define VKI 0.005f
+#define TRACER_KP_MAX 17.5f
+#define TRACER_KI_MAX 0
+#define TRACER_KD_MAX 335.71f
+#define TRACER_KP_MIN 17.5f
+#define TRACER_KI_MIN 0
+#define TRACER_KD_MIN 335.71f
 
+/*
 // low speed
 #define KP_LOW 17.5f
 #define KP_LOW_TOLERANCE 0
@@ -75,6 +41,7 @@
 #define KD_HIGH_TOLERANCE 10
 #define KI_HIGH 0
 #define KI_HIGH_TOLERANCE 0
+*/
 
 #else
 
@@ -293,3 +260,5 @@
 #define KIF 0
 #endif
 #endif	// !USE_PID_ARRAY
+
+#endif // __VELODEF_H__

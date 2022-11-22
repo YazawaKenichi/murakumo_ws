@@ -1,0 +1,6 @@
+motor.c:5:6:motor_init	8	static
+motor.c:10:6:motor_start	8	static
+motor.c:22:6:motor_stop	8	static
+motor.c:29:6:motor_enable	16	static
+motor.c:34:6:motor_read_enable	4	static
+motor.c:39:6:motor_set	32	static
