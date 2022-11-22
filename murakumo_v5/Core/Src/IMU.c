@@ -48,11 +48,11 @@ void imu_write_byte(uint8_t reg, uint8_t val)
 #endif
 }
 
-void imu_initialize()
+void imu_init()
 {
 	printf("Starting SPI2 (IMU)\r\n");
 	uint8_t wai, ret;
-	ret = imu_init(&wai);
+	ret = imu_initialize(&wai);
 	printf("who_am_i = %d\r\n", wai);
 	if(ret == 1)
 	{
@@ -64,7 +64,7 @@ void imu_initialize()
 	}
 }
 
-uint8_t imu_init(uint8_t* wai)
+uint8_t imu_initialize(uint8_t* wai)
 {
 	CS_RESET;
 	uint8_t who_am_i,ret;
@@ -113,7 +113,7 @@ uint8_t imu_init(uint8_t* wai)
 	return ret;
 }
 
-void imu_fin()
+void imu_stop()
 {
 #if !USE_NCS
 	CS_SET;

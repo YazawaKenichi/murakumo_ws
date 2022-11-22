@@ -3,24 +3,24 @@
 
 #include "math.h"
 #include "defines.h"
+#include "stm32f4xx_hal_tim.h"
 #include "print.h"
 
-#ifndef D_ENCODER
 #define D_ENCODER 1
-#endif
-
-// #define ENCODER_MIDDLE (4096/2)
-#define ENCODER_MIDDLE (4096/2)
 
 /* LENGTH PER PULSE */
-#define TIREDIAMETER 21000
-#define PULSEPERROTATE 4096
+#define TIREDIAMETER 21000  /* [um] */
+#define PULSEPERROTATE 4096 /* [cnt] */
 #define PINION 25
 #define SUPER 64
 
 #ifndef __OBSOLETE_MATH
 #define M_PI 3.14159265358979f
 #endif
+
+#define REDUCTION_RATIO (PINION / (double) SUPER)
+#define LENGTHPERPULSE (M_PI * TIREDIAMETER * REDUCTION_RATIO / (double) PULSEPERROTATE)    /* [um / cnt] */
+#define ENCODER_MIDDLE (PULSEPERROTATE / 2)
 
 void encoder_init();
 void encoder_finalize();
@@ -34,8 +34,6 @@ double encoder_length_left();
 double encoder_length_right();
 double encoder_length();
 void encoder_set();
-
-extern double LENGTHPERPULSE;
 
 #endif
 

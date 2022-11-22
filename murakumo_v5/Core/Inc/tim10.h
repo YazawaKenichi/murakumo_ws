@@ -14,7 +14,6 @@ void tim10_length_init();
 void tim10_start();
 void tim10_stop();
 void tim10_init();
-void tim10_fin();
 
 double tim10_read_velocity_left();
 double tim10_read_velocity_right();

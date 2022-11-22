@@ -15,7 +15,7 @@ void tracer_start()
     printf("tracer.c > tracer_start > ");
     printf("target = %5.2f\r\n", tracer_pid.target);
     printf("tracer.c > tracer_start > ");
-    printf("kp = %7.3f, ki = %7.3f, kd = %7.3f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
+    printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
     #endif
 }
 
@@ -56,7 +56,7 @@ void tracer_set_gain(unsigned short int i)
     tracer_pid.ki = tracer_read_gain_ki(i);
     tracer_pid.kd = tracer_read_gain_kd(i);
     #if D_TRACER
-    printf("kp = %7.3f, ki = %7.3f, kd = %7.3f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
+    printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
     #endif
 }
 

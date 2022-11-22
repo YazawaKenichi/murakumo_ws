@@ -59,9 +59,9 @@ double RADPERDEG;	// ( M_PI / 180 )	[rad / deg]
 
 uint8_t imu_read_byte(uint8_t);
 void imu_write_byte(uint8_t, uint8_t);
-void imu_initialize();
-uint8_t imu_init(uint8_t*);
-void imu_fin();
+void imu_init();
+uint8_t imu_initialize(uint8_t*);
+void imu_stop();
 void imu_set_offset();
 void imu_read();
 void Inertial_Integral(Displacement*);

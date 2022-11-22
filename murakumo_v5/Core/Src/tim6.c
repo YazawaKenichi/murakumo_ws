@@ -122,6 +122,6 @@ void tim6_main()
 void tim6_d_print()
 {
     #if D_TIM6
-    printf("tim6.c > tim6_d_print() > analogl = %5d, analogr = %5d, direction = %5d, tracer_solve(direction) = %7.3f, leftmotor = %5.3f, rightmotor = %5.3f\r\n", analogl, analogr, direction, tracer_solve(direction), leftmotor, rightmotor);
+    printf("tim6.c > tim6_d_print() > analogl = %5d, analogr = %5d, direction = %5d, tracer_solve(direction) = %7.2f, leftmotor = %5.3f, rightmotor = %5.3f\r\n", analogl, analogr, direction, tracer_solve(direction), leftmotor, rightmotor);
     #endif
 }

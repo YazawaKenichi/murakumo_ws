@@ -39,7 +39,7 @@ extern FlashBuffer flashbuffer;
 
 /* usuage */
 /*
-    run_fin()
+    run_stop()
     {
         ...
         writeFlash(start_address, (uint8_t*) &flashbuffer, sizeof(FlashBuffer));
