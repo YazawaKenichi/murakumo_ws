@@ -12,6 +12,9 @@
 
 #define D_TIM6 1
 
+#define D_TIM6_WHILE 1
+#define EXCLUSION 1
+
 void tim6_init();
 void tim6_start();
 void tim6_stop();

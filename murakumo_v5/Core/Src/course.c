@@ -2,6 +2,7 @@
 
 uint16_t course_state_time;
 double course_length;
+double course_by_state_length_left, course_by_state_length_right;
 
 void course_init()
 {
@@ -45,11 +46,17 @@ void course_increment_state_time()
 
 double course_calclate_radius()
 {
-    short int left_length, right_length;
-	left_length = tim10_read_length_left();
-	right_length = tim10_read_length_right();
-	tim10_length_init();
-    return (double) TREAD * (double) ((left_length) + (right_length)) / (double) ((left_length) - (right_length)) / (double) 2;
+    int left_length, right_length;
+    double solve;
+
+    /* 前センサからの長さを記録する */
+	left_length = tim10_read_length_left() - course_by_state_length_left;
+	right_length = tim10_read_length_right() - course_by_state_length_right;
+
+	/* 極率半径を計算する */
+	solve = (double) TREAD * (double) ((left_length) + (right_length)) / (double) ((left_length) - (right_length)) / (double) 2;
+
+    return solve;
 }
 
 void course_state_function()

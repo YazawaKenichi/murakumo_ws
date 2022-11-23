@@ -103,7 +103,7 @@ void tim10_d_print()
   printf("tim10_d_print() > length_left = %7.2f, length_right = %7.2f, length = %7.2f\r\n", length_left, length_right, length);
   #endif
   #if D_ENCODER
-  encoder_d_print();
+  tim10_length_set_zero();
   #endif
 }
 

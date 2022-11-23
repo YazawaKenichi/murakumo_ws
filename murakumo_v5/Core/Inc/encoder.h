@@ -22,18 +22,19 @@
 #define LENGTHPERPULSE (M_PI * TIREDIAMETER * REDUCTION_RATIO / (double) PULSEPERROTATE)    /* [um / cnt] */
 #define ENCODER_MIDDLE (PULSEPERROTATE / 2)
 
-void encoder_init();
-void encoder_finalize();
-void encoder_set_middle();
-void encoder_start();
-void encoder_stop();
-double encoder_read();
-double encoder_read_left();
-double encoder_read_right();
+/* 300 mm 走らせて 5 mm 足りない値が出力された */
+#define ENCODER_ERROR (5 / (double) 300)
+
 double encoder_length_left();
 double encoder_length_right();
 double encoder_length();
+void encoder_d_print();
 void encoder_set();
+void encoder_init();
+void encoder_fin();
+void encoder_start();
+void encoder_stop();
+void encoder_set_middle();
 
 #endif
 

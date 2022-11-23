@@ -44,7 +44,7 @@ void encoder_init()
     #endif
 }
 
-void encoder_finalize()
+void encoder_fin()
 {
     encoder_stop();
 }
@@ -72,5 +72,5 @@ void encoder_stop()
 void encoder_set_middle()
 {
     TIM1 -> CNT = ENCODER_MIDDLE;
-    TIM2 -> CNT = ENCODER_MIDDLE;
+    TIM3 -> CNT = ENCODER_MIDDLE;
 }

@@ -87,7 +87,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM6)
   {
+    #if !D_TIM6_WHILE
     tim6_main();
+    #endif
 	}
 
 	if(htim->Instance == TIM10)	// TIM10 // 1ms
@@ -260,7 +262,11 @@ int main(void)
 
           while(switch_read_enter())
           {
+            #if !D_TIM6_WHILE
             main_d_print();
+            #else
+            tim6_main();
+            #endif
             HAL_Delay(250);
           }
 
@@ -1098,7 +1104,7 @@ void main_init()
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
   /* print who am i */
-  imu_initialize();
+  imu_init();
 }
 
 void running_start()
@@ -1127,10 +1133,10 @@ void main_print_while()
 
 void main_d_print()
 {
-  printf("main_d_print\r\n");
-  #if D_ROTARY
-  #endif
+  printf("main.c > main_d_print > ");
   tim10_d_print();
+  printf("main.c > main_d_print > ");
+  tim6_d_print();
 }
 
 void running_stop()

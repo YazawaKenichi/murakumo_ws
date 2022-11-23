@@ -70,11 +70,13 @@ void tim6_main()
         }
     }
 
+    #if !EXCLUSION
     if(analogl + analogr >= 980 * analog_read_calibrationsize())
     {
         velotrace_set_target(0);
         motor_enable(0);
     }
+    #endif
 
     // ( direction > 0 ) is ( analogl > analogr ) i.e. left is black, right is white.
     // When ( direction > 0 ) , must turn right.
@@ -103,11 +105,13 @@ void tim6_main()
                 break;
         }
     }
+    #if !EXCLUSION
     else
     {
         leftmotor = 0;
         rightmotor = 0;
     }
+    #endif
 
     if(rotary_read_playmode() == motor_free)
     {
@@ -122,6 +126,8 @@ void tim6_main()
 void tim6_d_print()
 {
     #if D_TIM6
-    printf("tim6.c > tim6_d_print() > analogl = %5d, analogr = %5d, direction = %5d, tracer_solve(direction) = %7.2f, leftmotor = %5.3f, rightmotor = %5.3f\r\n", analogl, analogr, direction, tracer_solve(direction), leftmotor, rightmotor);
+    printf("tim6.c > tim6_d_print() > analogl = %5d, analogr = %5d, direction = %5d\r\n", analogl, analogr, direction);
+    printf("tim6.c > tim6_d_print() > tracer_solve(direction) = %7.2f velotrace_solve(tim10_read_velocity()) = %7.2f\r\n", tracer_solve(direction), velotrace_solve(tim10_read_velocity()));
+    printf("tim6.c > tim6_d_print() > leftmotor = %5.3f, rightmotor = %5.3f\r\n", leftmotor, rightmotor); 
     #endif
 }
