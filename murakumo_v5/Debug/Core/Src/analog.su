@@ -15,7 +15,7 @@ analog.c:138:6:analog_init	8	static
 analog.c:147:6:analog_start	8	static
 analog.c:153:6:analog_stop	8	static
 analog.c:158:6:analog_sensor_start	8	static
-analog.c:169:6:analog_sensor_stop	8	static
-analog.c:174:10:analog_sensor_get	24	static
-analog.c:183:6:HAL_ADC_ConvCpltCallback	16	static
-analog.c:190:6:analog_get_and_sort	16	static
+analog.c:168:6:analog_sensor_stop	8	static
+analog.c:173:10:analog_sensor_get	24	static
+analog.c:182:6:HAL_ADC_ConvCpltCallback	16	static
+analog.c:189:6:analog_get_and_sort	16	static

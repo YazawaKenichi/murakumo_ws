@@ -6,6 +6,6 @@ tracer.c:44:8:tracer_read_gain_kd	16	static
 tracer.c:49:6:tracer_set_gain	40	static
 tracer.c:63:6:tracer_set_target	24	static
 tracer.c:75:8:tracer_solve	48	static
-tracer.c:93:8:tracer_solve_with_gain	64	static
-tracer.c:111:6:tracer_d_print	40	static
-tracer.c:117:6:tracer_print_values	40	static
+tracer.c:99:8:tracer_solve_with_gain	64	static
+tracer.c:117:6:tracer_d_print	40	static
+tracer.c:123:6:tracer_print_values	40	static

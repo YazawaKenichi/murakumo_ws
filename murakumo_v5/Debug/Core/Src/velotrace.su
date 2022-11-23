@@ -7,4 +7,4 @@ velotrace.c:54:8:velotrace_read_gain_kd	16	static
 velotrace.c:59:6:velotrace_set_gain	16	static
 velotrace.c:69:6:velotrace_set_target	16	static
 velotrace.c:77:8:velotrace_solve	48	static
-velotrace.c:95:6:velotrace_print_values	40	static
+velotrace.c:101:6:velotrace_print_values	40	static

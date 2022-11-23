@@ -78,12 +78,18 @@ double tracer_solve(int reference_)
     double d_error;
     double result;
 
-    error = reference_ - tracer_pid.target;
+    error = reference_;
 
-    d_error = error - before_error / samplingtime;
-    s_error += error * samplingtime;
+    d_error = (error - before_error) / (double) samplingtime;
+    s_error += error * (double) samplingtime;
 
     result = tracer_pid.kp * error + tracer_pid.ki * s_error + tracer_pid.kd * d_error;
+
+    #if D_TIM6_WHILE
+    printf("tracer_solve()\r\n");
+    printf("reference_ = %5d\r\n");
+    printf("%7.2f = %7.2f * %5d + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, tracer_pid.kp, error, tracer_pid.ki, s_error, tracer_pid.kd, d_error);
+    #endif
 
     before_error = error;
 

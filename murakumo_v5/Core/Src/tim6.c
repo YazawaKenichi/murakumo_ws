@@ -18,7 +18,6 @@ void tim6_start()
 {
     /* analogmin/max = FlashBuffer.analogmin/max */
     analog_set_from_flash(flashbuffer.analogmin, flashbuffer.analogmax);
-    HAL_Delay(3000);
     /* sensgettime = 0, HAL_ADC_Start_DMA() */
     printf("analog_start()\r\n");
     analog_start();
@@ -55,8 +54,15 @@ void tim6_main()
     int direction;
     double leftmotor, rightmotor;
     #endif
+    // #if !VELOTRACE_TUNING
     analogl = 0;
     analogr = 0;
+
+	#if TEMPORARY
+    leftmotor   = velotrace_solve(tim10_read_velocity()) + 0;
+    rightmotor  = velotrace_solve(tim10_read_velocity()) - 0;
+    motor_set(leftmotor, rightmotor);
+	#endif
 
     for(unsigned char i = 0; i < analog_read_calibrationsize(); i++)
     {
@@ -70,7 +76,11 @@ void tim6_main()
         }
     }
 
-    #if !EXCLUSION
+    #if D_TIM6_WHILE
+    printf("analogl = %5d, analogr = %5d\r\n", analogl, analogr);
+    #endif
+
+    #if TIM6_EMERGENCY_STOP
     if(analogl + analogr >= 980 * analog_read_calibrationsize())
     {
         velotrace_set_target(0);
@@ -82,13 +92,20 @@ void tim6_main()
     // When ( direction > 0 ) , must turn right.
     direction = (analogl - analogr);	// difference
 
-    if(analogl + analogr <= 700 * analog_read_calibrationsize())
-    {
-        direction = 0;
-    }
+    #if D_TIM6_WHILE
+    printf("direction = %5d\r\n", direction);
+    printf("motor_read_enable() = %1d\r\n", motor_read_enable());
+    #endif
+
+    // #endif  /* !VELOTRACE_TUNING */
 
     if(motor_read_enable())
     {
+        #if D_TIM6_WHILE
+        rotary_print_playmode();
+        #endif
+
+        #if !D_TIM6_IGNORE
         switch(rotary_read_playmode())
         {
             case tracer_tuning:
@@ -104,13 +121,37 @@ void tim6_main()
                 rightmotor  = velotrace_solve(tim10_read_velocity()) - tracer_solve(direction);
                 break;
         }
+
+        #else
+
+        #if TRACER_TUNING
+        leftmotor   = 0 + tracer_solve(direction);
+        rightmotor  = 0 - tracer_solve(direction);
+        #endif
+        #if VELOTRACE_TUNING
+        leftmotor   = velotrace_solve(tim10_read_velocity()) + 0;
+        rightmotor  = velotrace_solve(tim10_read_velocity()) - 0;
+        #endif
+        #if !TRACER_TUNING && !VELOTRACE_TUNING
+        leftmotor   = velotrace_solve(tim10_read_velocity()) + tracer_solve(direction);
+        rightmotor  = velotrace_solve(tim10_read_velocity()) - tracer_solve(direction);
+        break;
+        #endif
+
+        #endif /* D_TIM6_IGNORE */
+
+        #if D_TIM6_WHILE
+        // printf("tracer_solve(direction) = %7.2f velotrace_solve(tim10_read_velocity()) = %7.2f\r\n", tracer_solve(direction), velotrace_solve(tim10_read_velocity()));
+        #endif
     }
-    #if !EXCLUSION
     else
     {
         leftmotor = 0;
         rightmotor = 0;
     }
+
+    #if D_TIM6_WHILE
+    printf("leftmotor = %7.2f, rightmotor = %7.2f\r\n", leftmotor, rightmotor);
     #endif
 
     if(rotary_read_playmode() == motor_free)
@@ -119,7 +160,9 @@ void tim6_main()
     }
     else
     {
+		#if !TEMPORARY
         motor_set(leftmotor, rightmotor);
+		#endif	/* TEMPLATE */
     }
 }
 

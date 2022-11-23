@@ -163,7 +163,6 @@ void analog_sensor_start()
     {
         Error_Handler();
     }
-    HAL_Delay(1000);
 }
 
 void analog_sensor_stop()

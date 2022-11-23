@@ -82,10 +82,16 @@ double velotrace_solve(double reference_)
 
     error = reference_ - pid.target;
 
-    d_error = error - before_error / samplingtime;
-    s_error += error * samplingtime;
+    d_error = (error - before_error) / (double) samplingtime;
+    s_error += error * (double) samplingtime;
 
-    result = pid.kp * error + pid. ki * s_error + pid.kd * d_error;
+    result = - (pid.kp * error + pid. ki * s_error + pid.kd * d_error);
+
+    #if D_TIM6_WHILE
+    printf("velotrace_solve()\r\n");
+    printf("reference_ = %5d\r\n");
+    printf("%7.2f = %7.2f * %5d + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, pid.kp, error, pid.ki, s_error, pid.kd, d_error);
+    #endif
 
     before_error = error;
 

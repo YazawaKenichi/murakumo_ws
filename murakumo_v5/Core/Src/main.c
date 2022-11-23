@@ -86,20 +86,20 @@ static void MX_TIM14_Init(void);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM6)
-  {
-    #if !D_TIM6_WHILE
-    tim6_main();
-    #endif
+	{
+		#if !D_TIM6_WHILE
+		tim6_main();
+		#endif
 	}
 
 	if(htim->Instance == TIM10)	// TIM10 // 1ms
 	{
-    tim10_main();
+		tim10_main();
 	}
 
 	if (htim->Instance == TIM11)	// TIM11 // 1ms
 	{
-    tim11_main();
+		tim11_main();
 	}
 }
 
@@ -183,7 +183,7 @@ int main(void)
               analog_get_and_sort();
               #endif
               main_d_print();
-              HAL_Delay(100);
+              HAL_Delay(250);
             }
 
             /* analogmode = all, */
@@ -262,11 +262,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            #if !D_TIM6_WHILE
             main_d_print();
-            #else
-            tim6_main();
-            #endif
             HAL_Delay(250);
           }
 
@@ -847,7 +843,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 4;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 16799;
+  htim6.Init.Period = 33599;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -1133,10 +1129,14 @@ void main_print_while()
 
 void main_d_print()
 {
+  #if D_TIM10
   printf("main.c > main_d_print > ");
   tim10_d_print();
+  #endif
+  #if D_TIM6
   printf("main.c > main_d_print > ");
   tim6_d_print();
+  #endif
 }
 
 void running_stop()
@@ -1180,4 +1180,3 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
