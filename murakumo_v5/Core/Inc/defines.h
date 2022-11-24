@@ -30,6 +30,8 @@
 #define USE_SLOWSTART 1
 #define USE_WRITE_FLASH 1
 
+#define VELOTRACE_IN_TIM10 1
+
 // one side only
 #define LENGTH_SAMPLING 1
 #define LEFTMARKER_SAMPLING 0
@@ -47,6 +49,7 @@ extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim7;
 extern TIM_HandleTypeDef htim10;
 extern TIM_HandleTypeDef htim11;
 extern TIM_HandleTypeDef htim14;
@@ -57,6 +60,7 @@ void Error_Handler(void);
 #endif /* EXTERN */
 
 #include "tim6.h"
+#include "tim7.h"
 #include "tim10.h"
 #include "tim11.h"
 #include "imu.h"

@@ -21,6 +21,7 @@
 "./Core/Src/tim10.o"
 "./Core/Src/tim11.o"
 "./Core/Src/tim6.o"
+"./Core/Src/tim7.o"
 "./Core/Src/tracer.o"
 "./Core/Src/velodef.o"
 "./Core/Src/velotrace.o"

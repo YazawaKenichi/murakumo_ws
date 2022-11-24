@@ -8,10 +8,10 @@
 
 #define TRACER_STEP_SIZE 16
 
-#define TRACER_KP_MAX 0.25f
+#define TRACER_KP_MAX 0.00025f
 #define TRACER_KI_MAX 0
 #define TRACER_KD_MAX 0
-#define TRACER_KP_MIN 0.25f
+#define TRACER_KP_MIN 0.00025f
 #define TRACER_KI_MIN 0
 #define TRACER_KD_MIN 0
 
@@ -27,6 +27,7 @@
 
 /* s_error and d_error are zero and if search then gain and target are zero */
 void tracer_start();
+void tracer_stop();
 /* s_error and d_error are zero*/
 void tracer_init(double samplingtime_);
 /* read kp ki kd */
@@ -37,6 +38,8 @@ double tracer_read_gain_kd(unsigned short int i);
 void tracer_set_gain(unsigned short int i);
 /* terget setting */
 void tracer_set_target(double target_);
+void tracer_set_target_zero();
+void tracer_set_gain_zero();
 /* calclate pid solving */
 double tracer_solve(int reference_);
 /* calclate pid solving with pid gain */

@@ -1,4 +1,4 @@
-Core/Src/motor.o: ../Core/Src/motor.c ../Core/Inc/motor.h \
+Core/Src/tim7.o: ../Core/Src/tim7.c ../Core/Inc/tim7.h \
  ../Core/Inc/print.h ../Core/Inc/defines.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
@@ -40,7 +40,7 @@ Core/Src/motor.o: ../Core/Src/motor.c ../Core/Inc/motor.h \
  ../Core/Inc/encoder.h ../Core/Inc/sidesensor.h ../Core/Inc/tim7.h \
  ../Core/Inc/tim11.h ../Core/Inc/Switch.h ../Core/Inc/imu.h
 
-../Core/Inc/motor.h:
+../Core/Inc/tim7.h:
 
 ../Core/Inc/print.h:
 

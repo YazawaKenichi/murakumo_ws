@@ -38,7 +38,8 @@ Core/Src/print.o: ../Core/Src/print.c ../Core/Inc/print.h \
  ../Core/Inc/flash.h ../Core/Inc/motor.h ../Core/Inc/velotrace.h \
  ../Core/Inc/pid.h ../Core/Inc/tracer.h ../Core/Inc/Rotary.h \
  ../Core/Inc/tim10.h ../Core/Inc/encoder.h ../Core/Inc/sidesensor.h \
- ../Core/Inc/tim11.h ../Core/Inc/Switch.h ../Core/Inc/imu.h
+ ../Core/Inc/tim7.h ../Core/Inc/tim11.h ../Core/Inc/Switch.h \
+ ../Core/Inc/imu.h
 
 ../Core/Inc/print.h:
 
@@ -135,6 +136,8 @@ Core/Src/print.o: ../Core/Src/print.c ../Core/Inc/print.h \
 ../Core/Inc/encoder.h:
 
 ../Core/Inc/sidesensor.h:
+
+../Core/Inc/tim7.h:
 
 ../Core/Inc/tim11.h:
 

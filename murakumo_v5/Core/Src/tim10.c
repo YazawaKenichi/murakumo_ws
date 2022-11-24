@@ -4,6 +4,10 @@
 double length, length_left, length_right;
 double velocity_left, velocity_right, velocity;
 
+#if VELOTRACE_IN_TIM10
+double tim10_velo_sol;
+#endif
+
 double tim10_read_length_left()
 {
   return length_left;
@@ -39,6 +43,9 @@ void tim10_init()
 {
   tim10_length_set_zero();
   tim10_velocity_set_zero();
+  #if VELOTRACE_IN_TIM10
+  velotrace_init(1);
+  #endif
 	encoder_init();
 	HAL_TIM_Base_Stop_IT(&htim10);
 }
@@ -49,6 +56,9 @@ void tim10_start()
   encoder_start();
   /* marker = subsensbuf = sidedeltacount = markerstate = rightmarkercount = 0 */
   sidesensor_start();
+  #if VELOTRACE_IN_TIM10
+  velotrace_start();
+  #endif
   tim10_length_set_zero();
   tim10_velocity_set_zero();
   HAL_TIM_Base_Start_IT(&htim10);
@@ -57,6 +67,9 @@ void tim10_start()
 void tim10_stop()
 {
 	HAL_TIM_Base_Stop_IT(&htim10);
+  #if VELOTRACE_IN_TIM10
+  velotrace_stop();
+  #endif
   sidesensor_stop();
   encoder_stop();
 }
@@ -78,6 +91,8 @@ void tim10_main()
   velocity_left = el * (double) TIM10_Hz;
   velocity_right = er * (double) TIM10_Hz;
   velocity = e * (double) TIM10_Hz;
+
+  tim10_velo_sol = velotrace_solve(velocity);
 
   /* update lengths */
   length_left += velocity_left;
@@ -121,3 +136,10 @@ void tim10_velocity_set_zero()
   velocity_right = 0;
   velocity = 0;
 }
+
+#if VELOTRACE_IN_TIM10
+double tim10_velotrace_solve()
+{
+  return tim10_velo_sol;
+}
+#endif

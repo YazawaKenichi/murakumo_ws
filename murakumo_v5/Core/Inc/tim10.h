@@ -6,6 +6,10 @@
 #include "sidesensor.h"
 #include "defines.h"
 
+#if VELOTRACE_IN_TIM10
+#include "velotrace.h"
+#endif
+
 #define D_TIM10 1
 
 #define TIM10_Hz 0.001f
@@ -28,5 +32,9 @@ void tim10_d_print();
 
 void tim10_length_set_zero();
 void tim10_velocity_set_zero();
+
+#if VELOTRACE_IN_TIM10
+double tim10_velotrace_solve();
+#endif
 
 #endif

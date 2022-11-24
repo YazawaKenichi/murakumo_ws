@@ -6,9 +6,18 @@ double samplingtime;
 
 PID pid;
 
+void velotrace_init(double samplingtime_)
+{
+    samplingtime = samplingtime_;
+}
+
 void velotrace_start()
 {
-    velotrace_init(1);
+    #if D_VELOTRACE
+    printf("samplingtime = 1, s_error = 0, before_error = 0\r\n");
+    #endif
+    s_error = 0;
+    before_error = 0;
     switch(rotary_read_playmode())
     {
         case search:
@@ -16,9 +25,12 @@ void velotrace_start()
             velotrace_set_target(0);
             break;
         case velotrace_tuning:
-            pid.target = 0;
+            velotrace_set_target_zero();
             velotrace_set_gain(rotary_read_value());
             break;
+        case tracer_tuning:
+            velotrace_set_target_zero();
+            velotrace_set_gain_zero();
         default:
             velotrace_set_gain(rotary_read_value());
             velotrace_set_target(rotary_read_value());
@@ -26,14 +38,10 @@ void velotrace_start()
     }
 }
 
-void velotrace_init(double samplingtime_)
+void velotrace_stop()
 {
-    #if D_VELOTRACE
-    printf("samplingtime = 1, s_error = 0, before_error = 0\r\n");
-    #endif
-    samplingtime = samplingtime_;
-    s_error = 0;
-    before_error = 0;
+    velotrace_set_target_zero();
+    velotrace_set_gain_zero();
 }
 
 double velotrace_read_target(unsigned short int i)
@@ -72,6 +80,18 @@ void velotrace_set_target(unsigned short int i)
     printf("pid = velotrace_read_target\r\n");
     #endif
     pid.target = velotrace_read_target(i);
+}
+
+void velotrace_set_gain_zero()
+{
+    pid.kp = 0;
+    pid.ki = 0;
+    pid.kd = 0;
+}
+
+void velotrace_set_target_zero()
+{
+    pid.target = 0;
 }
 
 double velotrace_solve(double reference_)

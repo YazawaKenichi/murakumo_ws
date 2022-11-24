@@ -1,0 +1,5 @@
+tim7.c:6:6:tim7_init	8	static
+tim7.c:15:6:tim7_start	8	static
+tim7.c:26:6:tim7_stop	8	static
+tim7.c:35:6:tim7_main	12	static
+tim7.c:46:6:tim7_d_print	8	static

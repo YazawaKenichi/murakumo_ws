@@ -10,6 +10,10 @@
 #include "defines.h"
 #include "Rotary.h" /* rotary_read_playmode() */
 
+#if VELOTRACE_IN_TIM10
+#include "tim10.h"
+#endif
+
 #define D_TIM6 0
 
 #define D_TIM6_WHILE 0
@@ -18,7 +22,7 @@
 
 #if D_TIM6_IGNORE
 #define TRACER_TUNING 0
-#define VELOTRACE_TUNING 1
+#define VELOTRACE_TUNING 0
 #endif
 
 #define TEMPORARY 0

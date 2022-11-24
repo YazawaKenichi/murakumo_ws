@@ -56,6 +56,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim7;
 TIM_HandleTypeDef htim10;
 TIM_HandleTypeDef htim11;
 TIM_HandleTypeDef htim14;
@@ -81,6 +82,7 @@ static void MX_TIM11_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM14_Init(void);
+static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -91,6 +93,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		tim6_main();
 		#endif
 	}
+
+  if(htim->Instance == TIM10)
+  {
+    tim7_main();
+  }
 
 	if(htim->Instance == TIM10)	// TIM10 // 1ms
 	{
@@ -150,6 +157,7 @@ int main(void)
   MX_SPI2_Init();
   MX_I2C1_Init();
   MX_TIM14_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 	printf(ESC_DEF);
 
@@ -862,6 +870,44 @@ static void MX_TIM6_Init(void)
 }
 
 /**
+  * @brief TIM7 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM7_Init(void)
+{
+
+  /* USER CODE BEGIN TIM7_Init 0 */
+
+  /* USER CODE END TIM7_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM7_Init 1 */
+
+  /* USER CODE END TIM7_Init 1 */
+  htim7.Instance = TIM7;
+  htim7.Init.Prescaler = 4;
+  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim7.Init.Period = 33599;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM7_Init 2 */
+
+  /* USER CODE END TIM7_Init 2 */
+
+}
+
+/**
   * @brief TIM10 Initialization Function
   * @param None
   * @retval None
@@ -1097,6 +1143,8 @@ void main_init()
   tim11_init();
   /* encoder_init */
   tim10_init();
+  /* tim7 */
+  tim7_init();
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
   /* print who am i */
@@ -1110,6 +1158,10 @@ void running_start()
   printf("tim10_start()\r\n");
   #endif
   tim10_start();
+  #if D_TIM7
+  printf("main.c > running_start() > ");
+  #endif
+  tim7_start();
   /* analogmin/max = FlashBuffer.analogmin/max, sensgettime = 0, HAL_ADC_Start_DMA, samplingtime = s_error = before_error = 0, if search ( p/i/d = [0], target = [0]), motor_enable = 0 */
   #if D_PRINT
   printf("tim6_start()\r\n");
@@ -1133,6 +1185,10 @@ void main_d_print()
   printf("main.c > main_d_print > ");
   tim10_d_print();
   #endif
+  #if D_TIM7
+  printf("main.c > main_d_print > ");
+  tim7_d_print();
+  #endif
   #if D_TIM6
   printf("main.c > main_d_print > ");
   tim6_d_print();
@@ -1143,6 +1199,8 @@ void running_stop()
 {
   /* HAL_TIM_Base_Stop_IT, HAL_ADC_Stop_DMA, motor_enable = 0, HAL_TIM_PWM_Stop */
   tim6_stop();
+  /* tim7 */
+  tim7_stop();
   /* HAL_TIM_Base_Stop_IT, HAL_TIM_Encoder_Stop, sidesensor_stop */
   tim10_stop();
 }

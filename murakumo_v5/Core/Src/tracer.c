@@ -8,7 +8,8 @@ PID tracer_pid;
 
 void tracer_start()
 {
-    tracer_init(1);
+    s_error = 0;
+    before_error = 0;
     tracer_set_gain(rotary_read_value());
     tracer_set_target(0);
     #if D_TRACER
@@ -19,6 +20,12 @@ void tracer_start()
     #endif
 }
 
+void tracer_stop()
+{
+    tracer_set_target_zero();
+    tracer_set_gain_zero();
+}
+
 void tracer_init(double samplingtime_)
 {
     #if D_TRACER
@@ -27,8 +34,18 @@ void tracer_init(double samplingtime_)
     printf("sampling_time = 1, s_error = 0, before_error = 0\r\n");
     #endif
     samplingtime = samplingtime_;
-    s_error = 0;
-    before_error = 0;
+}
+
+void tracer_set_gain_zero()
+{
+    tracer_pid.target = 0;
+}
+
+void tracer_set_target_zero()
+{
+    tracer_pid.kp = 0;
+    tracer_pid.ki = 0;
+    tracer_pid.kd = 0;
 }
 
 double tracer_read_gain_kp(unsigned short int i)
