@@ -7,16 +7,28 @@ double encoder;
 /* public */
 double encoder_length()
 {
+    #if D_ENCODER_WHILE
+    printf("encoder.c > encoder_length() > ");
+    printf("encoder * (double) LENGTHPERPULSE = %6.1f * %1.5f = %7.5f\r\n", encoder, LENGTHPERPULSE, encoder * (double) LENGTHPERPULSE);
+    #endif
     return (double) encoder * (double) LENGTHPERPULSE;
 }
 
 double encoder_length_left()
 {
+    #if D_ENCODER_WHILE
+    printf("encoder.c > encoder_length_left() > ");
+    printf("encoder_left * (double) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_left, LENGTHPERPULSE, encoder_left * (double) LENGTHPERPULSE);
+    #endif
     return (double) encoder_left * (double) LENGTHPERPULSE;
 }
 
 double encoder_length_right()
 {
+    #if D_ENCODER_WHILE
+    printf("encoder.c > encoder_length_right() > ");
+    printf("encoder_right * (double) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_right, LENGTHPERPULSE, encoder_right * (double) LENGTHPERPULSE);
+    #endif
     return (double) encoder_right * (double) LENGTHPERPULSE;
 }
 
@@ -33,6 +45,11 @@ void encoder_set()
     encoder_left = TIM1 -> CNT - ENCODER_MIDDLE;
     encoder_right = -(TIM3 -> CNT - ENCODER_MIDDLE);
     encoder = (encoder_left + encoder_right) / (double) 2;
+
+    #if D_ENCODER_WHILE
+    printf("encoder.c > encoder_set() > ");
+    printf("encoder_left = %6d, encoder_right = %6d, encoder = %6.1f\r\n", encoder_left, encoder_right, encoder);
+    #endif
 
     encoder_set_middle();
 }
@@ -73,4 +90,8 @@ void encoder_set_middle()
 {
     TIM1 -> CNT = ENCODER_MIDDLE;
     TIM3 -> CNT = ENCODER_MIDDLE;
+    #if D_ENCODER_WHILE
+    printf("encoder.c > encoder_set_middle() > ");
+    printf("TIM1 -> CNT = %6lu, TIM3 -> CNT = %6lu\r\n", TIM1->CNT, TIM3->CNT);
+    #endif
 }

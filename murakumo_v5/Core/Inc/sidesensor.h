@@ -3,12 +3,15 @@
 
 #include "defines.h"
 
+#define D_SIDESENSOR 0
+
 typedef enum SIDESENSORSTATE
 {
-    straight = 0,
-    start_or_stop = 1,
-    curve = 2,
-    cross = 3
+    straight,
+    start,
+    stop,
+    curve,
+    cross 
 } SideSensorState;
 
 void sidesensor_start();
@@ -18,9 +21,11 @@ uint8_t sidesensor_read();
 void sidesensor_right();
 void sidesensor_left();
 void sidesensor_cross();
-void sidesensor_function();
-SideSensorState sidesensor_read_state();
+void sidesensor_main();
+SideSensorState sidesensor_read_markerstate();
 void sidesensor_set_state(SideSensorState);
+void sidesensor_d_print();
+void sidesensor_print_sidesensorstate(SideSensorState markerstate_);
 
 #endif
 

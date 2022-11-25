@@ -3,14 +3,13 @@
 
 #include "print.h"
 #include "encoder.h"
-#include "sidesensor.h"
+#include "velotrace.h"
 #include "defines.h"
 
-#if VELOTRACE_IN_TIM10
-#include "velotrace.h"
-#endif
+/* motor_free にして手押しで移動距離を測りたい場合はここを 1 にする */
+#define D_TIM10 (0 + D_ENCODER + D_VELOTRACE)
 
-#define D_TIM10 1
+#define D_TIM10_WHILE (0 + D_VELOTRACE_WHILE + D_ENCODER_WHILE)
 
 #define TIM10_Hz 0.001f
 
@@ -33,8 +32,7 @@ void tim10_d_print();
 void tim10_length_set_zero();
 void tim10_velocity_set_zero();
 
-#if VELOTRACE_IN_TIM10
-double tim10_velotrace_solve();
-#endif
+double tim10_read_left();
+double tim10_read_right();
 
 #endif

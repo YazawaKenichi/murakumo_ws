@@ -4,6 +4,8 @@
 #include "print.h"
 #include "defines.h"
 
+#define D_ANALOG 1
+
 #define ANALOG_CALIBRATION_IN_WHILE 0
 #define ATTACH_LONGSENSOR 0	// use normal sensor and long sensor
 #define USE_LONGSENSOR 0	// only use long sensor
@@ -16,11 +18,16 @@
 
 typedef enum ANALOGMODE
 {
-    calibrating = 0,
-    all = 16
+    analogmode_calibrating = 0,
+    analogmode_long = 4,
+    analogmode_short = 12,
+    analogmode_all = 16
 } AnalogMode;
 
 void analog_print();
+void analog_array_print(uint16_t *analog_);
+void analog_rate_array_print();
+void analog_d_print();
 void analog_print_min();
 void analog_print_max();
 void analog_print_analogmode();

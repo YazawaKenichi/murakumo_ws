@@ -127,9 +127,10 @@ extern UART_HandleTypeDef huart6;
 
 void main_init();
 void running_start();
+void running_stop();
+void main_main();
 void main_print_while();
 void main_d_print();
-void running_stop();
 
 /* USER CODE END Private defines */
 

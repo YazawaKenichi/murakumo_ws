@@ -30,8 +30,6 @@
 #define USE_SLOWSTART 1
 #define USE_WRITE_FLASH 1
 
-#define VELOTRACE_IN_TIM10 1
-
 // one side only
 #define LENGTH_SAMPLING 1
 #define LEFTMARKER_SAMPLING 0

@@ -4,14 +4,15 @@
 #include "pid.h"
 #include "print.h"
 
-#define D_TRACER 1
+#define D_TRACER 0
+#define D_TRACER_WHILE 0
 
 #define TRACER_STEP_SIZE 16
 
-#define TRACER_KP_MAX 0.00025f
+#define TRACER_KP_MAX 3
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 0
-#define TRACER_KP_MIN 0.00025f
+#define TRACER_KD_MAX 2
+#define TRACER_KP_MIN 3
 #define TRACER_KI_MIN 0
 #define TRACER_KD_MIN 0
 

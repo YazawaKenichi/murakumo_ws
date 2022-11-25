@@ -94,14 +94,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		#endif
 	}
 
-  if(htim->Instance == TIM10)
-  {
-    tim7_main();
-  }
+	if(htim->Instance == TIM10)
+	{
+		#if !D_TIM7_WHILE
+		tim7_main();
+		#endif
+	}
 
 	if(htim->Instance == TIM10)	// TIM10 // 1ms
 	{
+    #if !D_TIM10_WHILE
 		tim10_main();
+    #endif
 	}
 
 	if (htim->Instance == TIM11)	// TIM11 // 1ms
@@ -186,12 +190,10 @@ int main(void)
 
             while(switch_read_enter())
             {
-
               #if ANALOG_CALIBRATION_IN_WHILE
               analog_get_and_sort();
               #endif
-              main_d_print();
-              HAL_Delay(250);
+              main_main();
             }
 
             /* analogmode = all, */
@@ -203,8 +205,7 @@ int main(void)
 
             while(switch_read_enter())
             {
-              main_d_print();
-              HAL_Delay(250);
+              main_main();
             }
 
             running_stop();
@@ -215,8 +216,7 @@ int main(void)
 
           while (switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -226,8 +226,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -237,8 +236,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -248,8 +246,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -259,8 +256,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -270,8 +266,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -281,8 +276,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -292,8 +286,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -303,8 +296,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -314,8 +306,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -325,8 +316,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -336,8 +326,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -347,8 +336,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -358,8 +346,7 @@ int main(void)
 
           while(switch_read_enter())
           {
-            main_d_print();
-            HAL_Delay(250);
+            main_main();
           }
 
           running_stop();
@@ -374,8 +361,7 @@ int main(void)
 
             while(switch_read_enter())
             {
-              main_d_print();
-              HAL_Delay(250);
+              main_main();
             }
 
             running_stop();
@@ -1153,20 +1139,30 @@ void main_init()
 
 void running_start()
 {
+  #if D_TIM7
+  printf("main.c > running_start() > ");
+  #endif
+  tim7_start();
   /* encoder_set_middle, HAL_TIM_Encoder_Start, HAL_TIM_Base_Start_IT */
   #if D_PRINT
   printf("tim10_start()\r\n");
   #endif
   tim10_start();
-  #if D_TIM7
-  printf("main.c > running_start() > ");
-  #endif
-  tim7_start();
   /* analogmin/max = FlashBuffer.analogmin/max, sensgettime = 0, HAL_ADC_Start_DMA, samplingtime = s_error = before_error = 0, if search ( p/i/d = [0], target = [0]), motor_enable = 0 */
   #if D_PRINT
   printf("tim6_start()\r\n");
   #endif
   tim6_start();
+}
+
+void running_stop()
+{
+  /* HAL_TIM_Base_Stop_IT, HAL_ADC_Stop_DMA, motor_enable = 0, HAL_TIM_PWM_Stop */
+  tim6_stop();
+  /* tim7 */
+  tim7_stop();
+  /* HAL_TIM_Base_Stop_IT, HAL_TIM_Encoder_Stop, sidesensor_stop */
+  tim10_stop();
 }
 
 void main_print_while()
@@ -1177,6 +1173,25 @@ void main_print_while()
 	/* print Tracer and Velotracer target and gains */
 	tracer_print_values();
 	velotrace_print_values();
+}
+
+void main_main()
+{
+	printf("////////// main_d_print() //////////\r\n");
+	main_d_print();
+	#if D_TIM10_WHILE
+	printf("////////// tim10_main() //////////\r\n");
+	tim10_main();
+	#endif
+	#if D_TIM7_WHILE
+	printf("////////// tim7_main() //////////\r\n");
+	tim7_main();
+	#endif
+	#if D_TIM6_WHILE
+	printf("////////// tim6_main() //////////\r\n");
+	tim6_main();
+	#endif
+	HAL_Delay(200);
 }
 
 void main_d_print()
@@ -1193,16 +1208,6 @@ void main_d_print()
   printf("main.c > main_d_print > ");
   tim6_d_print();
   #endif
-}
-
-void running_stop()
-{
-  /* HAL_TIM_Base_Stop_IT, HAL_ADC_Stop_DMA, motor_enable = 0, HAL_TIM_PWM_Stop */
-  tim6_stop();
-  /* tim7 */
-  tim7_stop();
-  /* HAL_TIM_Base_Stop_IT, HAL_TIM_Encoder_Stop, sidesensor_stop */
-  tim10_stop();
 }
 
 /* USER CODE END 4 */

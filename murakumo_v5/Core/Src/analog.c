@@ -19,19 +19,52 @@ void analog_array_print(uint16_t *analog_)
 	printf("%4d, %4d, %4d, %4d, %4d, %4d | %4d, %4d, %4d, %4d, %4d, %4d\r\n", *(analog_ + 0), *(analog_ + 2), *(analog_ + 4), *(analog_ + 6), *(analog_ + 8), *(analog_ + 10), *(analog_ + 11), *(analog_ + 9), *(analog_ + 7), *(analog_ + 5), *(analog_ + 3), *(analog_ + 1));
 }
 
+void analog_rate_array_print()
+{
+	printf("\r\n");
+	printf("\x1b[24C");	// Cursor move right *24
+	printf("%4d, %4d | %4d, %4d\r\n", analog_sensor_get(12), analog_sensor_get(14), analog_sensor_get(15), analog_sensor_get(13));
+	printf("%4d, %4d, %4d, %4d, %4d, %4d | %4d, %4d, %4d, %4d, %4d, %4d\r\n", analog_sensor_get(0), analog_sensor_get(2), analog_sensor_get(4), analog_sensor_get(6), analog_sensor_get(8), analog_sensor_get(10), analog_sensor_get(11), analog_sensor_get(9), analog_sensor_get(7), analog_sensor_get(5), analog_sensor_get(3), analog_sensor_get(1));
+	printf("\r\n");
+
+	uint16_t sum_, size_;
+
+	sum_ = 0;
+	size_ = 16;
+
+	for(unsigned char i; i < size_; i++)
+	{
+		sum_ += analog_sensor_get(i);
+	}
+
+	printf("average = %4.2f\r\n\r\n", sum_ / (double) size_);
+}
+
+void analog_d_print()
+{
+	analog_print_analogmode();
+	analog_rate_array_print();
+}
+
 void analog_print_analogmode()
 {
 	printf("analogmode = ");
 	switch(analog_read_analogmode())
 	{
-		case calibrating:
-			printf("calibrating");
+		case analogmode_calibrating:
+			printf("analogmode_calibrating\r\n");
 			break;
-		case all:
-			printf("all");
+		case analogmode_long:
+			printf("analogmode_long\r\n");
+			break;
+		case analogmode_short:
+			printf("analogmode_short\r\n");
+			break;
+		case analogmode_all:
+			printf("analogmode_all\r\n");
 			break;
 		default:
-			printf("Unknown analogmode ... ");
+			printf("Unknown analogmode ... \r\n");
 			break;
 	}
 	printf("\r\n");
@@ -111,7 +144,7 @@ AnalogMode analog_read_analogmode()
 
 void analog_calibration_start()
 {
-	analog_set_analogmode(calibrating);
+	analog_set_analogmode(analogmode_calibrating);
     for(unsigned char i = 0; CALIBRATIONSIZE > i; i++)
     {
         analogmax[i] = 0;
@@ -125,7 +158,7 @@ void analog_calibration_start()
 void analog_calibration_stop()
 {
 	/* analog_calibration_stop */
-	analog_set_analogmode(all);
+	analog_set_analogmode(analogmode_all);
 	/* HAL_ADC_Stop_DMA */
 	analog_stop();
 	analog_print_max();
@@ -159,6 +192,7 @@ void analog_sensor_start()
 {
 	printf("sensgettime = 0\r\nHAL_ADC_Start_DMA()\r\n");
     sensgettime = 0;
+	analog_set_analogmode(analogmode_all);
     if(HAL_ADC_Start_DMA(&hadc1, (uint32_t*) analograw, CALIBRATIONSIZE) != HAL_OK)
     {
         Error_Handler();

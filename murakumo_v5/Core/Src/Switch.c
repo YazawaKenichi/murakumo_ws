@@ -12,6 +12,11 @@ void switch_reset_enter()
     enter = 0;
 }
 
+void switch_main_emergency()
+{
+    switch_reset_enter();
+}
+
 void switch_init()
 {
     switch_reset_enter();

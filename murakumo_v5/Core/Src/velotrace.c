@@ -1,23 +1,23 @@
 #include "velotrace.h"
 
-double s_error;
-double before_error;
-double samplingtime;
+double velotrace_s_error;
+double velotrace_before_error;
+double velotrace_samplingtime;
 
-PID pid;
+PID velotrace_pid;
 
 void velotrace_init(double samplingtime_)
 {
-    samplingtime = samplingtime_;
+    velotrace_samplingtime = samplingtime_;
 }
 
 void velotrace_start()
 {
     #if D_VELOTRACE
-    printf("samplingtime = 1, s_error = 0, before_error = 0\r\n");
+    printf("velotrace_samplingtime = 1, velotrace_s_error = 0, velotrace_before_error = 0\r\n");
     #endif
-    s_error = 0;
-    before_error = 0;
+    velotrace_s_error = 0;
+    velotrace_before_error = 0;
     switch(rotary_read_playmode())
     {
         case search:
@@ -67,31 +67,31 @@ double velotrace_read_gain_kd(unsigned short int i)
 void velotrace_set_gain(unsigned short int i)
 {
     #if D_VELOTRACE
-    printf("pid = velotrace_read_gain\r\n");
+    printf("velotrace_pid = velotrace_read_gain\r\n");
     #endif
-    pid.kp = velotrace_read_gain_kp(i);
-    pid.ki = velotrace_read_gain_ki(i);
-    pid.kd = velotrace_read_gain_kd(i);
+    velotrace_pid.kp = velotrace_read_gain_kp(i);
+    velotrace_pid.ki = velotrace_read_gain_ki(i);
+    velotrace_pid.kd = velotrace_read_gain_kd(i);
 }
 
 void velotrace_set_target(unsigned short int i)
 {
     #if D_VELOTRACE
-    printf("pid = velotrace_read_target\r\n");
+    printf("velotrace_pid = velotrace_read_target\r\n");
     #endif
-    pid.target = velotrace_read_target(i);
+    velotrace_pid.target = velotrace_read_target(i);
 }
 
 void velotrace_set_gain_zero()
 {
-    pid.kp = 0;
-    pid.ki = 0;
-    pid.kd = 0;
+    velotrace_pid.kp = 0;
+    velotrace_pid.ki = 0;
+    velotrace_pid.kd = 0;
 }
 
 void velotrace_set_target_zero()
 {
-    pid.target = 0;
+    velotrace_pid.target = 0;
 }
 
 double velotrace_solve(double reference_)
@@ -100,20 +100,20 @@ double velotrace_solve(double reference_)
     double d_error;
     double result;
 
-    error = reference_ - pid.target;
+    error = reference_ - velotrace_pid.target;
 
-    d_error = (error - before_error) / (double) samplingtime;
-    s_error += error * (double) samplingtime;
+    d_error = (error - velotrace_before_error) / (double) velotrace_samplingtime;
+    velotrace_s_error += error * (double) velotrace_samplingtime;
 
-    result = - (pid.kp * error + pid. ki * s_error + pid.kd * d_error);
+    result = - (velotrace_pid.kp * error + velotrace_pid.ki * velotrace_s_error + velotrace_pid.kd * d_error);
 
-    #if D_TIM6_WHILE
+    #if D_VELOTRACE_WHILE
     printf("velotrace_solve()\r\n");
-    printf("reference_ = %5d\r\n");
-    printf("%7.2f = %7.2f * %5d + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, pid.kp, error, pid.ki, s_error, pid.kd, d_error);
+    printf("reference_ - velotrace_pid.target = %7.2f - %7.2f = %7.2f\r\n", reference_, velotrace_pid.target, reference_ - velotrace_pid.target);
+    printf("%7.2f = %7.2f * %7.2f + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, velotrace_pid.kp, error, velotrace_pid.ki, velotrace_s_error, velotrace_pid.kd, d_error);
     #endif
 
-    before_error = error;
+    velotrace_before_error = error;
 
     return result;
 }

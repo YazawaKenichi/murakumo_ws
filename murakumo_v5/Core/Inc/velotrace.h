@@ -5,16 +5,17 @@
 #include "print.h"
 
 #define D_VELOTRACE 0
+#define D_VELOTRACE_WHILE 0
 
 #define VELOTRACE_STEP_SIZE 16
 
-#define VELOCITY_TARGET_MAX 0    /* [m/s] */
-#define VELOCITY_TARGET_MIN 0
-#define VELOCITY_KP_MAX 1467
-#define VELOCITY_KI_MAX 2
+#define VELOCITY_TARGET_MAX 1    /* [m/s] */
+#define VELOCITY_TARGET_MIN 1
+#define VELOCITY_KP_MAX 1000
+#define VELOCITY_KI_MAX 100
 #define VELOCITY_KD_MAX 0
-#define VELOCITY_KP_MIN 1467
-#define VELOCITY_KI_MIN 2
+#define VELOCITY_KP_MIN 1000
+#define VELOCITY_KI_MIN 100
 #define VELOCITY_KD_MIN 0
 
 /* velotrace_init(1), velotrace_set_gain(), velotrace_set_target() */

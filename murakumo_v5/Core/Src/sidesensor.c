@@ -1,7 +1,12 @@
 #include "sidesensor.h"
 
-unsigned char subsensbuf, marker, sidedeltacount, markerstate, rightmarkercount;
-SideSensorState sidesensorstate;
+/* marker : 一回目の左右の色と二回目の左右の色が格納される */
+/* markerstate : 直前のマーカの種類が格納される */
+/* rightmarkercount : 右マーカの数が格納される */
+
+unsigned char subsensbuf, marker, sidedeltacount, rightmarkercount;
+SideSensorState markerstate;
+char sidesensor_start_or_stop;
 
 uint8_t sidesensor_read()
 {
@@ -19,8 +24,8 @@ void sidesensor_start()
     marker = 0;
     subsensbuf = 0;
     sidedeltacount = 0;
-    markerstate = 0;
     rightmarkercount = 0;
+	markerstate = start;
     // HAL_TIM_Base_Start_IT(&htim14);
 }
 
@@ -29,26 +34,22 @@ void sidesensor_stop()
 	/* sidesensor_stop */
 }
 
-SideSensorState sidesensor_read_state()
+SideSensorState sidesensor_read_markerstate()
 {
-	return sidesensorstate;
-}
-
-void sidesensor_set_state(SideSensorState sidesensorstate_)
-{
-	sidesensorstate = sidesensorstate_;
+	return markerstate;
 }
 
 void sidesensor_right()
 {
-    markerstate = start_or_stop;
     if(rightmarkercount == 1 - 1)
     {
         // start
+		markerstate = straight;
     }
     else if(rightmarkercount == 2 - 1)
     {
         // stop
+		markerstate = stop;
     }
     rightmarkercount++;
 }
@@ -71,7 +72,7 @@ void sidesensor_straight()
 	markerstate = straight;
 }
 
-void sidesensor_function()
+void sidesensor_main()
 {
 	unsigned char subsens;
 
@@ -117,4 +118,37 @@ void sidesensor_function()
 			sidedeltacount++;
 		}
 	}
+}
+
+void sidesensor_print_sidesensorstate(SideSensorState markerstate_)
+{
+	switch(markerstate_)
+	{
+		case straight:
+			printf("straight\r\n");
+			break;
+		case start:
+			printf("start\r\n");
+			break;
+		case stop:
+			printf("stop\r\n");
+			break;
+		case curve:
+			printf("curve\r\n");
+			break;
+		case cross:
+			printf("cross\r\n");
+			break;
+		default:
+		 	printf("unknown SideSensorState x_x\r\n");
+			break;
+	}
+}
+
+void sidesensor_d_print()
+{
+	#if D_SIDESENSOR
+	printf("sidesensor.c > sidesensor_d_print() > ");
+	sidesensor_print_sidesensorstate(markerstate);
+	#endif
 }
