@@ -1,3 +1,27 @@
+/*
+ * 操作方法
+ *
+ * キャリブレーション
+ * 1. ロータリスイッチゼロで Reset
+ * 2. 置いて Enter
+ *
+ * 探索走行
+ * 1. ロータリスイッチイチで Reset
+ * 2. ロータリスイッチを 8 あたりに回す（ゲインを決定）
+ * 3. 置いて Enter
+ *
+ * 二次走行
+ * 1. ロータリスイッチニ で Reset
+ * 2. ロータリスイッチを 8 あたりに回す（ゲインを決定）
+ * 3. 置いて Enter
+ *
+ *
+ * 機能
+ * 左マーカ記憶
+ * 「早い」と「遅い」の二値
+ *
+ */
+
 #define PLAY 1
 
 #define D_ANALOG 0
@@ -41,8 +65,8 @@
 #define USE_WRITE_FLASH 1
 
 // one side only
-#define LENGTH_SAMPLING 1
-#define LEFTMARKER_SAMPLING 0
+#define LENGTH_SAMPLING 0
+#define LEFTMARKER_SAMPLING 1
 
 #define NOISY 0
 #define GOD 0

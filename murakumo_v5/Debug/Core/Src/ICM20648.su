@@ -1,6 +1,6 @@
 ICM20648.c:16:9:read_byte	24	static
 ICM20648.c:33:6:write_byte	24	static
-ICM20648.c:48:9:IMU_init	32	static
+ICM20648.c:48:9:IMU_init	24	static
 ICM20648.c:97:6:IMU_fin	4	static
 ICM20648.c:104:6:IMU_set_offset	8	static
 ICM20648.c:110:6:IMU_read	16	static
