@@ -25,8 +25,8 @@ void tim6_start()
 
 void tim6_stop()
 {
-	HAL_TIM_Base_Stop_IT(&htim6);
     motor_stop();
+	HAL_TIM_Base_Stop_IT(&htim6);
     sidesensor_stop();
 }
 

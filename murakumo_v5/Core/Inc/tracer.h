@@ -9,12 +9,13 @@
 
 #define TRACER_STEP_SIZE 16
 
-#define TRACER_KP_MAX 3
+#define TRACER_KP_MAX 0.5f
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 2
-#define TRACER_KP_MIN 3
+#define TRACER_KD_MAX 10
+
+#define TRACER_KP_MIN 0.3f
 #define TRACER_KI_MIN 0
-#define TRACER_KD_MIN 0
+#define TRACER_KD_MIN 10
 
 /* 追従が弱い D が大きすぎる */
 #if OLD_BEST

@@ -7,9 +7,12 @@
 #include "analog.h"
 #include "tracer.h"
 #include "Switch.h"
+#include "Rotary.h"
 
 #define D_TIM7 (0 + D_TRACER + D_ANALOG + D_FLASH)
 #define D_TIM7_WHILE (0 + D_TRACER_WHILE)
+
+#define TIM7_EMERGENCY_THRESHOLD 980
 
 void tim7_init();
 void tim7_start();

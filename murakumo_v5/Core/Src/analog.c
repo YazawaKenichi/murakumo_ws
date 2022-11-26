@@ -144,7 +144,7 @@ AnalogMode analog_read_analogmode()
 
 void analog_calibration_start()
 {
-	analog_set_analogmode(analogmode_calibrating);
+	analog_set_analogmode(analogmode_all);
     for(unsigned char i = 0; CALIBRATIONSIZE > i; i++)
     {
         analogmax[i] = 0;
@@ -192,7 +192,6 @@ void analog_sensor_start()
 {
 	printf("sensgettime = 0\r\nHAL_ADC_Start_DMA()\r\n");
     sensgettime = 0;
-	analog_set_analogmode(analogmode_all);
     if(HAL_ADC_Start_DMA(&hadc1, (uint32_t*) analograw, CALIBRATIONSIZE) != HAL_OK)
     {
         Error_Handler();
