@@ -215,6 +215,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 		encoder = (double) (encoder_l + encoder_r) / 2;
 		velocity = (double) encoder * LENGTHPERPULSE;
+    course_length += velocity;
 	#endif	// USE_ENCODER
 	#if USE_SLOWSTART
 		if(slow)
@@ -258,7 +259,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		}
 		else
 		{
-	        if(playmode == accel)
+	        if(playmode == accel || playmode == max_enable)
 	        {
 #if LENGTH_SAMPLING
 	        	course_state_function();
@@ -313,7 +314,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 #if LENGTH_SAMPLING
 				if(mm_length >= SAMPLING_LENGTH)
 				{
-					course_state_function();
+          course_state_function();
 				}
 #endif
 			}
@@ -1619,6 +1620,7 @@ void running_initialize()
 	stoptime = 0;
 #endif
 	sampling_time = 0;
+  course_length = 0;
 	m_velocity = 0;
 	mm_length = 0;
 	my_gyro.z = 0;

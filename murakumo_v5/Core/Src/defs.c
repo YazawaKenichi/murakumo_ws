@@ -111,6 +111,7 @@ void d_print() {
 #if D_ENCODER
 	printf("encoder_l = %d, encoder_r = %d \r\n",
 			encoder_l, encoder_r);
+	printf("course_length = %7.2f\r\n", course_length);
 /*
 	printf("encoder_l = %d, encoder_r = %d \r\ndvl = %d, dvr = %d\r\n",
 			encoder_l, encoder_r, dvl, dvr);
@@ -491,7 +492,7 @@ void course_state_function()
 			my_gyro.z = 0;
 		}
 	}
-	if(playmode == accel)
+	if(playmode == accel || playmode == max_enable)
 	{
 		velocity_control_switch_function();
 		if(course_state_time + 1 >= COURSE_STATE_SIZE)	// sizeof(flash_buffer.radius) / sizeof(flash_buffer.radius[0]))
@@ -569,22 +570,47 @@ void pid_gain_initialize()
 	for(int i = 0; i < 16; i++)
 	{
 		low_velo.velocity_target[i] = VELOCITY_TARGET_LOW;
-		high_velo.velocity_target[i] = VELOCITY_TARGET_HIGH;
+		if(playmode != max_enable)
+		{
+			high_velo.velocity_target[i] = VELOCITY_TARGET_HIGH;
+		}
+		else
+		{
+			high_velo.velocity_target[i] = VELOCITY_TARGET_MAX;
+		}
 	}
 	low_velo.kp[0] = KP_LOW;
 	low_velo.ki[0] = KI_LOW;
 	low_velo.kd[0] = KD_LOW;
-	high_velo.kp[0] = KP_HIGH;
-	high_velo.ki[0] = KI_HIGH;
-	high_velo.kd[0] = KD_HIGH;
+	if(playmode != max_enable)
+	{
+		high_velo.kp[0] = KP_HIGH;
+		high_velo.ki[0] = KI_HIGH;
+		high_velo.kd[0] = KD_HIGH;
+	}
+	else
+	{
+		high_velo.kp[0] = KP_MAX;
+		high_velo.ki[0] = KI_MAX;
+		high_velo.kd[0] = KD_MAX;
+	}
 	for(int i = 1; i < 16; i++)
 	{
 		low_velo.kp[i] = KP_LOW + (i - 1) * KP_LOW_TOLERANCE;
 		low_velo.ki[i] = KI_LOW + (i - 1) * KI_LOW_TOLERANCE;
 		low_velo.kd[i] = KD_LOW + (i - 1) * KD_LOW_TOLERANCE;
-		high_velo.kp[i] = KP_HIGH + (i - 1) * KP_HIGH_TOLERANCE;
-		high_velo.ki[i] = KI_HIGH + (i - 1) * KI_HIGH_TOLERANCE;
-		high_velo.kd[i] = KD_HIGH + (i - 1) * KD_HIGH_TOLERANCE;
+		if(playmode != max_enable)
+		{
+			high_velo.kp[i] = KP_HIGH + (i - 1) * KP_HIGH_TOLERANCE;
+			high_velo.ki[i] = KI_HIGH + (i - 1) * KI_HIGH_TOLERANCE;
+			high_velo.kd[i] = KD_HIGH + (i - 1) * KD_HIGH_TOLERANCE;
+		}
+		else
+		{
+			high_velo.kp[i] = KP_MAX + (i - 1) * KP_MAX_TOLERANCE;
+			high_velo.ki[i] = KI_MAX + (i - 1) * KI_MAX_TOLERANCE;
+			high_velo.kd[i] = KD_MAX + (i - 1) * KD_MAX_TOLERANCE;
+		}
 	}
 }
 
@@ -594,7 +620,7 @@ void pid_initialize()
 	kp = low_velo.kp[rv];
 	kd = low_velo.kd[rv];
 	ki = low_velo.ki[rv];
-	if(playmode == accel)
+	if(playmode == accel || playmode == max_enable)
 	{
 		velocity_target = high_velo.velocity_target[rv];
 		kp = high_velo.kp[rv];

@@ -178,6 +178,7 @@ short int s_encoder, s_encoder_l, s_encoder_r;
 
 double velocity_l, velocity_l_raw;
 double velocity_r, velocity_r_raw;
+double course_length;
 #if VELOCITY_CONTROL_RELATIVE
 double velocity_target;
 #if USE_SLOWSTART

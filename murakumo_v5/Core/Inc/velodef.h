@@ -90,15 +90,30 @@
 #define KD_LOW 335.71f
 #define KD_LOW_TOLERANCE ((635.71f - 335) / 16)
 #define KI_LOW 0
+#define KI_LOW_TOLERANCE 0
 
 // high speed
-#define KI_LOW_TOLERANCE 0
+#define KP_HIGH 25.5f
+#define KP_HIGH_TOLERANCE ((41.5f - 25.5f) / 15)
+#define KD_HIGH 335.71f
+#define KD_HIGH_TOLERANCE ((395.71f - 25.5f) / 15)
+#define KI_HIGH 0
+#define KI_HIGH_TOLERANCE 0
+/*
 #define KP_HIGH 17.5f
 #define KP_HIGH_TOLERANCE 2
 #define KD_HIGH 335.71f
 #define KD_HIGH_TOLERANCE 10
 #define KI_HIGH 0
 #define KI_HIGH_TOLERANCE 0
+*/
+
+#define KP_MAX 140
+#define KP_MAX_TOLERANCE 2
+#define KD_MAX 500
+#define KD_MAX_TOLERANCE 0
+#define KI_MAX 0
+#define KI_MAX_TOLERANCE 0
 
 #else
 
