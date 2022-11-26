@@ -28,7 +28,7 @@
 #define D_ANALOGRATE 0
 #define D_MOTOR 0
 #define D_SIDESENS 0	//
-#define D_ENCODER 0	// Debug Encoder
+#define D_ENCODER 1	// Debug Encoder
 #define D_PWM 0
 #define D_ROTARY 0
 #define D_PLAYMODE 0
