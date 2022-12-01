@@ -1,5 +1,5 @@
-main.c:90:6:HAL_TIM_PeriodElapsedCallback	72	static
-main.c:370:5:main	24	static
+main.c:90:6:HAL_TIM_PeriodElapsedCallback	80	static
+main.c:370:5:main	32	static
 main.c:826:6:SystemClock_Config	88	static
 main.c:870:13:MX_ADC1_Init	24	static
 main.c:1040:13:MX_I2C1_Init	8	static
@@ -18,9 +18,9 @@ main.c:1493:13:MX_GPIO_Init	48	static
 main.c:1568:9:read_sidesens	16	static
 main.c:1578:6:sensor_initialize	8	static
 main.c:1587:6:sensor_finalize	8	static
-main.c:1591:6:running_initialize	16	static
+main.c:1591:6:running_initialize	24	static
 main.c:1660:6:running_finalize	8	static
-main.c:1680:6:encoder_initialize	16	static
+main.c:1680:6:encoder_initialize	24	static
 main.c:1707:6:encoder_finalize	8	static
 main.c:1712:1:__io_putchar	16	static
 main.c:1722:6:Error_Handler	4	static,ignoring_inline_asm

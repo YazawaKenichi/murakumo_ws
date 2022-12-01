@@ -108,10 +108,10 @@
 #define KI_HIGH_TOLERANCE 0
 */
 
-#define KP_MAX 140
-#define KP_MAX_TOLERANCE 2
-#define KD_MAX 500
-#define KD_MAX_TOLERANCE 0
+#define KP_MAX 50
+#define KP_MAX_TOLERANCE 0
+#define KD_MAX 400
+#define KD_MAX_TOLERANCE 13
 #define KI_MAX 0
 #define KI_MAX_TOLERANCE 0
 
