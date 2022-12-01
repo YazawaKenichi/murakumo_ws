@@ -63,36 +63,22 @@ void course_state_function()
 {
 	if(rotary_read_playmode() == search)
 	{
-		if(course_read_state_time() + 1 >= COURSE_STATE_SIZE)	// sizeof(flash_buffer.radius) / sizeof(flash_buffer.radius[0]))
-		{
-            motor_enable(0);
-		}
-		else
-		{
 #if USE_COURSE_STATE_TIME
-			course_increment_state_time();
+		course_increment_state_time();
 #endif
-			flashbuffer.course_state_time_max = course_read_state_time();
+		flashbuffer.course_state_time_max = course_read_state_time();
 //			my_gyro.z = theta * RADPERDEG;
 //			my_gyro.z *= RADPERDEG;
-			flashbuffer.radius[course_state_time] = course_calclate_radius();
-			course_length = 0;
+		flashbuffer.radius[course_state_time] = course_calclate_radius();
+		course_length = 0;
 //			my_gyro.z = 0;
-		}
 	}
 	if(rotary_read_playmode() == accel)
 	{
 //		velocity_control_switch_function();
-		if(course_read_state_time() + 1 >= COURSE_STATE_SIZE)	// sizeof(flash_buffer.radius) / sizeof(flash_buffer.radius[0]))
-		{
-			motor_enable(0);
-		}
-		else
-		{
 #if USE_COURSE_STATE_TIME
-			course_increment_state_time();
+		course_increment_state_time();
 #endif
-		}
 	}
 }
 

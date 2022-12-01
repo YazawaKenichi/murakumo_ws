@@ -117,6 +117,7 @@ void tim6_main()
         else
         {
             switch_reset_enter();
+            tim6_stop();
         }
 		#endif	/* TEMPLATE */
     }
