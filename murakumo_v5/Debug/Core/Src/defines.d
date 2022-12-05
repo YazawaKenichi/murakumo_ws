@@ -38,7 +38,8 @@ Core/Src/defines.o: ../Core/Src/defines.c ../Core/Inc/defines.h \
  ../Core/Inc/tim7.h ../Core/Inc/flash.h ../Core/Inc/analog.h \
  ../Core/Inc/tracer.h ../Core/Inc/pid.h ../Core/Inc/Switch.h \
  ../Core/Inc/tim10.h ../Core/Inc/encoder.h ../Core/Inc/velotrace.h \
- ../Core/Inc/tim11.h ../Core/Inc/imu.h
+ ../Core/Inc/slow.h ../Core/Inc/function.h ../Core/Inc/tim11.h \
+ ../Core/Inc/imu.h
 
 ../Core/Inc/defines.h:
 
@@ -139,6 +140,10 @@ Core/Src/defines.o: ../Core/Src/defines.c ../Core/Inc/defines.h \
 ../Core/Inc/encoder.h:
 
 ../Core/Inc/velotrace.h:
+
+../Core/Inc/slow.h:
+
+../Core/Inc/function.h:
 
 ../Core/Inc/tim11.h:
 

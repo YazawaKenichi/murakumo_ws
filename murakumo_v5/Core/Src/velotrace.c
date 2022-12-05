@@ -82,6 +82,19 @@ void velotrace_set_target(unsigned short int i)
     velotrace_pid.target = velotrace_read_target(i);
 }
 
+void velotrace_set_values(PID *_pid)
+{
+    velotrace_pid.target = _pid->target;
+    velotrace_pid.kp = _pid->kp;
+    velotrace_pid.ki = _pid->ki;
+    velotrace_pid.kd = _pid->kd;
+}
+
+PID* velotrace_read_values()
+{
+    return &velotrace_pid;
+}
+
 void velotrace_set_gain_zero()
 {
     velotrace_pid.kp = 0;

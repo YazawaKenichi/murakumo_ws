@@ -5,6 +5,7 @@
 #include "encoder.h"
 #include "velotrace.h"
 #include "defines.h"
+#include "slow.h"
 
 /* motor_free にして手押しで移動距離を測りたい場合はここを 1 にする */
 #define D_TIM10 (0 + D_ENCODER + D_VELOTRACE)

@@ -6,4 +6,4 @@ course.c:31:8:course_add_length	16	static
 course.c:37:10:course_read_state_time	4	static
 course.c:42:6:course_increment_state_time	4	static
 course.c:47:8:course_calclate_radius	32	static
-course.c:62:6:course_state_function	8	static
+course.c:62:6:course_state_function	16	static

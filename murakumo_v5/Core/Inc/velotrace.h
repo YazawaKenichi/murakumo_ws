@@ -30,6 +30,8 @@ double velotrace_read_gain_ki(unsigned short int i);
 double velotrace_read_gain_kd(unsigned short int i);
 /* terget setting */
 void velotrace_set_target(unsigned short int i);
+void velotrace_set_values(PID*);
+PID *velotrace_read_values();
 /* kp ki kd settings */
 void velotrace_set_gain(unsigned short int i);
 /* target kp ki kd set zero */
@@ -38,5 +40,6 @@ void velotrace_set_target_zero();
 /* calclate pid solving */
 double velotrace_solve(double reference_);
 void veloctracer_print_values();
+void velotrace_set_values(PID*);
 
 #endif

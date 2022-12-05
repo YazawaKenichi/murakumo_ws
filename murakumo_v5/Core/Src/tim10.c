@@ -54,6 +54,7 @@ void tim10_start()
   encoder_start();
   /* marker = subsensbuf = sidedeltacount = markerstate = rightmarkercount = 0 */
   velotrace_start();
+  slow_start(velotrace_read_values());
   tim10_length_set_zero();
   tim10_velocity_set_zero();
   HAL_TIM_Base_Start_IT(&htim10);
@@ -104,6 +105,13 @@ void tim10_main()
   printf("tim10.c > tim10_main() > velocity_left = %7.2f, velocity_right = %7.2f, velocity = %7.2f\r\n", velocity_left, velocity_right, velocity);
   #endif
 
+  /* slow start のプログラムいれたけど、できないよ！ */
+  if(slow_read_enable())
+  {
+    slow_set_velocity(velocity);
+    slow_main();
+    velotrace_set_values(slow_read_gain_values());
+  }
 
   #if D_TIM10_WHILE
   printf("tim10.c > tim10_main() > ");
