@@ -1,3 +1,13 @@
+/**
+ * @file slow.h
+ * @author YAZAWA Kenichi (s21c1036hn@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-01-08
+ * 
+ * (C) 2023 YAZAWA Kenichi
+ * 
+*/
 #ifndef __SLOW_H__
 #define __SLOW_H__
 

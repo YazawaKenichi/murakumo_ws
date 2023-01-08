@@ -1133,8 +1133,6 @@ void main_init()
   tim7_init();
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
-  /* print who am i */
-  imu_init();
 }
 
 void running_start()

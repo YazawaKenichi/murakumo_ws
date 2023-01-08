@@ -34,7 +34,6 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "defines.h"
 #include "print.h"
-#include "IMU.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

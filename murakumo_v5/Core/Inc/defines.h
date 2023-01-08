@@ -1,8 +1,16 @@
-/*
-    main.h 内で stm32f4xx_hal.h の後に呼び出されるヘッダファイル
-
-    この中で include したヘッダファイルは STM32 特有の型や変数が使用可能になる
-*/
+/**
+ * @file defines.h
+ * @author YAZAWA Kenichi (21C1036hn@gmail.com)
+ * @brief 機能の使用決定をする
+ * @version 0.1
+ * @date 2023-01-08
+ * 
+ * @copyright Copyright (c) 2023 YAZAWA Kenichi
+ * 
+ * main.h 内で stm32f4xx_hal.h の後に呼び出されるヘッダファイル
+ * 本ファイルを呼び出した後に include するファイルでは、STM32 で用意されているペリフェラルの変数や関数が使用可能になる
+ * 
+ */
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 
@@ -27,7 +35,7 @@
 #define USE_PID_ARRAY 1
 #define USE_COURSE_STATE_TIME 1
 
-#define USE_SLOWSTART 1
+#define USE_SLOWSTART 0
 #define USE_WRITE_FLASH 1
 
 // one side only
@@ -61,6 +69,5 @@ void Error_Handler(void);
 #include "tim7.h"
 #include "tim10.h"
 #include "tim11.h"
-#include "imu.h"
 
 #endif

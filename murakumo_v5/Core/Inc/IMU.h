@@ -1,3 +1,12 @@
+/**
+ * @file IMU.h
+ * @author IGC8810 / shimotoriharuki / YazawaKenichi (s21c1036hn@gmail.com)
+ * @brief ICM-20648 から加速度と角速度の値を取得することができる
+ * @version 1.3
+ * @date 2023-01-08
+ * @details 先輩方の IMU のライブラリ ICM20648.h に YazawaKenichi が手を加えた物
+*/
+
 #ifndef ICM_20648_H
 #define ICM_20648_H
 
@@ -31,17 +40,20 @@ extern SPI_HandleTypeDef hspi2;
 
 typedef struct
 {
-	int16_t x;
-	int16_t y;
-	int16_t z;
-} Coordinate;
+	/* data */
+	float x,
+	float y,
+	float z
+} Position;
 
 typedef struct
 {
-	double x;
-	double y;
-	double z;
-} Coordinate_float;
+	/* data */
+	float roll,
+	float pitch,
+	float yaw
+} Rpy;
+
 
 typedef struct
 {
@@ -51,9 +63,9 @@ typedef struct
 
 typedef struct
 {
-	Coordinate position;
-	Coordinate theta;
-} Displacement;
+	Position position;
+	Rpy rpy;
+} Pose;
 
 double RADPERDEG;	// ( M_PI / 180 )	[rad / deg]
 
@@ -64,7 +76,7 @@ uint8_t imu_initialize(uint8_t*);
 void imu_stop();
 void imu_set_offset();
 void imu_read();
-void Inertial_Integral(Displacement*);
+void Inertial_Integral(Pose*);
 void Coordinate_Init(Coordinate*);
 void Coordinate_Set(Coordinate *, Coordinate *);
 
@@ -73,7 +85,7 @@ void Coordinate_Set(Coordinate *, Coordinate *);
 
 extern volatile Inertial inertial;
 extern volatile Inertial inertial_offset;
-extern volatile Displacement displacement;
+extern volatile Pose pose;
 
 #endif
 

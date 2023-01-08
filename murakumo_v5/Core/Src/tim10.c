@@ -106,12 +106,14 @@ void tim10_main()
   #endif
 
   /* slow start のプログラムいれたけど、できないよ！ */
+  #if USE_SLOWSTART
   if(slow_read_enable())
   {
     slow_set_velocity(velocity);
     slow_main();
     velotrace_set_values(slow_read_gain_values());
   }
+  #endif
 
   #if D_TIM10_WHILE
   printf("tim10.c > tim10_main() > ");

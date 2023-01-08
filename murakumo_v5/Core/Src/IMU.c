@@ -1,11 +1,19 @@
-//ICM_20648.c Ver.1.3
+/**
+ * @file IMU.c
+ * @author IGC8810 / shimotoriharuki / YazawaKenichi (s21c1036hn@gmail.com)
+ * @brief ICM-20648 から加速度と角速度の値を取得することができる
+ * @version 1.3
+ * @date 2023-01-08
+ * @details 先輩方の IMU のライブラリ ICM20648.c に YazawaKenichi が手を加えた物
+*/
+
 #include "IMU.h"
 
 #define USE_NCS 1
 #define INIT_ZERO 1
 
-//volatile int16_t xa, ya, za;
-//volatile int16_t xg, yg, zg;
+// volatile int16_t xa, ya, za;
+// volatile int16_t xg, yg, zg;
 
 volatile Inertial inertial;
 volatile Displacement displacement;
@@ -126,6 +134,13 @@ void imu_set_offset()
 	inertial_offset = inertial;
 }
 
+/**
+ * @fn
+ * 
+ * @brief inertial 変数に、現在の加速度・角速度の値を代入する関数
+ * @details
+ * @attention 値を代入したら外部参照変数を呼び出して値を取得することになる
+*/
 void imu_read()
 {
 	inertial.accel.x = ((int16_t)imu_read_byte(ACCEL_XOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_XOUT_L));
@@ -134,34 +149,6 @@ void imu_read()
 	inertial.gyro.x = ((int16_t)imu_read_byte(GYRO_XOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_XOUT_L));
 	inertial.gyro.y = ((int16_t)imu_read_byte(GYRO_YOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_YOUT_L));
 	inertial.gyro.z = ((int16_t)imu_read_byte(GYRO_ZOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_ZOUT_L));
-}
-
-void Inertial_Integral(Displacement *a)
-{
-	imu_read();
-	a->position.x += inertial.accel.x;
-	a->position.y += inertial.accel.y;
-	a->position.z += inertial.accel.z;
-	a->position.x += a->position.x;
-	a->position.y += a->position.y;
-	a->position.z += a->position.z;
-	a->theta.x += inertial.gyro.x;
-	a->theta.y += inertial.gyro.y;
-	a->theta.z += inertial.gyro.z;
-}
-
-void Coordinate_Init(Coordinate *a)
-{
-	a->x = 0;
-	a->y = 0;
-	a->z = 0;
-}
-
-void Coordinate_Set(Coordinate *a, Coordinate *b)
-{
-	a->x = b->x;
-	a->y = b->y;
-	a->z = b->z;
 }
 
 
