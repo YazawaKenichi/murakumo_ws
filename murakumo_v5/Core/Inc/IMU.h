@@ -10,10 +10,15 @@
 #ifndef ICM_20648_H
 #define ICM_20648_H
 
+#include "defines.h"
+#include "stm32f4xx_hal.h"
 #include "math.h"
+#include "geometry.h"
 #include "print.h"
 
-extern SPI_HandleTypeDef hspi2;
+#define USE_NCS 1
+#define INIT_ZERO 1
+
 #define CS_RESET HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET)
 #define CS_SET   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET)
 
@@ -36,56 +41,23 @@ extern SPI_HandleTypeDef hspi2;
 #define GYRO_YOUT_L 0x36
 #define GYRO_ZOUT_H 0x37
 #define GYRO_ZOUT_L 0x38
+//! This address (127) can selsct "User Bank" index
 #define REG_BANK_SEL 0x7F
 
-typedef struct
-{
-	/* data */
-	float x,
-	float y,
-	float z
-} Position;
-
-typedef struct
-{
-	/* data */
-	float roll,
-	float pitch,
-	float yaw
-} Rpy;
-
-
-typedef struct
-{
-	Coordinate accel;
-	Coordinate gyro;
-} Inertial;
-
-typedef struct
-{
-	Position position;
-	Rpy rpy;
-} Pose;
-
-double RADPERDEG;	// ( M_PI / 180 )	[rad / deg]
+//! (M_PI / 180) [rad / deg]
+#define RADPERDEG (M_PI / (double) 180)
 
 uint8_t imu_read_byte(uint8_t);
 void imu_write_byte(uint8_t, uint8_t);
 void imu_init();
 uint8_t imu_initialize(uint8_t*);
 void imu_stop();
-void imu_set_offset();
-void imu_read();
-void Inertial_Integral(Pose*);
-void Coordinate_Init(Coordinate*);
-void Coordinate_Set(Coordinate *, Coordinate *);
+void imu_update_gyro();
+void imu_update_accel();
+float imu_read_yaw();
 
 //extern volatile int16_t 	xa, ya, za;
 //extern volatile int16_t 	xg, yg, zg;
-
-extern volatile Inertial inertial;
-extern volatile Inertial inertial_offset;
-extern volatile Pose pose;
 
 #endif
 

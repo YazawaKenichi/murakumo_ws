@@ -1,3 +1,17 @@
+/**
+ * @file geometry.h
+ * @author YAZAWA Kenichi (s21c1036hn@gmail.com)
+ * @brief 
+ * @version 1.0
+ * @date 2023-01-08
+ * @details
+ * geometry.h provides type for common geometric primitives such as points, vectors, and poses.
+ * These primitives are designed to provide a common data type and facilitate interoperability throughout the system.
+ * 
+ * (C) 2023 YAZAWA Kenichi
+ * 
+ */
+
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
@@ -36,6 +50,18 @@ typedef struct
     float iyz;
     float izz;
 } Inertia;
+
+typedef struct
+{
+    /* data */
+    /**
+     * @brief 
+     * 
+     */
+    Vector3 linear;
+    Vector3 angular;
+} Inertial;
+
 
 typedef struct
 {
@@ -110,5 +136,7 @@ typedef struct
     float y;
     float z;
 } Vector3;
+
+Vector3 vector3_adder(Vector3, Vector3);
 
 #endif

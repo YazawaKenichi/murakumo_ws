@@ -3,8 +3,10 @@
 /* lengths is updated only in tim10 file. */
 double length, length_left, length_right;
 double velocity_left, velocity_right, velocity;
+double omega_z;
 
 double tim10_left, tim10_right;
+double tim10_degree;
 
 double tim10_read_length_left()
 {
@@ -41,6 +43,7 @@ void tim10_init()
 {
   tim10_length_set_zero();
   tim10_velocity_set_zero();
+  tim10_degree_set_zerO();
   velotrace_init(1);
 	encoder_init();
 	HAL_TIM_Base_Stop_IT(&htim10);
@@ -68,6 +71,13 @@ void tim10_stop()
 }
 
 void tim10_main()
+{
+  tim10_update_length();
+  tim10_update_degree();
+}
+
+//! tim10_main でのみ呼び出されるべき関数
+void tim10_update_length()
 {
   double el, er, e;
 
@@ -142,6 +152,13 @@ void tim10_main()
   */
 }
 
+void tim10_update_degree()
+{
+  imu_update_gyro();
+  omega_z = imu_read_yaw();
+  tim10_degree = (tim10_degree + omega_z) / TIM10_Hz;
+}
+
 void tim10_d_print()
 {
   #if D_TIM10
@@ -170,6 +187,12 @@ void tim10_velocity_set_zero()
   velocity = 0;
 }
 
+void tim10_degree_set_zero()
+{
+  tim10_degree = 0;
+  omega_z = 0;
+}
+
 double tim10_read_left()
 {
   return tim10_left;
@@ -178,4 +201,9 @@ double tim10_read_left()
 double tim10_read_right()
 {
   return tim10_right;
+}
+
+double tim10_read_degree()
+{
+  return tim10_degree;
 }

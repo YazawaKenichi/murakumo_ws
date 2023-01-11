@@ -39,7 +39,7 @@ void encoder_d_print()
     #endif
 }
 
-/* only read tim10_main */
+/* only read tim10_update_length */
 void encoder_set()
 {
     encoder_left = TIM1 -> CNT - ENCODER_MIDDLE;

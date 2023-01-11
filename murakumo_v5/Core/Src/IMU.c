@@ -9,17 +9,10 @@
 
 #include "IMU.h"
 
-#define USE_NCS 1
-#define INIT_ZERO 1
-
 // volatile int16_t xa, ya, za;
 // volatile int16_t xg, yg, zg;
 
-volatile Inertial inertial;
-volatile Displacement displacement;
-volatile Inertial inertial_offset;
-
-Coordinate COORDINATE_ZERO;
+Inertial inertial;
 
 uint8_t imu_read_byte( uint8_t reg )
 { 
@@ -56,6 +49,11 @@ void imu_write_byte(uint8_t reg, uint8_t val)
 #endif
 }
 
+/**
+ * @fn imu_init()
+ * @brief 
+ * 
+ */
 void imu_init()
 {
 	printf("Starting SPI2 (IMU)\r\n");
@@ -75,45 +73,89 @@ void imu_init()
 uint8_t imu_initialize(uint8_t* wai)
 {
 	CS_RESET;
-	uint8_t who_am_i,ret;
+	uint8_t who_am_i, ret;
 	ret = 0;
 
-	COORDINATE_ZERO.x = 0;
-	COORDINATE_ZERO.y = 0;
-	COORDINATE_ZERO.z = 0;
-
-	RADPERDEG = ((double) M_PI / (double) 180);
-
 #if	INIT_ZERO
-	inertial.accel = COORDINATE_ZERO;
-	inertial.gyro = COORDINATE_ZERO;
-	displacement.position = COORDINATE_ZERO;
-	displacement.theta = COORDINATE_ZERO;
+	imu.inertial.linear = vector3_creation(0, 0, 0);
+	imu.inertial.angular = vector3_creation(0, 0, 0);
+	imu.pose.position = point_creation(0, 0, 0);
+	imu.pose.rpy = rpy_creation(0, 0, 0);
 #endif
 
+	//! User Bank 0 を選択
+	imu_write_byte(REG_BANK_SEL, 0x00);
 	who_am_i = imu_read_byte(0x00);
 	*wai = who_am_i;
 	if(who_am_i == 0xE0)
 	{	// ICM-20648 is 0xE0
 		ret = 1;
+		//! PWR_MGMT_1 推奨値 1
 		imu_write_byte(PWR_MGMT_1, 0x01);	//PWR_MGMT_1
+		//! PWR_MGMt_2 推奨値 0
+		// imu_write_byte(PWR_MGMT_2, 0x00);
 		HAL_Delay(100);
 		imu_write_byte(USER_CTRL, 0x10);	//USER_CTRL
+
+		/**
+		 * @brief 
+		 * @details
+		 * REG BANK SEL の USER_BANK ( 0b 00** 0000 の位置 )
+		 * 	00 : User Bank 0 : Who am I や加速度と角速度の実際の値が取れる
+		 * 	01 : User Bank 1 : Self Test が使える（なにこれ）
+		 * 	10 : User Bank 2 : 加速度と角速度の値の設定ができる
+		 * 	11 : User Bank 3 : I2C の設定が行える
+		 * 
+		 */
+		//! User Bank 2 を選択
 		imu_write_byte(REG_BANK_SEL, 0x20);	//USER_BANK2
-		// shimotoriharuki
-		//write_byte(0x01,0x06);	//range±2000dps DLPF disable	// range+-2000
-		// igc8810
-		imu_write_byte(0x01, 0x07);	//range±2000dps DLPF enable DLPFCFG = 0
-		//write_byte(0x01,0x0F);	//range±2000dps DLPF enable DLPFCFG = 1
-		//write_byte(0x01,0x17);	//range±2000dps DLPF enable DLPFCFG = 2
-		//2:1 GYRO_FS_SEL[1:0] 00:±250	01:±500 10:±1000 11:±2000
-		// igc8810
-		imu_write_byte(0x14, 0x00);	//range±2g
-		// shimotoriharuki
-		//write_byte(0x14,0x06);	// range+-16
-		//2:1 ACCEL_FS_SEL[1:0] 00:±2	01:±4 10:±8 11:±16
-		imu_write_byte(REG_BANK_SEL, 0x00);	//USER_BANK0
-		imu_set_offset();
+
+		/**
+		 * @brief 
+		 * @details
+		 * REG_BANK_SEL : 0x20 を指定しているので User Bank 2 が選択されている
+		 * User Bank 2 に於いて 0x01 で Gyro Config が可能
+		 * GYRO_CONFIG_1 : Gyro Full Scale Range / Output Data Rate を選択する
+		 * GYRO_DLPFCFG : Data Low Pass Filter
+		 * 					 Use 2bit
+		 * 					 Detail ... Datasheet > 14.2 GYRO_CONFIG_1
+		 * GYRO_FS_SEL : Gyro Full Scale Range
+		 * 					 00 : +- 250  [dps]
+		 * 					 01 : +- 500  [dps]
+		 * 					 10 : +- 1000 [dps]
+		 * 					 11 : +- 2000 [dps] 
+		 * GYRP_FCHOICE : Gyro Output Data Rate
+		 * 					 0 : bypass gyro DLPF 9     [kHz]
+		 * 					 1 : enable gyro DLPF 1.125 [kHz]
+		 * 
+		 */
+		//! ( +- 2000 [dps] & bypass ) -> 0b 0000 0110 -> 0x06
+		imu_write_byte(0x01, 0x06);
+
+		/**
+		 * @brief 
+		 * @details
+		 * REG_BANK_SEL : 0x20 を指定しているので User Bank 2 が選択されている
+		 * User Bank 2 に於いて 0x14 で Accel Config が可能
+		 * GYRO_CONFIG_1 : Accel Full Scale Range / Output Data Rate を選択する
+		 * GYRO_DLPFCFG : Data Low Pass Filter
+		 * 					 Use 2bit
+		 * 					 Detail ... Datasheet > 14.15 ACCEL_CONFIG
+		 * ACCEL_FS_SEL : Accelerometer Full Scale Range
+		 * 					 00 : +-  2 [g]
+		 * 					 01 : +-  4 [g]
+		 * 					 10 : +-  8 [g]
+		 * 					 11 : +- 16 [g] 
+		 * ACCEL_FCHOICE : Accelerometer Output Data Rate
+		 * 					 0 : bypass gyro DLPF 4.5   [kHz]
+		 * 					 1 : enable gyro DLPF 1.125 [kHz]
+		 * 
+		 */
+		//! ( +- 2 [dps] & bypass ) -> 0b 0000 0000 -> 0x06
+		imu_write_byte(0x14, 0x00);
+
+		//! User Bank 0 に戻す
+		imu_write_byte(REG_BANK_SEL, 0x00);
 	}
 #if USE_NCS
 	CS_SET;
@@ -128,27 +170,87 @@ void imu_stop()
 #endif
 }
 
-void imu_set_offset()
+/**
+ * @fn imu_update_gyro()
+ * 
+ * @brief inertial 変数に、現在の角速度の値を代入する関数
+ * @details
+ * imu_read_byte(***_XOUT_H) で、Accel か Gyro の上位バイトが読める
+ * imu_read_byte(***_XOUT_L) で、Accel か Gyro の下位バイトが読める
+ *  | 演算で上位バイトと上位バイトを合成する
+ * --- --- --- --- --- --- --- --- --- ---
+ *  ***_XOUT_H       :           **** ****
+ *  ***_XOUT_L       :           #### ####
+ * --- --- --- --- --- --- --- --- --- ---
+ *  ***_XOUT_H << 8  : **** **** 0000 0000
+ *  ***_XOUT_L << 0  : 0000 0000 #### ####
+ * --- --- --- --- --- --- --- --- --- ---
+ * imu.inertial.***.* : **** **** #### ####
+ * --- --- --- --- --- --- --- --- --- ---
+ * @attention 値を代入したら外部参照変数を呼び出して値を取得することになる
+ *
+*/
+void imu_update_gyro()
 {
-	imu_read();
-	inertial_offset = inertial;
+	float k_gyro;
+	int16_t byte_data;
+
+	k_gyro = (GYRO_RANGE / (float) MAXDATA_RANGE);
+
+	byte_data = ((int16_t)imu_read_byte(GYRO_XOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_XOUT_L));
+	inertial.angular.x = byte_data * k_gyro;
+
+	byte_data = ((int16_t)imu_read_byte(GYRO_YOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_YOUT_L));
+	inertial.angular.y = byte_data * k_gyro;
+
+	byte_data = ((int16_t)imu_read_byte(GYRO_ZOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_ZOUT_L));
+	inertial.angular.z = byte_data * k_gyro;
 }
 
 /**
- * @fn
+ * @fn imu_update_accel()
  * 
- * @brief inertial 変数に、現在の加速度・角速度の値を代入する関数
+ * @brief inertial 変数に、現在の加速度の値を代入する関数
  * @details
+ * imu_read_byte(***_XOUT_H) で、Accel か Gyro の上位バイトが読める
+ * imu_read_byte(***_XOUT_L) で、Accel か Gyro の下位バイトが読める
+ *  | 演算で上位バイトと上位バイトを合成する
+ * --- --- --- --- --- --- --- --- --- ---
+ *  ***_XOUT_H       :           **** ****
+ *  ***_XOUT_L       :           #### ####
+ * --- --- --- --- --- --- --- --- --- ---
+ *  ***_XOUT_H << 8  : **** **** 0000 0000
+ *  ***_XOUT_L << 0  : 0000 0000 #### ####
+ * --- --- --- --- --- --- --- --- --- ---
+ * imu.inertial.***.* : **** **** #### ####
+ * --- --- --- --- --- --- --- --- --- ---
  * @attention 値を代入したら外部参照変数を呼び出して値を取得することになる
+ *
 */
-void imu_read()
+void imu_update_accel()
 {
-	inertial.accel.x = ((int16_t)imu_read_byte(ACCEL_XOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_XOUT_L));
-	inertial.accel.y = ((int16_t)imu_read_byte(ACCEL_YOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_YOUT_L));
-	inertial.accel.z = ((int16_t)imu_read_byte(ACCEL_ZOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_ZOUT_L));
-	inertial.gyro.x = ((int16_t)imu_read_byte(GYRO_XOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_XOUT_L));
-	inertial.gyro.y = ((int16_t)imu_read_byte(GYRO_YOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_YOUT_L));
-	inertial.gyro.z = ((int16_t)imu_read_byte(GYRO_ZOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_ZOUT_L));
+	float k_accel;
+	int16_t byte_data;
+
+	k_accel = (ACCEL_RANGE / (float) MAXDATA_RANGE);
+
+	byte_data = ((int16_t)imu_read_byte(ACCEL_XOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_XOUT_L));
+	inertial.linear.x = byte_data * k_accel;
+
+	byte_data = ((int16_t)imu_read_byte(ACCEL_YOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_YOUT_L));
+	inertial.linear.y = byte_data * k_accel;
+
+	byte_data = ((int16_t)imu_read_byte(ACCEL_ZOUT_H) << 8) | ((int16_t)imu_read_byte(ACCEL_ZOUT_L));
+	inertial.linear.z = byte_data * k_accel;
 }
 
-
+/**
+ * @fn imu_read_yaw()
+ * @brief 
+ * 
+ * @return float 
+ */
+float imu_read_yaw()
+{
+	return inertial.angular.z;
+}

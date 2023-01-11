@@ -5,6 +5,7 @@
 #include "defines.h"
 #include "print.h"
 #include "string.h"
+#include "stm32f4xx_hal.h"
 
 #define BACKUP_FLASH_SECTORNUM FLASH_SECTOR_11
 #define BACKUP_FLASH_SECTOR_SIZE (1024*16)

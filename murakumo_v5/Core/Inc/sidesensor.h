@@ -2,6 +2,7 @@
 #define __SIDESENSOR_H__
 
 #include "defines.h"
+#include "stm32f4xx_hal.h"
 
 #define D_SIDESENSOR 0
 

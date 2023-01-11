@@ -7,14 +7,12 @@
  * 
  * @copyright Copyright (c) 2023 YAZAWA Kenichi
  * 
- * main.h 内で stm32f4xx_hal.h の後に呼び出されるヘッダファイル
- * 本ファイルを呼び出した後に include するファイルでは、STM32 で用意されているペリフェラルの変数や関数が使用可能になる
+ * 多くの extern 変数や Error_Handler() を利用できるようにする
+ * 複数の機能をスイッチングする
  * 
  */
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
-
-#include "stm32f4xx_hal.h"
 
 #define PLAY 1
 
@@ -41,6 +39,7 @@
 // one side only
 #define LENGTH_SAMPLING 1
 #define LEFTMARKER_SAMPLING 0
+
 #define SAMPLING_LENGTH 10000
 
 /* main.h で再び宣言されるのを防ぐ */
@@ -64,10 +63,5 @@ extern UART_HandleTypeDef huart6;
 void Error_Handler(void);
 
 #endif /* EXTERN */
-
-#include "tim6.h"
-#include "tim7.h"
-#include "tim10.h"
-#include "tim11.h"
 
 #endif
