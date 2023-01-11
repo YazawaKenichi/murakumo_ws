@@ -33,13 +33,14 @@ Core/Src/pid.o: ../Core/Src/pid.c ../Core/Inc/pid.h ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/defines.h ../Core/Inc/tim6.h ../Core/Inc/print.h \
- ../Core/Inc/motor.h ../Core/Inc/Rotary.h ../Core/Inc/sidesensor.h \
- ../Core/Inc/tim7.h ../Core/Inc/flash.h ../Core/Inc/analog.h \
- ../Core/Inc/tracer.h ../Core/Inc/pid.h ../Core/Inc/Switch.h \
- ../Core/Inc/tim10.h ../Core/Inc/encoder.h ../Core/Inc/velotrace.h \
- ../Core/Inc/slow.h ../Core/Inc/function.h ../Core/Inc/tim11.h \
- ../Core/Inc/imu.h ../Core/Inc/IMU.h
+ ../Core/Inc/defines.h ../Core/Inc/print.h ../Core/Inc/Switch.h \
+ ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
+ ../Core/Inc/tim6.h ../Core/Inc/motor.h ../Core/Inc/sidesensor.h \
+ ../Core/Inc/tim7.h ../Core/Inc/tracer.h ../Core/Inc/pid.h \
+ ../Core/Inc/tim10.h ../Core/Inc/length.h ../Core/Inc/encoder.h \
+ ../Core/Inc/course.h ../Core/Inc/time.h ../Core/Inc/IMU.h \
+ ../Core/Inc/geometry.h ../Core/Inc/velotrace.h ../Core/Inc/slow.h \
+ ../Core/Inc/function.h ../Core/Inc/tim11.h
 
 ../Core/Inc/pid.h:
 
@@ -115,31 +116,41 @@ Core/Src/pid.o: ../Core/Src/pid.c ../Core/Inc/pid.h ../Core/Inc/main.h \
 
 ../Core/Inc/defines.h:
 
-../Core/Inc/tim6.h:
-
 ../Core/Inc/print.h:
 
-../Core/Inc/motor.h:
+../Core/Inc/Switch.h:
 
 ../Core/Inc/Rotary.h:
+
+../Core/Inc/analog.h:
+
+../Core/Inc/flash.h:
+
+../Core/Inc/tim6.h:
+
+../Core/Inc/motor.h:
 
 ../Core/Inc/sidesensor.h:
 
 ../Core/Inc/tim7.h:
 
-../Core/Inc/flash.h:
-
-../Core/Inc/analog.h:
-
 ../Core/Inc/tracer.h:
 
 ../Core/Inc/pid.h:
 
-../Core/Inc/Switch.h:
-
 ../Core/Inc/tim10.h:
 
+../Core/Inc/length.h:
+
 ../Core/Inc/encoder.h:
+
+../Core/Inc/course.h:
+
+../Core/Inc/time.h:
+
+../Core/Inc/IMU.h:
+
+../Core/Inc/geometry.h:
 
 ../Core/Inc/velotrace.h:
 
@@ -148,7 +159,3 @@ Core/Src/pid.o: ../Core/Src/pid.c ../Core/Inc/pid.h ../Core/Inc/main.h \
 ../Core/Inc/function.h:
 
 ../Core/Inc/tim11.h:
-
-../Core/Inc/imu.h:
-
-../Core/Inc/IMU.h:

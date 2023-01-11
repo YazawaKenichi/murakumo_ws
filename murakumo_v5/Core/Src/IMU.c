@@ -27,7 +27,6 @@ uint8_t imu_read_byte( uint8_t reg )
 #if USE_NCS
 	CS_SET;
 #endif
-
 	return val;
 }
 
@@ -77,10 +76,8 @@ uint8_t imu_initialize(uint8_t* wai)
 	ret = 0;
 
 #if	INIT_ZERO
-	imu.inertial.linear = vector3_creation(0, 0, 0);
-	imu.inertial.angular = vector3_creation(0, 0, 0);
-	imu.pose.position = point_creation(0, 0, 0);
-	imu.pose.rpy = rpy_creation(0, 0, 0);
+	inertial.linear = vector3_creation(0, 0, 0);
+	inertial.angular = vector3_creation(0, 0, 0);
 #endif
 
 	//! User Bank 0 を選択
@@ -222,7 +219,7 @@ void imu_update_gyro()
  *  ***_XOUT_H << 8  : **** **** 0000 0000
  *  ***_XOUT_L << 0  : 0000 0000 #### ####
  * --- --- --- --- --- --- --- --- --- ---
- * imu.inertial.***.* : **** **** #### ####
+ *    inertial.***.* : **** **** #### ####
  * --- --- --- --- --- --- --- --- --- ---
  * @attention 値を代入したら外部参照変数を呼び出して値を取得することになる
  *

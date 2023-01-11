@@ -19,6 +19,23 @@ typedef struct
 {
     /* data */
     /**
+     * @brief 
+     * 
+     * This represents a vector in free space.
+     * It is only meant to represent a direction.
+     * Therefore, it does not make sense to apply a translation to it.
+     * If you want your data to be translatable too, use the Point type instead.
+     * 
+    */
+    float x;
+    float y;
+    float z;
+} Vector3;
+
+typedef struct
+{
+    /* data */
+    /**
      * @brief This expresses acceleration in free space broken into its linear and angular parts.
      * 
     */
@@ -62,7 +79,6 @@ typedef struct
     Vector3 angular;
 } Inertial;
 
-
 typedef struct
 {
     /* data */
@@ -79,17 +95,6 @@ typedef struct
 {
     /* data */
     /**
-     * @brief A representation of pose in free space, composed of position and orientation.
-     * 
-    */
-    Point position;
-    Rpy rpy;
-} Pose;
-
-typedef struct
-{
-    /* data */
-    /**
      * @brief This represents an Roll Pitch Yaw in free space in Roll Pitch Yaw form.
      * 
     */
@@ -97,6 +102,17 @@ typedef struct
     float pitch;
     float yaw;
 } Rpy;
+
+typedef struct
+{
+    /* data */
+    /**
+     * @brief A representation of pose in free space, composed of position and orientation.
+     * 
+    */
+    Point position;
+    Rpy rpy;
+} Pose;
 
 typedef struct
 {
@@ -120,23 +136,9 @@ typedef struct
     Vector3 angular;
 } Twist;
 
-typedef struct
-{
-    /* data */
-    /**
-     * @brief 
-     * 
-     * This represents a vector in free space.
-     * It is only meant to represent a direction.
-     * Therefore, it does not make sense to apply a translation to it.
-     * If you want your data to be translatable too, use the Point type instead.
-     * 
-    */
-    float x;
-    float y;
-    float z;
-} Vector3;
-
 Vector3 vector3_adder(Vector3, Vector3);
+Vector3 vector3_creation(float, float, float);
+Point point_creation(float, float, float);
+Rpy rpy_creation(float, float, float);
 
 #endif

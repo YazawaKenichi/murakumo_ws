@@ -3,8 +3,9 @@
 
 #include "print.h"
 #include "defines.h"
+#include "flash.h"
 
-#define D_ANALOG 1
+#define D_ANALOG 0
 
 #define ANALOG_CALIBRATION_IN_WHILE 0
 #define ATTACH_LONGSENSOR 0	// use normal sensor and long sensor

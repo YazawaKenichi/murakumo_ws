@@ -52,7 +52,6 @@ void tim7_stop()
     printf("tim7.c > tim7_stop() > ");
     #endif
     HAL_TIM_Base_Stop_IT(&htim7);
-    motor_stop();
     tracer_stop();
     analog_stop();
 }

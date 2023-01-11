@@ -11,6 +11,8 @@ void tim11_init()
 
 void tim11_main()
 {
+    //! 1ms
+    time_update_ms(1);
     switch_enter();
     rotary_set_value();
 }

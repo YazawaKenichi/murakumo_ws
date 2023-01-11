@@ -19,8 +19,9 @@
 #include "sidesensor.h"
 #include "tim7.h"
 #include "tim10.h"
+#include "course.h"
 
-#define D_TIM6 (0 + D_MOTOR + D_SIDESENSOR + D_TIM7 + D_TIM10)
+#define D_TIM6 (0 + D_MOTOR + D_SIDESENSOR + D_TIM7)
 
 #define D_TIM6_WHILE (0 + D_MOTOR_WHILE + D_TIM7_WHILE + D_TIM10_WHILE)
 #define D_TIM6_EXCLUSION 1

@@ -9,15 +9,15 @@
 
 typedef enum PLAYMODE
 {
-    calibration,            /* キャリブレーション */
-    search,                 /* 探索走行 */
-    accel,                  /* 二次走行 */
-    max_enable,             /* 最速走行 */ 
-    motor_free,             /* モータの出力をしないまま動作させる */
-    tracer_tuning,          /* ライントレースのゲインチューニングが可能 */ 
-    velotrace_tuning,       /* 速度制御のゲインチューニングが可能 */
-    banquet,                /* 宴会芸 */
-    flash_print = 15        /* ROM の内容を標準出力 */
+    calibration,            /* 0.キャリブレーション */
+    search,                 /* 1.探索走行 */
+    accel,                  /* 2.二次走行 */
+    max_enable,             /* 3.最速走行 */ 
+    motor_free,             /* 4.モータの出力をしないまま動作させる */
+    tracer_tuning,          /* 5.ライントレースのゲインチューニングが可能 */ 
+    velotrace_tuning,       /* 6.速度制御のゲインチューニングが可能 */
+    banquet,                /* 7.宴会芸 */
+    flash_print = 15        /* 15.ROM の内容を標準出力 */
 } PlayMode;
 
 void rotary_init();

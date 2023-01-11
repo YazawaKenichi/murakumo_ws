@@ -1168,14 +1168,10 @@ void main_print_while()
 	printf("///// WHILE /////\n\r");
   rotary_print_playmode();
 	print_rotary_value();
-	/* print Tracer and Velotracer target and gains */
-	tracer_print_values();
-	velotrace_print_values();
 }
 
 void main_main()
 {
-	printf("////////// main_d_print() //////////\r\n");
 	main_d_print();
 	#if D_TIM10_WHILE
 	printf("////////// tim10_main() //////////\r\n");
@@ -1194,10 +1190,9 @@ void main_main()
 
 void main_d_print()
 {
-  #if D_TIM10
+	printf("////////// main_d_print() //////////\r\n");
   printf("main.c > main_d_print > ");
   tim10_d_print();
-  #endif
   #if D_TIM7
   printf("main.c > main_d_print > ");
   tim7_d_print();

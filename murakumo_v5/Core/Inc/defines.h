@@ -14,6 +14,8 @@
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 
+#include "stm32f4xx_hal.h"
+
 #define PLAY 1
 
 #define USE_ANALOG 1

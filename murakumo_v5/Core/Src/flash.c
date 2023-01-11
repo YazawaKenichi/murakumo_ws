@@ -5,7 +5,6 @@
 #endif
 
 FlashBuffer flashbuffer;
-uint16_t course_state_time;
 
 const uint32_t start_address = 0x080E0000;
 const uint32_t end_address = 0x080FFFFF;

@@ -5,6 +5,7 @@
 #include "Switch.h"
 #include "Rotary.h"
 #include "defines.h"
+#include "time.h"
 
 void tim11_start();
 void tim11_stop();
