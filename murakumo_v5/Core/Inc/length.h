@@ -1,7 +1,7 @@
 #include "encoder.h"
 
-void length_set_sampling_time_s(double _sampling_time_s);
-void length_init(double _sampling_time_s);
+void length_set_sampling_time_ms(unsigned short int samplingtime_ms);
+void length_init(unsigned short int samplingtime_ms);
 void length_start();
 void length_stop();
 void length_fin();

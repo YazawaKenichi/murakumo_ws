@@ -13,6 +13,7 @@
 #include "defines.h"
 #include "stm32f4xx_hal.h"
 #include "math.h"
+#include "function.h"
 #include "geometry.h"
 #include "print.h"
 
@@ -24,7 +25,7 @@
 
 #define ACCEL_RANGE		2.0f
 #define GYRO_RANGE		2000.0f
-#define MAXDATA_RANGE	32764.0f
+#define MAXDATA_RANGE	32768.0f
 #define G_ACCELERATION	9.806650f
 
 #define USER_CTRL 0x03
@@ -51,10 +52,12 @@ uint8_t imu_read_byte(uint8_t);
 void imu_write_byte(uint8_t, uint8_t);
 void imu_init();
 uint8_t imu_initialize(uint8_t*);
+void imu_start();
 void imu_stop();
 void imu_update_gyro();
 void imu_update_accel();
 float imu_read_yaw();
+float imu_read_direct_yaw();
 
 //extern volatile int16_t 	xa, ya, za;
 //extern volatile int16_t 	xg, yg, zg;

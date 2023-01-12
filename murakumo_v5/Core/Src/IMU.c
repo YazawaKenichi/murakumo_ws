@@ -160,6 +160,11 @@ uint8_t imu_initialize(uint8_t* wai)
 	return ret;
 }
 
+void imu_start()
+{
+	/* imu_start */
+}
+
 void imu_stop()
 {
 #if !USE_NCS
@@ -191,17 +196,39 @@ void imu_update_gyro()
 {
 	float k_gyro;
 	int16_t byte_data;
+	float tmp;
+	float LPF_RATE;
+	LPF_RATE = 0.3;
 
 	k_gyro = (GYRO_RANGE / (float) MAXDATA_RANGE);
 
 	byte_data = ((int16_t)imu_read_byte(GYRO_XOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_XOUT_L));
-	inertial.angular.x = byte_data * k_gyro;
+	tmp = (float) byte_data * k_gyro;
+	inertial.angular.x = low_pass_filter(tmp, inertial.angular.x, LPF_RATE);
 
 	byte_data = ((int16_t)imu_read_byte(GYRO_YOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_YOUT_L));
-	inertial.angular.y = byte_data * k_gyro;
+	tmp = (float) byte_data * k_gyro;
+	inertial.angular.y = low_pass_filter(tmp, inertial.angular.y, LPF_RATE);
 
 	byte_data = ((int16_t)imu_read_byte(GYRO_ZOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_ZOUT_L));
-	inertial.angular.z = byte_data * k_gyro;
+	tmp = (float) byte_data * k_gyro;
+	inertial.angular.z = low_pass_filter(tmp, inertial.angular.z, LPF_RATE);
+
+	/**
+	 * typedef struct
+	 * {
+	 * 		Vector3 angular;
+	 * 		Vector3 linear;
+	 * } Inertial;
+	 * 
+	 * typedef struct
+	 * {
+	 * 		float x;
+	 * 		float y;
+	 * 		float z;
+	 * } Vector3;
+	 * 
+	 */
 }
 
 /**
@@ -250,4 +277,13 @@ void imu_update_accel()
 float imu_read_yaw()
 {
 	return inertial.angular.z;
+}
+
+float imu_read_direct_yaw()
+{
+	float k_gyro;
+	int16_t byte_data;
+	k_gyro = (GYRO_RANGE / (float) MAXDATA_RANGE);
+	byte_data = ((int16_t)imu_read_byte(GYRO_ZOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_ZOUT_L));
+	return (byte_data * k_gyro);
 }

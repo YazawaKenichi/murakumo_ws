@@ -42,6 +42,18 @@ char pwmstepud;	// PWM Step upword or downword
 		double stoptime;	// ms
 #endif
 
+/**
+ * @fn low_pass_filter(val, pre_val, gamma)
+ * @brief ローパスフィルタ
+ * 
+ * @param val 今回の値
+ * @param pre_val 前回の値
+ * @param gamma 混合比率
+ * 				0 ~ 1.0 の範囲
+ * 				0.5 以上で前回の値を重視する
+ * 				0.5 以下で今回の値を重視する
+ * @return double 
+ */
 double low_pass_filter(double val, double pre_val, double gamma);
 double sigmoid(double x, double a, double x0);
 

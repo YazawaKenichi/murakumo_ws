@@ -37,8 +37,8 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
  ../Core/Inc/print.h ../Core/Inc/length.h ../Core/Inc/encoder.h \
  ../Core/Inc/course.h ../Core/Inc/motor.h ../Core/Inc/flash.h \
  ../Core/Inc/analog.h ../Core/Inc/Rotary.h ../Core/Inc/time.h \
- ../Core/Inc/IMU.h ../Core/Inc/geometry.h ../Core/Inc/velotrace.h \
- ../Core/Inc/pid.h ../Core/Inc/slow.h ../Core/Inc/function.h
+ ../Core/Inc/function.h ../Core/Inc/IMU.h ../Core/Inc/geometry.h \
+ ../Core/Inc/velotrace.h ../Core/Inc/pid.h ../Core/Inc/slow.h
 
 ../Core/Inc/tim10.h:
 
@@ -130,6 +130,8 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
 
 ../Core/Inc/time.h:
 
+../Core/Inc/function.h:
+
 ../Core/Inc/IMU.h:
 
 ../Core/Inc/geometry.h:
@@ -139,5 +141,3 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
 ../Core/Inc/pid.h:
 
 ../Core/Inc/slow.h:
-
-../Core/Inc/function.h:

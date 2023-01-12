@@ -11,9 +11,9 @@
 /* motor_free にして手押しで移動距離を測りたい場合はここを 1 にする */
 #define D_TIM10 (0 + D_COURSE)
 
-#define D_TIM10_WHILE 0
+#define D_TIM10_WHILE (0 + D_COURSE_WHILE)
 
-#define TIM10_Hz 0.001f
+#define TIM10_TIME_MS 1 //! [ms]
 
 double tim10_read_length_left();
 double tim10_read_length_right();

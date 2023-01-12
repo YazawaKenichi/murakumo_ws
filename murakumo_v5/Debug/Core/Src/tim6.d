@@ -38,9 +38,9 @@ Core/Src/tim6.o: ../Core/Src/tim6.c ../Core/Inc/tim6.h \
  ../Core/Inc/tim7.h ../Core/Inc/flash.h ../Core/Inc/analog.h \
  ../Core/Inc/tracer.h ../Core/Inc/pid.h ../Core/Inc/Switch.h \
  ../Core/Inc/tim10.h ../Core/Inc/length.h ../Core/Inc/encoder.h \
- ../Core/Inc/course.h ../Core/Inc/time.h ../Core/Inc/IMU.h \
- ../Core/Inc/geometry.h ../Core/Inc/velotrace.h ../Core/Inc/slow.h \
- ../Core/Inc/function.h
+ ../Core/Inc/course.h ../Core/Inc/time.h ../Core/Inc/function.h \
+ ../Core/Inc/IMU.h ../Core/Inc/geometry.h ../Core/Inc/velotrace.h \
+ ../Core/Inc/slow.h
 
 ../Core/Inc/tim6.h:
 
@@ -144,6 +144,8 @@ Core/Src/tim6.o: ../Core/Src/tim6.c ../Core/Inc/tim6.h \
 
 ../Core/Inc/time.h:
 
+../Core/Inc/function.h:
+
 ../Core/Inc/IMU.h:
 
 ../Core/Inc/geometry.h:
@@ -151,5 +153,3 @@ Core/Src/tim6.o: ../Core/Src/tim6.c ../Core/Inc/tim6.h \
 ../Core/Inc/velotrace.h:
 
 ../Core/Inc/slow.h:
-
-../Core/Inc/function.h:

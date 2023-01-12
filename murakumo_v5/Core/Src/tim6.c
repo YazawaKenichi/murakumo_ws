@@ -35,42 +35,33 @@ void tim6_main()
     #if !D_TIM6
     double leftmotor, rightmotor;
     #endif
+    SideSensorState markerstate;
+    PlayMode playmode;
 
+    playmode = rotary_read_playmode();
+
+    //! コース状態の把握
+    //! ここ以降 sidesensor_read_markerstate() で読みだせる
     sidesensor_main();
+    //! 格納されるのは直前のマーカの状態であり、区間中はリセットされないことに注意すべし！
+    markerstate = sidesensor_read_markerstate();
 
     if(motor_read_enable())
     {
-        #if D_TIM6_WHILE
-        printf("tim6.c > tim6_main() > if() > ");
-        rotary_print_playmode();
-        #endif
-
         #if !(TRACER_TUNING || VELOTRACE_TUNING)
-        switch(rotary_read_playmode())
+        switch(playmode)
         {
             case tracer_tuning:
                 leftmotor   = 0 + tim7_read_left();
                 rightmotor  = 0 + tim7_read_right();
-                #if D_TIM6_WHILE
-                printf("tim6.c > tim6_main() > if() > switch() case tracer_tuning > ");
-                printf("leftmotor = %7.2f, rightmotor = %7.2f\r\n", leftmotor, rightmotor);
-                #endif
                 break;
             case velotrace_tuning:
                 leftmotor   = tim10_read_left() + 0;
                 rightmotor  = tim10_read_right() + 0;
-                #if D_TIM6_WHILE
-                printf("tim6.c > tim6_main() > if() > switch() case velotrace_tuning > ");
-                printf("leftmotor = %7.2f, rightmotor = %7.2f\r\n", leftmotor, rightmotor);
-                #endif
                 break;
             default:
                 leftmotor   = tim10_read_left() + tim7_read_left();
                 rightmotor  = tim10_read_right() + tim7_read_right();
-                #if D_TIM6_WHILE
-                printf("tim6.c > tim6_main() > if() > switch() case default > ");
-                printf("leftmotor = %7.2f, rightmotor = %7.2f\r\n", leftmotor, rightmotor);
-                #endif
                 break;
         }
         #else
@@ -87,10 +78,6 @@ void tim6_main()
         rightmotor = tim10_read_right() + tim7_read_right();
         #endif
 		#endif	/* !(TRACER_TUNING || VELOTRACE_TUNING) */
-
-        #if D_TIM6_WHILE
-        // printf("tracer_solve(direction) = %7.2f velotrace_solve(tim10_read_velocity()) = %7.2f\r\n", tracer_solve(direction), velotrace_solve(tim10_read_velocity()));
-        #endif
     }
     else
     {
@@ -98,30 +85,26 @@ void tim6_main()
         rightmotor = 0;
     }
 
-    #if D_TIM6_WHILE
-    printf("tim6.c > tim6_main() > ");
-    printf("leftmotor = %7.2f, rightmotor = %7.2f\r\n", leftmotor, rightmotor);
-    #endif
-
-    if(rotary_read_playmode() == motor_free)
+    if(playmode == motor_free)
     {
-        motor_set(0, 0);
+        leftmotor = 0;
+        rightmotor = 0;
     }
-    else
+
+    switch(markerstate)
     {
-		#if !TEMPORARY
-        if(sidesensor_read_markerstate() != stop)
-        {
-            motor_set(leftmotor, rightmotor);
-        }
-        else
-        {
+        case curve:
+            course_state_function();
+            break;
+        case stop:
             switch_reset_enter();
             tim6_stop();
-        }
-		#endif	/* TEMPLATE */
+            motor_set(leftmotor, rightmotor);
+            break;
+        default:
+            motor_set(leftmotor, rightmotor);
+            break;
     }
-
 }
 
 void tim6_d_print()

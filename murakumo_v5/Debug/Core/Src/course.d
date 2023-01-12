@@ -36,7 +36,8 @@ Core/Src/course.o: ../Core/Src/course.c ../Core/Inc/course.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/print.h ../Core/Inc/encoder.h ../Core/Inc/flash.h \
  ../Core/Inc/analog.h ../Core/Inc/Rotary.h ../Core/Inc/time.h \
- ../Core/Inc/IMU.h ../Core/Inc/geometry.h ../Core/Inc/length.h
+ ../Core/Inc/function.h ../Core/Inc/IMU.h ../Core/Inc/geometry.h \
+ ../Core/Inc/length.h
 
 ../Core/Inc/course.h:
 
@@ -123,6 +124,8 @@ Core/Src/course.o: ../Core/Src/course.c ../Core/Inc/course.h \
 ../Core/Inc/Rotary.h:
 
 ../Core/Inc/time.h:
+
+../Core/Inc/function.h:
 
 ../Core/Inc/IMU.h:
 

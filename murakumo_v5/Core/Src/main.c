@@ -1172,7 +1172,7 @@ void main_print_while()
 
 void main_main()
 {
-	main_d_print();
+  main_d_print();
 	#if D_TIM10_WHILE
 	printf("////////// tim10_main() //////////\r\n");
 	tim10_main();
@@ -1182,7 +1182,6 @@ void main_main()
 	tim7_main();
 	#endif
 	#if D_TIM6_WHILE
-	printf("////////// tim6_main() //////////\r\n");
 	tim6_main();
 	#endif
 	HAL_Delay(200);
@@ -1190,7 +1189,6 @@ void main_main()
 
 void main_d_print()
 {
-	printf("////////// main_d_print() //////////\r\n");
   printf("main.c > main_d_print > ");
   tim10_d_print();
   #if D_TIM7

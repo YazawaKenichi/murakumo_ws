@@ -2,16 +2,16 @@
 
 double length_left, length_right;
 double velocity_left, velocity_right;
-double sampling_time_s;
+double length_update_sampling_time_s;
 
-void length_set_sampling_time_s(double _sampling_time_s)
+void length_set_sampling_time_ms(unsigned short int samplingtime_ms)
 {
-    sampling_time_s = _sampling_time_s;
+    length_update_sampling_time_s = samplingtime_ms / (double) 1000;
 }
 
-void length_init(double _sampling_time_s)
+void length_init(unsigned short int samplingtime_ms)
 {
-    length_set_sampling_time_s(_sampling_time_s);
+    length_set_sampling_time_ms(samplingtime_ms);
     encoder_init();
 }
 
@@ -57,6 +57,8 @@ double velocity_read()
 void length_update()
 {
     double encoder_left, encoder_right;
+    double sampling_time_s;
+    sampling_time_s = length_update_sampling_time_s;
     /* encoder をセットしてから encoder_length を読み出さないといけない */
     encoder_set();
     encoder_left = encoder_length_left();
