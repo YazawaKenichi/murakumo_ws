@@ -80,7 +80,6 @@ void tim10_update_length()
 
 void tim10_d_print()
 {
-	printf("samplingtime_s = %lf, samplingtime_ms = %d\r\n", samplingtime_s, samplingtime_ms);
 	course_d_print();
 }
 

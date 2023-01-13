@@ -34,6 +34,12 @@ void length_fin()
     encoder_fin();
 }
 
+void length_reset()
+{
+    length_left = 0;
+    length_right = 0;
+}
+
 double length_read()
 {
     return (length_left + length_right) / 2;

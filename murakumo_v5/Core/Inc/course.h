@@ -28,7 +28,7 @@ void course_reset_section_degree();
 double course_read_curvature_radius();
 uint16_t course_read_state_count();
 void course_increment_state_count();
-double course_calclate_radius();
+void course_calclate_radius();
 void course_state_function();
 void course_d_print();
 

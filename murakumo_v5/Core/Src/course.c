@@ -11,6 +11,7 @@ double course_update_section_sampling_time_s;
  * 
  */
 unsigned int course_by_state_time_ms;
+unsigned int __debug_execute_count__;
 
 void course_init(unsigned short int samplingtime_ms)
 {
@@ -21,6 +22,7 @@ void course_init(unsigned short int samplingtime_ms)
 
 void course_start()
 {
+	__debug_execute_count__ = 0;
 	/* course_start */
 	course_reset_section_degree();
 	imu_start();
@@ -69,6 +71,12 @@ void course_reset_section_degree()
 	course_section_degree = 0;
 }
 
+void course_reset()
+{
+	course_reset_section_degree();
+	length_reset();
+}
+
 double course_read_curvature_radius()
 {
 	return course_curvature_radius;
@@ -90,9 +98,13 @@ void course_increment_state_count()
  * @return double 
  * @sa course_state_function()
  * @attention course_state_function() からのみ呼び出される
+ * course_calclate_radius()			// 半径の計算
+ * course_read_curvature_radius()	// 計算した半径を取得する
+ * course_reset()					// 角度と長さ情報をリセットする
+ * の順に呼び出す必要がある
  * 
  */
-double course_calclate_radius()
+void course_calclate_radius()
 {
     int left_length, right_length;
     double curvature_radius;
@@ -118,9 +130,6 @@ double course_calclate_radius()
 
 	curvature_radius = section_length / section_degree;
 	course_curvature_radius = curvature_radius;
-	course_reset_section_degree();
-
-    return curvature_radius;
 }
 
 /**
@@ -141,7 +150,9 @@ void course_state_function()
 		flashbuffer.course_state_count_max = course_read_state_count();
 //			my_gyro.z = theta * RADPERDEG;
 //			my_gyro.z *= RADPERDEG;
-		flashbuffer.radius[course_state_count] = course_calclate_radius();
+		course_calclate_radius();
+		flashbuffer.radius[course_state_count] = course_read_curvature_radius();
+		course_reset();
 //			my_gyro.z = 0;
 	}
 	if(rotary_read_playmode() == accel)
@@ -151,12 +162,14 @@ void course_state_function()
 		course_increment_state_count();
 #endif
 	}
+	__debug_execute_count__ = __debug_execute_count__ + 1;
 }
 
 void course_d_print()
 {
 #if D_COURSE
-	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf, course_update_section_sampling_time_s = %7.2lf\r\n",
-		length_read(), course_read_section_degree(), course_read_curvature_radius(), course_update_section_sampling_time_s);
+	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n",
+		length_read(), course_read_section_degree(), course_read_curvature_radius());
+	// printf("course_state_function の実行回数 = %d\r\n", __debug_execute_count__);
 #endif
 }

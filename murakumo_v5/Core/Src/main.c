@@ -1189,7 +1189,6 @@ void main_main()
 
 void main_d_print()
 {
-  printf("main.c > main_d_print > ");
   tim10_d_print();
   #if D_TIM7
   printf("main.c > main_d_print > ");

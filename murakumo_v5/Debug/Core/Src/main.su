@@ -21,4 +21,4 @@ main.c:1156:6:running_stop	8	static
 main.c:1166:6:main_print_while	8	static
 main.c:1173:6:main_main	8	static
 main.c:1190:6:main_d_print	8	static
-main.c:1210:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:1209:6:Error_Handler	4	static,ignoring_inline_asm

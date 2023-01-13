@@ -4,6 +4,8 @@
 double leftmotor, rightmotor;
 #endif
 
+SideSensorState tim6_markerstate_before;
+
 void tim6_init()
 {
     motor_init();
@@ -46,7 +48,7 @@ void tim6_main()
     //! 格納されるのは直前のマーカの状態であり、区間中はリセットされないことに注意すべし！
     markerstate = sidesensor_read_markerstate();
 
-    if(motor_read_enable())
+    if(motor_read_enable() && playmode != motor_free)
     {
         #if !(TRACER_TUNING || VELOTRACE_TUNING)
         switch(playmode)
@@ -85,16 +87,13 @@ void tim6_main()
         rightmotor = 0;
     }
 
-    if(playmode == motor_free)
-    {
-        leftmotor = 0;
-        rightmotor = 0;
-    }
-
     switch(markerstate)
     {
         case curve:
-            course_state_function();
+            if(markerstate != tim6_markerstate_before)
+            {
+                course_state_function();
+            }
             break;
         case stop:
             switch_reset_enter();
@@ -105,6 +104,8 @@ void tim6_main()
             motor_set(leftmotor, rightmotor);
             break;
     }
+
+    tim6_markerstate_before = markerstate;
 }
 
 void tim6_d_print()
