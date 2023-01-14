@@ -37,16 +37,18 @@ void tim6_main()
     #if !D_TIM6
     double leftmotor, rightmotor;
     #endif
-    SideSensorState markerstate;
+    SideSensorState markerstate, markerstate_volatile;
     PlayMode playmode;
 
     playmode = rotary_read_playmode();
 
     //! コース状態の把握
-    //! ここ以降 sidesensor_read_markerstate() で読みだせる
+    //! ここ以降 sidesensor_read_markerstate() / sidesensor_read_markerstate_volatile() で読みだせる
     sidesensor_main();
     //! 格納されるのは直前のマーカの状態であり、区間中はリセットされないことに注意すべし！
     markerstate = sidesensor_read_markerstate();
+    //! 格納されるのは現在マーカを読んだか読んでないか、次に sidesensor_main() が来た時に変化することに注意
+    markerstate_volatile = sidesensor_read_markerstate_volatile();
 
     if(motor_read_enable() && playmode != motor_free)
     {
@@ -87,14 +89,13 @@ void tim6_main()
         rightmotor = 0;
     }
 
+    if(markerstate_volatile == curve)
+    {
+        course_state_function();
+    }
+
     switch(markerstate)
     {
-        case curve:
-            if(markerstate != tim6_markerstate_before)
-            {
-                course_state_function();
-            }
-            break;
         case stop:
             switch_reset_enter();
             tim6_stop();

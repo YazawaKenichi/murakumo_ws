@@ -8,11 +8,12 @@
 
 typedef enum SIDESENSORSTATE
 {
+    none,
     straight,
     start,
     stop,
     curve,
-    cross 
+    cross
 } SideSensorState;
 
 void sidesensor_start();
@@ -24,6 +25,7 @@ void sidesensor_left();
 void sidesensor_cross();
 void sidesensor_main();
 SideSensorState sidesensor_read_markerstate();
+SideSensorState sidesensor_read_markerstate_volatile();
 void sidesensor_set_state(SideSensorState);
 void sidesensor_d_print();
 void sidesensor_print_sidesensorstate(SideSensorState markerstate_);

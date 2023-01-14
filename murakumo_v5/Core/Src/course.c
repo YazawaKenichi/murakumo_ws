@@ -22,7 +22,6 @@ void course_init(unsigned short int samplingtime_ms)
 
 void course_start()
 {
-	__debug_execute_count__ = 0;
 	/* course_start */
 	course_reset_section_degree();
 	imu_start();
@@ -142,7 +141,7 @@ void course_calclate_radius()
  */
 void course_state_function()
 {
-	if(rotary_read_playmode() == search )
+	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free )
 	{
 #if USE_COURSE_STATE_COUNT
 		course_increment_state_count();
@@ -162,7 +161,6 @@ void course_state_function()
 		course_increment_state_count();
 #endif
 	}
-	__debug_execute_count__ = __debug_execute_count__ + 1;
 }
 
 void course_d_print()
