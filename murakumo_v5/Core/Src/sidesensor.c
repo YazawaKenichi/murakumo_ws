@@ -89,7 +89,7 @@ void sidesensor_main()
 	unsigned char subsens;
 
 	subsens = sidesensor_read();
-	markerstate_volatile = 0;
+	markerstate_volatile = none;
 
 	if(subsens != subsensbuf)
 	{
