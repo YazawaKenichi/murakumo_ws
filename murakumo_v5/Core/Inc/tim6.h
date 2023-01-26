@@ -15,7 +15,7 @@
 #include "print.h"
 #include "motor.h"
 #include "defines.h"
-#include "Rotary.h" /* rotary_read_playmode() */
+#include "Rotary.h"
 #include "sidesensor.h"
 #include "tim7.h"
 #include "tim10.h"

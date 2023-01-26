@@ -15,7 +15,6 @@ void tim6_init()
 
 void tim6_start()
 {
-    printf("motor_start()\r\n");
     #if D_TIM6
     leftmotor = 0;
     rightmotor = 0;
@@ -89,6 +88,8 @@ void tim6_main()
         rightmotor = 0;
     }
 
+    //! 一定区間で切るプログラムにするときはいらなくなる処理
+    //! 今度は tim10 とかに course_state_function() をいれる必要が出てくる
     if(markerstate_volatile == curve)
     {
         course_state_function();

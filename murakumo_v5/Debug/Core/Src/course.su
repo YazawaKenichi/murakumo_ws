@@ -10,5 +10,6 @@ course.c:79:8:course_read_curvature_radius	4	static
 course.c:84:10:course_read_state_count	4	static
 course.c:89:6:course_increment_state_count	4	static
 course.c:106:6:course_calclate_radius	40	static
-course.c:142:6:course_state_function	16	static
-course.c:166:6:course_d_print	40	static
+course.c:138:6:course_state_function	16	static
+course.c:163:6:course_d_print	40	static
+course.c:172:10:course_radius2speed	24	static

@@ -1,6 +1,7 @@
 #ifndef __COURSE_H__
 #define __COURSE_H__
 
+#include "math.h"
 #include "motor.h"
 #include "encoder.h"
 #include "flash.h"
@@ -31,5 +32,6 @@ void course_increment_state_count();
 void course_calclate_radius();
 void course_state_function();
 void course_d_print();
+uint16_t course_radius2speed(float);
 
 #endif

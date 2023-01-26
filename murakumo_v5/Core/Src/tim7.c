@@ -133,7 +133,7 @@ int tim7_read_direction()
 
     if(analogl + analogr >= TIM7_EMERGENCY_THRESHOLD * i_count)
     {
-    	tim7_main_emergency();
+    	// tim7_main_emergency();
     }
 
     return analogl - analogr;

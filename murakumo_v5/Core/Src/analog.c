@@ -112,13 +112,19 @@ void analog_set_on_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 
 void analog_set_from_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 {
+	#if D_ANALOG
 	printf("analog_set_from_flash()\r\n");
+	#endif
 	for(unsigned int i = 0; i < CALIBRATIONSIZE; i++)
 	{
+		#if D_ANALOG
 		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		#endif
 		analogmin[i] = *(analogmin_ + i);
 		analogmax[i] = *(analogmax_ + i);
+		#if D_ANALOG
 		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		#endif
 	}
 }
 
@@ -179,7 +185,9 @@ void analog_init()
 
 void analog_start()
 {
+	#if D_ANALOG
 	printf("analog_sensor_start()\r\n");
+	#endif
 	analog_sensor_start();
 }
 
@@ -190,7 +198,9 @@ void analog_stop()
 
 void analog_sensor_start()
 {
+	#if D_ANALOG
 	printf("sensgettime = 0\r\nHAL_ADC_Start_DMA()\r\n");
+	#endif
     sensgettime = 0;
     if(HAL_ADC_Start_DMA(&hadc1, (uint32_t*) analograw, CALIBRATIONSIZE) != HAL_OK)
     {

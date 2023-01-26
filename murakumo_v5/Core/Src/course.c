@@ -49,9 +49,9 @@ void course_update_section_degree()
 	double tmp;
 	imu_update_gyro();
 	#if D_COURSE_WHILE
-	printf("imu_read_direct_yaw() = %7.2lf, course_section_degree = %7.2lf\r\n", imu_read_direct_yaw(), course_section_degree);
+	printf("imu_read_yaw() = %7.2lf, course_section_degree = %7.2lf\r\n", imu_read_yaw(), course_section_degree);
 	#endif
-	tmp = course_section_degree + imu_read_direct_yaw() * course_update_section_sampling_time_s;
+	tmp = course_section_degree + imu_read_yaw() * course_update_section_sampling_time_s;
 	course_section_degree = low_pass_filter(tmp, course_section_degree, 0);
 }
 
@@ -105,18 +105,13 @@ void course_increment_state_count()
  */
 void course_calclate_radius()
 {
-    int left_length, right_length;
     double curvature_radius;
 	double section_degree, section_length;
+	double section_radian;
 
-    /* 前センサからの長さを記録する */
-	left_length = length_read_left() - course_by_state_length_left;
-	right_length = length_read_right() - course_by_state_length_right;
-	section_length = (left_length + right_length) / 2;
+    /* 長さを取得する */
+	section_length = length_read();
 	section_degree = course_read_section_degree();
-
-	//! 半径を計算した絶対時間を格納する
-	course_by_state_time_ms = time_read_ms();
 
 	/* 極率半径を計算する */
 #if MODE_ENCODER_CALCLATE
@@ -127,7 +122,8 @@ void course_calclate_radius()
 	course_section_length = // course_section_length_from_imu
 #endif
 
-	curvature_radius = section_length / section_degree;
+	section_radian = section_degree * M_PI / (double) 180;
+	curvature_radius = section_length / section_radian;
 	course_curvature_radius = curvature_radius;
 }
 
@@ -161,6 +157,7 @@ void course_state_function()
 		course_increment_state_count();
 #endif
 	}
+	course_increment_state_count();
 }
 
 void course_d_print()
@@ -168,6 +165,21 @@ void course_d_print()
 #if D_COURSE
 	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n",
 		length_read(), course_read_section_degree(), course_read_curvature_radius());
-	// printf("course_state_function の実行回数 = %d\r\n", __debug_execute_count__);
+	// printf("course_state_function の実行回数 = %d\r\n", __debug_eradiusecute_count__);
 #endif
+}
+
+uint16_t course_radius2speed(float radius)
+{
+	uint16_t speed;
+	if(radius < 0.1f) speed = 1000;
+    else if(radius < 0.25f) speed = 1250;
+    else if(radius < 0.5f) speed = 1500;
+    else if(radius < 0.75f) speed = 1750;
+    else if(radius < 1.0f) speed = 2000;
+    else if(radius < 1.5f) speed = 2500;
+    else if(radius < 2.0f) speed = 3000;
+    else speed = 3000;
+	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
+	return speed;
 }

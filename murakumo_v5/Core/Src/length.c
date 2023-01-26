@@ -34,12 +34,14 @@ void length_fin()
     encoder_fin();
 }
 
+//! course_state_function() を呼び出すたびに length_reset() する
 void length_reset()
 {
     length_left = 0;
     length_right = 0;
 }
 
+//! 中央の長さを取る
 double length_read()
 {
     return (length_left + length_right) / 2;

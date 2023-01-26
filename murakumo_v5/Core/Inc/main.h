@@ -33,6 +33,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "defines.h"
+#include "LED.h"
 #include "print.h"
 #include "Switch.h"
 #include "Rotary.h"
@@ -42,6 +43,7 @@ extern "C" {
 #include "tim7.h"
 #include "tim10.h"
 #include "tim11.h"
+#include "revision.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

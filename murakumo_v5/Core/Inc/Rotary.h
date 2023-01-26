@@ -17,6 +17,7 @@ typedef enum PLAYMODE
     tracer_tuning,          /* 5.ライントレースのゲインチューニングが可能 */ 
     velotrace_tuning,       /* 6.速度制御のゲインチューニングが可能 */
     banquet,                /* 7.宴会芸 */
+    tuning,                 /* 8.センサのチューニングをするときのモード*/
     flash_print = 15        /* 15.ROM の内容を標準出力 */
 } PlayMode;
 

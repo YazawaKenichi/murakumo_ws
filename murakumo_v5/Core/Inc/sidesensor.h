@@ -31,4 +31,3 @@ void sidesensor_d_print();
 void sidesensor_print_sidesensorstate(SideSensorState markerstate_);
 
 #endif
-
