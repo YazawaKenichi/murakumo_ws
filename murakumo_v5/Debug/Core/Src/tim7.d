@@ -35,7 +35,7 @@ Core/Src/tim7.o: ../Core/Src/tim7.c ../Core/Inc/tim7.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/flash.h ../Core/Inc/analog.h ../Core/Inc/tracer.h \
- ../Core/Inc/pid.h ../Core/Inc/Switch.h ../Core/Inc/Rotary.h
+ ../Core/Inc/pid.h ../Core/Inc/Rotary.h ../Core/Inc/Switch.h
 
 ../Core/Inc/tim7.h:
 
@@ -119,6 +119,6 @@ Core/Src/tim7.o: ../Core/Src/tim7.c ../Core/Inc/tim7.h \
 
 ../Core/Inc/pid.h:
 
-../Core/Inc/Switch.h:
-
 ../Core/Inc/Rotary.h:
+
+../Core/Inc/Switch.h:

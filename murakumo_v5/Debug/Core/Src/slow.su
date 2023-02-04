@@ -2,9 +2,9 @@ slow.c:9:6:slow_read_enable	4	static
 slow.c:14:6:slow_set_enable	16	static
 slow.c:19:6:slow_start	16	static
 slow.c:31:6:slow_stop	4	static
-slow.c:36:8:slow_sigmoid	16	static
+slow.c:36:7:slow_sigmoid	16	static
 slow.c:41:6:slow_read_gain_values	16	static
 slow.c:47:6:slow_set_values	16	static
 slow.c:55:6:slow_set_velocity	16	static
-slow.c:60:8:slow_read_velocity	4	static
+slow.c:60:7:slow_read_velocity	4	static
 slow.c:65:6:slow_main	16	static

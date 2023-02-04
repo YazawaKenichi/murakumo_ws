@@ -6,7 +6,7 @@
 #include "stm32f4xx_hal_tim.h"
 #include "print.h"
 
-#define D_ENCODER 0
+#define D_ENCODER 1
 #define D_ENCODER_WHILE 0
 
 /* LENGTH PER PULSE */
@@ -19,13 +19,13 @@
 #define M_PI 3.14159265358979f
 #endif
 
-#define REDUCTION_RATIO (PINION / (double) SUPER)
-#define LENGTHPERPULSE (M_PI * TIREDIAMETER * REDUCTION_RATIO / (double) PULSEPERROTATE)    /* [um / cnt] */
+#define REDUCTION_RATIO (PINION / (float) SUPER)
+#define LENGTHPERPULSE (M_PI * TIREDIAMETER * REDUCTION_RATIO / (float) PULSEPERROTATE)    /* [um / cnt] */
 #define ENCODER_MIDDLE (PULSEPERROTATE / 2)
 
-double encoder_length_left();
-double encoder_length_right();
-double encoder_length();
+float encoder_length_left();
+float encoder_length_right();
+float encoder_length();
 void encoder_d_print();
 void encoder_set();
 void encoder_init();

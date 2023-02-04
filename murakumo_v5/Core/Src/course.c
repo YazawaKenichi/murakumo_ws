@@ -1,16 +1,9 @@
 #include "course.h"
 
 uint16_t course_state_count;
-double course_by_state_length_left, course_by_state_length_right;
-double course_section_degree;
-double course_curvature_radius;
-double course_update_section_sampling_time_s;
-/**
- * @name course_by_state_time_ms
- * @brief 現在の区間の開始マーカを読んだ時の時間を格納
- * 
- */
-unsigned int course_by_state_time_ms;
+float course_section_degree;
+float course_curvature_radius;
+float course_update_section_sampling_time_s;
 unsigned int __debug_execute_count__;
 
 void course_init(unsigned short int samplingtime_ms)
@@ -47,7 +40,7 @@ void course_stop()
  */
 void course_update_section_degree()
 {
-	double tmp;
+	float tmp;
 	imu_update_gyro();
 	#if D_COURSE_WHILE
 	printf("imu_read_yaw() = %7.2lf, course_section_degree = %7.2lf\r\n", imu_read_yaw(), course_section_degree);
@@ -58,10 +51,10 @@ void course_update_section_degree()
 
 void course_set_update_section_freq_ms(unsigned short int samplingtime_ms)
 {
-	course_update_section_sampling_time_s = samplingtime_ms / (double) 1000;
+	course_update_section_sampling_time_s = samplingtime_ms / (float) 1000;
 }
 
-double course_read_section_degree()
+float course_read_section_degree()
 {
 	return course_section_degree;
 }
@@ -77,7 +70,7 @@ void course_reset()
 	length_reset();
 }
 
-double course_read_curvature_radius()
+float course_read_curvature_radius()
 {
 	return course_curvature_radius;
 }
@@ -95,7 +88,7 @@ void course_increment_state_count()
 /**
  * @fn course_calclate_radius()
  * @brief 区間の半径を計測する
- * @return double 
+ * @return float 
  * @sa course_state_function()
  * @attention course_state_function() からのみ呼び出される
  * course_calclate_radius()			// 半径の計算
@@ -106,24 +99,25 @@ void course_increment_state_count()
  */
 void course_calclate_radius()
 {
-    double curvature_radius;
-	double section_degree, section_length;
-	double section_radian;
+    float curvature_radius;
+	float section_degree, section_length;
+	float section_radian;
 
     /* 長さを取得する */
 	section_length = length_read();
+	//! 角度を取得する
 	section_degree = course_read_section_degree();
 
 	/* 極率半径を計算する */
 #if MODE_ENCODER_CALCLATE
-	curvature_radius = (double) TREAD * (double) ((left_length) + (right_length)) / (double) ((left_length) - (right_length)) / (double) 2;
+	curvature_radius = (float) TREAD * (float) ((left_length) + (right_length)) / (float) ((left_length) - (right_length)) / (float) 2;
 #endif
 
 #if MODE_IMU_CALCLATE
 	course_section_length = // course_section_length_from_imu
 #endif
 
-	section_radian = section_degree * M_PI / (double) 180;
+	section_radian = section_degree * M_PI / (float) 180;
 	curvature_radius = section_length / section_radian;
 	course_curvature_radius = curvature_radius;
 }
@@ -140,15 +134,15 @@ void course_state_function()
 {
 	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free )
 	{
+		float radius;
 #if USE_COURSE_STATE_COUNT
 		course_increment_state_count();
 #endif
 		flashbuffer.course_state_count_max = course_read_state_count();
 		course_calclate_radius();
-		flashbuffer.radius[course_state_count] = course_read_curvature_radius();
-		#if D_COURSE_WHILE
-		printf("radius = %lf\r\n", flashbuffer.radius[course_state_count]);
-		#endif
+		radius = course_read_curvature_radius();
+		flashbuffer.radius[course_state_count] = radius;
+		flashbuffer.speed[course_state_count] = course_radius2speed(radius);
 		course_reset();
 	}
 	if(rotary_read_playmode() == accel)
@@ -164,10 +158,10 @@ void course_state_function()
 void course_d_print()
 {
 #if D_COURSE
-	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n",
-		length_read(), course_read_section_degree(), course_read_curvature_radius());
+	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", length_read(), course_read_section_degree(), course_read_curvature_radius());
 	// printf("course_state_function の実行回数 = %d\r\n", __debug_eradiusecute_count__);
 #endif
+	encoder_d_print();
 }
 
 uint16_t course_radius2speed(float radius)

@@ -9,19 +9,19 @@
 #include "slow.h"
 
 /* motor_free にして手押しで移動距離を測りたい場合はここを 1 にする */
-#define D_TIM10 (0 + D_COURSE)
+#define D_TIM10 0
 
 #define D_TIM10_WHILE (0 + D_COURSE_WHILE)
 
 #define TIM10_TIME_MS 1 //! [ms]
 
-double tim10_read_length_left();
-double tim10_read_length_right();
-double tim10_read_length();
+float tim10_read_length_left();
+float tim10_read_length_right();
+float tim10_read_length();
 
-double tim10_read_velocity_left();
-double tim10_read_velocity_right();
-double tim10_read_velocity();
+float tim10_read_velocity_left();
+float tim10_read_velocity_right();
+float tim10_read_velocity();
 
 void tim10_init();
 void tim10_start();
@@ -34,8 +34,8 @@ void tim10_d_print();
 void tim10_length_set_zero();
 void tim10_velocity_set_zero();
 
-double tim10_read_left();
-double tim10_read_right();
+float tim10_read_left();
+float tim10_read_right();
 
 void tim10_update_length();
 

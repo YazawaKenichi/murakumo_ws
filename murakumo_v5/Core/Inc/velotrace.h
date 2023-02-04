@@ -23,12 +23,12 @@
 void velotrace_start();
 void velotrace_stop();
 /* s_error and d_error are zero */
-void velotrace_init(double samplingtime_);
+void velotrace_init(float samplingtime_);
 /* read target kp ki kd */
-double velotrace_read_target(unsigned short int i);
-double velotrace_read_gain_kp(unsigned short int i);
-double velotrace_read_gain_ki(unsigned short int i);
-double velotrace_read_gain_kd(unsigned short int i);
+float velotrace_read_target(unsigned short int i);
+float velotrace_read_gain_kp(unsigned short int i);
+float velotrace_read_gain_ki(unsigned short int i);
+float velotrace_read_gain_kd(unsigned short int i);
 /* terget setting */
 void velotrace_set_target(unsigned short int i);
 void velotrace_set_values(PID*);
@@ -39,7 +39,7 @@ void velotrace_set_gain(unsigned short int i);
 void velotrace_set_gain_zero();
 void velotrace_set_target_zero();
 /* calclate pid solving */
-double velotrace_solve(double reference_);
+float velotrace_solve(float reference_);
 void veloctracer_print_values();
 void velotrace_set_values(PID*);
 

@@ -1,6 +1,6 @@
 #include "tim7.h"
 
-double tim7_left, tim7_right;
+float tim7_left, tim7_right;
 char tim7_emergency;
 
 #if D_TIM7
@@ -154,7 +154,7 @@ char tim7_read_emergency()
     return tim7_emergency;
 }
 
-double tim7_read_left()
+float tim7_read_left()
 {
     #if D_TIM7_WHILE
     printf("tim7.c >  tim7_read_left() >  tim7_left = %7.2f\r\n", tim7_left);
@@ -162,7 +162,7 @@ double tim7_read_left()
     return tim7_left;
 }
 
-double tim7_read_right()
+float tim7_read_right()
 {
     #if D_TIM7_WHILE
     printf("tim7.c > tim7_read_right() > tim7_right = %7.2f\r\n", tim7_right);

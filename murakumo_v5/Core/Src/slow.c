@@ -2,8 +2,8 @@
 
 PID *base_pointer;
 PID slow_pid;
-double slowinglength;
-double slow_velocity;
+float slowinglength;
+float slow_velocity;
 char slow_enable;
 
 char slow_read_enable()
@@ -33,7 +33,7 @@ void slow_stop()
     /* slow_stop */
 }
 
-double slow_sigmoid(double x)
+float slow_sigmoid(float x)
 {
     return sigmoid(x, SLOW_SIGMOID_A, SLOW_LENGTH / 2);
 }
@@ -44,27 +44,27 @@ PID *slow_read_gain_values()
     return slow_pid_;
 }
 
-void slow_set_values(double _rate)
+void slow_set_values(float _rate)
 {
-    slow_pid.target = (double) base_pointer->target * _rate;
-    slow_pid.kp = (double) base_pointer->kp * _rate;
-    slow_pid.ki = (double) base_pointer->ki * _rate;
-    slow_pid.kd = (double) base_pointer->kd * _rate;
+    slow_pid.target = (float) base_pointer->target * _rate;
+    slow_pid.kp = (float) base_pointer->kp * _rate;
+    slow_pid.ki = (float) base_pointer->ki * _rate;
+    slow_pid.kd = (float) base_pointer->kd * _rate;
 }
 
-void slow_set_velocity(double _velocity)
+void slow_set_velocity(float _velocity)
 {
     slow_velocity = _velocity;
 }
 
-double slow_read_velocity()
+float slow_read_velocity()
 {
     return slow_velocity;
 }
 
 void slow_main()
 {
-    double rate;
+    float rate;
     /* slowinglength 現在進んだ距離 */
     /* slow_main() の直前で slow_set_velocity() する必要がある */
     slowinglength += slow_read_velocity();

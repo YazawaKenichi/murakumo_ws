@@ -1,12 +1,12 @@
 #include "length.h"
 
-double length_left, length_right;
-double velocity_left, velocity_right;
-double length_update_sampling_time_s;
+float length_left, length_right;
+float velocity_left, velocity_right;
+float length_update_sampling_time_s;
 
 void length_set_sampling_time_ms(unsigned short int samplingtime_ms)
 {
-    length_update_sampling_time_s = samplingtime_ms / (double) 1000;
+    length_update_sampling_time_s = samplingtime_ms / (float) 1000;
 }
 
 void length_init(unsigned short int samplingtime_ms)
@@ -41,31 +41,31 @@ void length_reset()
     length_right = 0;
 }
 
-//! 中央の長さを取る
-double length_read()
+//! 中央の長さを取る 単位 [ m ]
+float length_read()
 {
     return (length_left + length_right) / 2;
 }
 
-double length_read_left()
+float length_read_left()
 {
     return length_left;
 }
 
-double length_read_right()
+float length_read_right()
 {
     return length_right;
 }
 
-double velocity_read()
+float velocity_read()
 {
     return (velocity_left + velocity_right) / 2;
 }
 
 void length_update()
 {
-    double encoder_left, encoder_right;
-    double sampling_time_s;
+    float encoder_left, encoder_right;
+    float sampling_time_s;
     sampling_time_s = length_update_sampling_time_s;
     /* encoder をセットしてから encoder_length を読み出さないといけない */
     encoder_set();

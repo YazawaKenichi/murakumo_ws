@@ -13,8 +13,8 @@
 
 //! バイアス補正用カウンタ
 unsigned int imu_revision_count;
-double imu_revision_sum;
-double imu_revision_average;
+float imu_revision_sum;
+float imu_revision_average;
 
 void imu_revision_init()
 {
@@ -39,7 +39,7 @@ void imu_revision_print()
 	if(imu_revision_count <= IMU_REVISION_COUNT_MAX)
 	{
         imu_revision_sum = imu_revision_sum + imu_read_yaw();
-        imu_revision_average = imu_revision_sum / (double) imu_revision_count;
+        imu_revision_average = imu_revision_sum / (float) imu_revision_count;
 		printf("%7d, %lf\r\n", imu_revision_count, imu_revision_average);
         imu_revision_count = imu_revision_count + 1;
 	}

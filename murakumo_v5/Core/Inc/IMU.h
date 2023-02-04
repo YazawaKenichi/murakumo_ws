@@ -46,7 +46,7 @@
 #define REG_BANK_SEL 0x7F
 
 //! (M_PI / 180) [rad / deg]
-#define RADPERDEG (M_PI / (double) 180)
+#define RADPERDEG (M_PI / (float) 180)
 
 //! バイアス補正
 #define BIAS_AVERAGE (-0.137694f + 0.0025f)  // 求めた平均値

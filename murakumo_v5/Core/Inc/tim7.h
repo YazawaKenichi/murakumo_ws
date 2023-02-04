@@ -22,8 +22,8 @@ int tim7_read_direction();
 void tim7_main_emergency();
 void tim7_set_emergency(char);
 char tim7_read_emergency();
-double tim7_read_left();
-double tim7_read_right();
+float tim7_read_left();
+float tim7_read_right();
 void tim7_d_print();
 
 #endif

@@ -1,8 +1,8 @@
 #include "tracer.h"
 
-double tracer_s_error;
+float tracer_s_error;
 int tracer_before_error;
-double tracer_samplingtime;
+float tracer_samplingtime;
 
 PID tracer_pid;
 
@@ -26,7 +26,7 @@ void tracer_stop()
     tracer_set_gain_zero();
 }
 
-void tracer_init(double samplingtime_)
+void tracer_init(float samplingtime_)
 {
     #if D_TRACER
     printf("tracer.c > ");
@@ -48,19 +48,19 @@ void tracer_set_target_zero()
     tracer_pid.kd = 0;
 }
 
-double tracer_read_gain_kp(unsigned short int i)
+float tracer_read_gain_kp(unsigned short int i)
 {
-    return TRACER_KP_MAX - ((TRACER_STEP_SIZE - 1) - i) * (double) (TRACER_KP_MAX - TRACER_KP_MIN) / (double) (TRACER_STEP_SIZE - 1);
+    return TRACER_KP_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KP_MAX - TRACER_KP_MIN) / (float) (TRACER_STEP_SIZE - 1);
 }
 
-double tracer_read_gain_ki(unsigned short int i)
+float tracer_read_gain_ki(unsigned short int i)
 {
-    return TRACER_KI_MAX - ((TRACER_STEP_SIZE - 1) - i) * (double) (TRACER_KI_MAX - TRACER_KI_MIN) / (double) (TRACER_STEP_SIZE - 1);
+    return TRACER_KI_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KI_MAX - TRACER_KI_MIN) / (float) (TRACER_STEP_SIZE - 1);
 }
 
-double tracer_read_gain_kd(unsigned short int i)
+float tracer_read_gain_kd(unsigned short int i)
 {
-    return TRACER_KD_MAX - ((TRACER_STEP_SIZE - 1) - i) * (double) (TRACER_KD_MAX - TRACER_KD_MIN) / (double) (TRACER_STEP_SIZE - 1);
+    return TRACER_KD_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KD_MAX - TRACER_KD_MIN) / (float) (TRACER_STEP_SIZE - 1);
 }
 
 void tracer_set_gain(unsigned short int i)
@@ -77,7 +77,7 @@ void tracer_set_gain(unsigned short int i)
     #endif
 }
 
-void tracer_set_target(double target_)
+void tracer_set_target(float target_)
 {
     #if D_TRACER
     printf("tracer.c > ");
@@ -89,11 +89,11 @@ void tracer_set_target(double target_)
     #endif
 }
 
-double tracer_solve(int reference_)
+float tracer_solve(int reference_)
 {
     int error;
-    double d_error;
-    double result;
+    float d_error;
+    float result;
 
     #if D_TRACER_WHILE
     printf("tracer.c > tracer_solve() > ");
@@ -102,8 +102,8 @@ double tracer_solve(int reference_)
 
     error = reference_;
 
-    d_error = (error - tracer_before_error) / (double) tracer_samplingtime;
-    tracer_s_error += error * (double) tracer_samplingtime;
+    d_error = (error - tracer_before_error) / (float) tracer_samplingtime;
+    tracer_s_error += error * (float) tracer_samplingtime;
 
     result = tracer_pid.kp * error + tracer_pid.ki * tracer_s_error + tracer_pid.kd * d_error;
 
@@ -117,11 +117,11 @@ double tracer_solve(int reference_)
     return result;
 }
 
-double tracer_solve_with_gain(int reference_, double kp_, double ki_, double kd_)
+float tracer_solve_with_gain(int reference_, float kp_, float ki_, float kd_)
 {
     int error;
     int d_error;
-    double result;
+    float result;
 
     error = reference_;
 

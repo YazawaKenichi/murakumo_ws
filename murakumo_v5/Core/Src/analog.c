@@ -37,7 +37,7 @@ void analog_rate_array_print()
 		sum_ += analog_sensor_get(i);
 	}
 
-	printf("average = %4.2f\r\n\r\n", sum_ / (double) size_);
+	printf("average = %4.2f\r\n\r\n", sum_ / (float) size_);
 }
 
 void analog_d_print()
@@ -215,9 +215,9 @@ void analog_sensor_stop()
 
 uint16_t analog_sensor_get(unsigned char i)
 {
-	analograte[i] = 1000 * (analog[i] - analogmin[i]) / (double) (analogmax[i] - analogmin[i]);
+	analograte[i] = 1000 * (analog[i] - analogmin[i]) / (float) (analogmax[i] - analogmin[i]);
 #if USE_SIGMOID_TRACE
-	analograte[i] = 1000 * sigmoid(analograte[i], (16 - i)/(double)800, 500);
+	analograte[i] = 1000 * sigmoid(analograte[i], (16 - i)/(float)800, 500);
 #endif
 	return analograte[i];
 }

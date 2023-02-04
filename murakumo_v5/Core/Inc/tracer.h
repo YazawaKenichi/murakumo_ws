@@ -3,6 +3,7 @@
 
 #include "pid.h"
 #include "print.h"
+#include "Rotary.h"
 
 #define D_TRACER 0
 #define D_TRACER_WHILE 0
@@ -31,21 +32,21 @@
 void tracer_start();
 void tracer_stop();
 /* s_error and d_error are zero*/
-void tracer_init(double samplingtime_);
+void tracer_init(float samplingtime_);
 /* read kp ki kd */
-double tracer_read_gain_kp(unsigned short int i);
-double tracer_read_gain_ki(unsigned short int i);
-double tracer_read_gain_kd(unsigned short int i);
+float tracer_read_gain_kp(unsigned short int i);
+float tracer_read_gain_ki(unsigned short int i);
+float tracer_read_gain_kd(unsigned short int i);
 /* kp ki kd settings*/
 void tracer_set_gain(unsigned short int i);
 /* terget setting */
-void tracer_set_target(double target_);
+void tracer_set_target(float target_);
 void tracer_set_target_zero();
 void tracer_set_gain_zero();
 /* calclate pid solving */
-double tracer_solve(int reference_);
+float tracer_solve(int reference_);
 /* calclate pid solving with pid gain */
-double tracer_solve_with_gain(int, double, double, double);
+float tracer_solve_with_gain(int, float, float, float);
 void tracer_d_print();
 void tracer_print_values();
 /* read pid struct */

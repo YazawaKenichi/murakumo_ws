@@ -1,7 +1,7 @@
 #include "tim6.h"
 
 #if D_TIM6
-double leftmotor, rightmotor;
+float leftmotor, rightmotor;
 #endif
 
 SideSensorState tim6_markerstate_before;
@@ -35,9 +35,12 @@ void tim6_stop()
 void tim6_main()
 {
     #if !D_TIM6
-    double leftmotor, rightmotor;
+    float leftmotor, rightmotor;
     #endif
-    SideSensorState markerstate, markerstate_volatile;
+    SideSensorState markerstate;
+#if LEFT_MARKER_RADIUS
+    SideSensorState markerstate_volatile;
+#endif
     PlayMode playmode;
 
     playmode = rotary_read_playmode();
@@ -47,8 +50,10 @@ void tim6_main()
     sidesensor_main();
     //! 格納されるのは直前のマーカの状態であり、区間中はリセットされないことに注意すべし！
     markerstate = sidesensor_read_markerstate();
+#if LEFT_MARKER_RADIUS
     //! 格納されるのは現在マーカを読んだか読んでないか、次に sidesensor_main() が来た時に変化することに注意
     markerstate_volatile = sidesensor_read_markerstate_volatile();
+#endif
 
     if(motor_read_enable() && playmode != motor_free)
     {
@@ -89,12 +94,17 @@ void tim6_main()
         rightmotor = 0;
     }
 
+#if LEFT_MARKER_RADIUS
     //! 一定区間で切るプログラムにするときはいらなくなる処理
     //! 今度は tim10 とかに course_state_function() をいれる必要が出てくる
     if(markerstate_volatile == curve)
     {
         course_state_function();
     }
+#else
+    //! 距離が COURSE_SAMPLING_LENGTH になっていたら course_state_function() を実行する関数
+    fixed_section_main();
+#endif
 
     switch(markerstate)
     {

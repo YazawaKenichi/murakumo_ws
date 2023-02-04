@@ -1,12 +1,12 @@
 #include "velotrace.h"
 
-double velotrace_s_error;
-double velotrace_before_error;
-double velotrace_samplingtime;
+float velotrace_s_error;
+float velotrace_before_error;
+float velotrace_samplingtime;
 
 PID velotrace_pid;
 
-void velotrace_init(double samplingtime_)
+void velotrace_init(float samplingtime_)
 {
     velotrace_samplingtime = samplingtime_;
 }
@@ -44,24 +44,24 @@ void velotrace_stop()
     velotrace_set_gain_zero();
 }
 
-double velotrace_read_target(unsigned short int i)
+float velotrace_read_target(unsigned short int i)
 {
-    return VELOCITY_TARGET_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (double) (VELOCITY_TARGET_MAX - VELOCITY_TARGET_MIN) / (double) (VELOTRACE_STEP_SIZE - 1);
+    return VELOCITY_TARGET_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_TARGET_MAX - VELOCITY_TARGET_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-double velotrace_read_gain_kp(unsigned short int i)
+float velotrace_read_gain_kp(unsigned short int i)
 {
-    return VELOCITY_KP_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (double) (VELOCITY_KP_MAX - VELOCITY_KP_MIN) / (double) (VELOTRACE_STEP_SIZE - 1);
+    return VELOCITY_KP_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_KP_MAX - VELOCITY_KP_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-double velotrace_read_gain_ki(unsigned short int i)
+float velotrace_read_gain_ki(unsigned short int i)
 {
-    return VELOCITY_KI_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (double) (VELOCITY_KI_MAX - VELOCITY_KI_MIN) / (double) (VELOTRACE_STEP_SIZE - 1);
+    return VELOCITY_KI_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_KI_MAX - VELOCITY_KI_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-double velotrace_read_gain_kd(unsigned short int i)
+float velotrace_read_gain_kd(unsigned short int i)
 {
-    return VELOCITY_KD_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (double) (VELOCITY_KD_MAX - VELOCITY_KD_MIN) / (double) (VELOTRACE_STEP_SIZE - 1);
+    return VELOCITY_KD_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_KD_MAX - VELOCITY_KD_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
 void velotrace_set_gain(unsigned short int i)
@@ -107,16 +107,16 @@ void velotrace_set_target_zero()
     velotrace_pid.target = 0;
 }
 
-double velotrace_solve(double reference_)
+float velotrace_solve(float reference_)
 {
-    double error;
-    double d_error;
-    double result;
+    float error;
+    float d_error;
+    float result;
 
     error = reference_ - velotrace_pid.target;
 
-    d_error = (error - velotrace_before_error) / (double) velotrace_samplingtime;
-    velotrace_s_error += error * (double) velotrace_samplingtime;
+    d_error = (error - velotrace_before_error) / (float) velotrace_samplingtime;
+    velotrace_s_error += error * (float) velotrace_samplingtime;
 
     result = - (velotrace_pid.kp * error + velotrace_pid.ki * velotrace_s_error + velotrace_pid.kd * d_error);
 

@@ -40,8 +40,8 @@ Core/Src/pid.o: ../Core/Src/pid.c ../Core/Inc/pid.h ../Core/Inc/main.h \
  ../Core/Inc/pid.h ../Core/Inc/tim10.h ../Core/Inc/length.h \
  ../Core/Inc/encoder.h ../Core/Inc/course.h ../Core/Inc/time.h \
  ../Core/Inc/function.h ../Core/Inc/IMU.h ../Core/Inc/geometry.h \
- ../Core/Inc/velotrace.h ../Core/Inc/slow.h ../Core/Inc/tim11.h \
- ../Core/Inc/revision.h
+ ../Core/Inc/velotrace.h ../Core/Inc/slow.h ../Core/Inc/fixed_section.h \
+ ../Core/Inc/tim11.h ../Core/Inc/revision.h
 
 ../Core/Inc/pid.h:
 
@@ -160,6 +160,8 @@ Core/Src/pid.o: ../Core/Src/pid.c ../Core/Inc/pid.h ../Core/Inc/main.h \
 ../Core/Inc/velotrace.h:
 
 ../Core/Inc/slow.h:
+
+../Core/Inc/fixed_section.h:
 
 ../Core/Inc/tim11.h:
 

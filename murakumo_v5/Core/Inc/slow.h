@@ -25,12 +25,12 @@ char slow_read_enable();
 void slow_set_enable(char);
 void slow_start(PID*);
 void slow_stop();
-double slow_sigmoid(double);
+float slow_sigmoid(float);
 PID *slow_read_gain_values();
-void slow_set_values(double);
-void slow_set_give_velocity(double);
-void slow_set_velocity(double);
-double slow_read_velocity();
+void slow_set_values(float);
+void slow_set_give_velocity(float);
+void slow_set_velocity(float);
+float slow_read_velocity();
 void slow_main();
 
 #endif

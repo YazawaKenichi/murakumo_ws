@@ -40,7 +40,7 @@ Core/Src/tim6.o: ../Core/Src/tim6.c ../Core/Inc/tim6.h \
  ../Core/Inc/tim10.h ../Core/Inc/length.h ../Core/Inc/encoder.h \
  ../Core/Inc/course.h ../Core/Inc/time.h ../Core/Inc/function.h \
  ../Core/Inc/IMU.h ../Core/Inc/geometry.h ../Core/Inc/velotrace.h \
- ../Core/Inc/slow.h
+ ../Core/Inc/slow.h ../Core/Inc/fixed_section.h
 
 ../Core/Inc/tim6.h:
 
@@ -153,3 +153,5 @@ Core/Src/tim6.o: ../Core/Src/tim6.c ../Core/Inc/tim6.h \
 ../Core/Inc/velotrace.h:
 
 ../Core/Inc/slow.h:
+
+../Core/Inc/fixed_section.h:

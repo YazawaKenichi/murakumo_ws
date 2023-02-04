@@ -9,7 +9,7 @@
 
 #define BACKUP_FLASH_SECTORNUM FLASH_SECTOR_11
 #define BACKUP_FLASH_SECTOR_SIZE (1024*16)
-#define COURSE_STATE_SIZE 512
+#define COURSE_STATE_SIZE 6000  // 6000 = 60 [ m ] / COURSE_SAMPLING_LENGTH [ m ]
 
 #ifndef CALIBRATIONSIZE
 #define CALIBRATIONSIZE 16
@@ -20,9 +20,8 @@ typedef struct
     uint16_t course_state_count_max;
     uint16_t analogmin[CALIBRATIONSIZE];
     uint16_t analogmax[CALIBRATIONSIZE];
-    double radius[COURSE_STATE_SIZE];
-    double igz[COURSE_STATE_SIZE];
-    double len[COURSE_STATE_SIZE];
+    float radius[COURSE_STATE_SIZE];
+    uint16_t speed[COURSE_STATE_SIZE];
 } FlashBuffer;
 
 void flash_erase(void);

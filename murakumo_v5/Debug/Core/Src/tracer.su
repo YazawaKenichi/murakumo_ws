@@ -3,12 +3,12 @@ tracer.c:23:6:tracer_stop	8	static
 tracer.c:29:6:tracer_init	16	static
 tracer.c:39:6:tracer_set_gain_zero	4	static
 tracer.c:44:6:tracer_set_target_zero	4	static
-tracer.c:51:8:tracer_read_gain_kp	16	static
-tracer.c:56:8:tracer_read_gain_ki	16	static
-tracer.c:61:8:tracer_read_gain_kd	16	static
+tracer.c:51:7:tracer_read_gain_kp	16	static
+tracer.c:56:7:tracer_read_gain_ki	16	static
+tracer.c:61:7:tracer_read_gain_kd	16	static
 tracer.c:66:6:tracer_set_gain	16	static
 tracer.c:80:6:tracer_set_target	16	static
-tracer.c:92:8:tracer_solve	48	static
-tracer.c:120:8:tracer_solve_with_gain	64	static
+tracer.c:92:7:tracer_solve	32	static
+tracer.c:120:7:tracer_solve_with_gain	40	static
 tracer.c:138:6:tracer_d_print	40	static
 tracer.c:144:6:tracer_print_values	40	static

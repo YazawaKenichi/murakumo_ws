@@ -7,6 +7,7 @@
 "./Core/Src/course.o"
 "./Core/Src/defines.o"
 "./Core/Src/encoder.o"
+"./Core/Src/fixed_section.o"
 "./Core/Src/flash.o"
 "./Core/Src/function.o"
 "./Core/Src/geometry.o"

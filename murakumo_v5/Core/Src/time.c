@@ -41,7 +41,7 @@ void time_update_ms(unsigned short int step)
      * @brief time_ms が 1 時間（ 3600,000 ミリ秒 ）を超えた時にゼロに戻す
      * 
      */
-    time_countup(time_ms, step, 6300000);
+    time_countup(&time_ms, step, 6300000);
     time_origin = time_ms * 1000;
 }
 
@@ -51,7 +51,7 @@ void time_init()
     time_origin = 0;
 }
 
-unsigned int time_countup(unsigned int *_time, unsigned short int step, unsigned int _time_max)
+void time_countup(unsigned int *_time, unsigned short int step, unsigned int _time_max)
 {
     if(*_time + step >= _time_max)
     {
@@ -60,7 +60,7 @@ unsigned int time_countup(unsigned int *_time, unsigned short int step, unsigned
     }
     else
     {
-        *_time + step;
+        *_time = *_time + step;
     }
 }
 

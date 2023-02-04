@@ -1,16 +1,16 @@
 #include "tim10.h"
 
 /* lengths is updated only in tim10 file. */
-double length, length_left, length_right;
-double velocity_left, velocity_right, velocity;
-double tim10_left, tim10_right;
+float length, length_left, length_right;
+float velocity_left, velocity_right, velocity;
+float tim10_left, tim10_right;
 unsigned int samplingtime_ms;
-double samplingtime_s;
+float samplingtime_s;
 
 /* only use in main.c */
 void tim10_init()
 {
-	samplingtime_s = TIM10_TIME_MS / (double) 1000;
+	samplingtime_s = TIM10_TIME_MS / (float) 1000;
 	samplingtime_ms = TIM10_TIME_MS;
 	length_init(samplingtime_ms);
 	course_init(samplingtime_ms);
@@ -83,12 +83,12 @@ void tim10_d_print()
 	course_d_print();
 }
 
-double tim10_read_left()
+float tim10_read_left()
 {
 	return tim10_left;
 }
 
-double tim10_read_right()
+float tim10_read_right()
 {
 	return tim10_right;
 }

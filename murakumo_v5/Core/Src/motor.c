@@ -36,7 +36,7 @@ char motor_read_enable()
     return enable;
 }
 
-void motor_set(double motor_left_, double motor_right_)
+void motor_set(float motor_left_, float motor_right_)
 {
     if(motor_left_ < 0)
     {
