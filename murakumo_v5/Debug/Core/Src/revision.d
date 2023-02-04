@@ -36,8 +36,8 @@ Core/Src/revision.o: ../Core/Src/revision.c ../Core/Inc/revision.h \
  ../Core/Inc/IMU.h ../Core/Inc/defines.h ../Core/Inc/function.h \
  ../Core/Inc/geometry.h ../Core/Inc/print.h ../Core/Inc/course.h \
  ../Core/Inc/motor.h ../Core/Inc/encoder.h ../Core/Inc/flash.h \
- ../Core/Inc/analog.h ../Core/Inc/Rotary.h ../Core/Inc/time.h \
- ../Core/Inc/length.h
+ ../Core/Inc/analog.h ../Core/Inc/Rotary.h ../Core/Inc/Switch.h \
+ ../Core/Inc/time.h ../Core/Inc/length.h
 
 ../Core/Inc/revision.h:
 
@@ -130,6 +130,8 @@ Core/Src/revision.o: ../Core/Src/revision.c ../Core/Inc/revision.h \
 ../Core/Inc/analog.h:
 
 ../Core/Inc/Rotary.h:
+
+../Core/Inc/Switch.h:
 
 ../Core/Inc/time.h:
 

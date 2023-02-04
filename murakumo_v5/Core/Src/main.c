@@ -354,20 +354,7 @@ int main(void)
         case 0x0F:
           if(rotary_read_playmode()== flash_print)
           {
-            uint16_t course_state_size;
-            course_state_size = COURSE_STATE_SIZE;
-            //! print flash contents
-            while(switch_read_enter())
-            {
-              if(course_state_size > 0)
-              {
-                uint16_t index;
-                index = COURSE_STATE_SIZE - course_state_size;
-                printf("%6d, %8lf\r\n", index, flashbuffer[index]);
-                course_state_size = course_state_size - 1;
-              }
-              HAL_Delay(100);
-            }
+            course_print_flash();
           }
           else
           {

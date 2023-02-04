@@ -24,12 +24,13 @@ void course_start()
 {
 	/* course_start */
 	course_reset_section_degree();
+	course_reset_flash_radius();
 	imu_start();
 }
 
 void course_stop()
 {
-	if(rotary_read_playmode() == search)
+	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free)
 	{
 		flash_write();
 	}
@@ -143,12 +144,12 @@ void course_state_function()
 		course_increment_state_count();
 #endif
 		flashbuffer.course_state_count_max = course_read_state_count();
-//			my_gyro.z = theta * RADPERDEG;
-//			my_gyro.z *= RADPERDEG;
 		course_calclate_radius();
 		flashbuffer.radius[course_state_count] = course_read_curvature_radius();
+		#if D_COURSE_WHILE
+		printf("radius = %lf\r\n", flashbuffer.radius[course_state_count]);
+		#endif
 		course_reset();
-//			my_gyro.z = 0;
 	}
 	if(rotary_read_playmode() == accel)
 	{
@@ -182,4 +183,36 @@ uint16_t course_radius2speed(float radius)
     else speed = 3000;
 	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
 	return speed;
+}
+
+void course_print_flash()
+{
+	uint16_t course_state_size;
+	course_state_size = COURSE_STATE_SIZE;
+	//! print flash contents
+	while(switch_read_enter())
+	{
+		if(course_state_size > 0)
+		{
+			uint16_t index;
+			index = COURSE_STATE_SIZE - course_state_size;
+			printf("%6d, %8lf\r\n", index, flashbuffer.radius[index]);
+			course_state_size = course_state_size - 1;
+			HAL_Delay(100);
+		}
+		else
+		{
+			HAL_Delay(1000);
+		}
+	}
+}
+
+void course_reset_flash_radius()
+{
+	for(uint16_t course_state_size = COURSE_STATE_SIZE; course_state_size > 0; course_state_size = course_state_size - 1)
+	{
+		uint16_t index;
+		index = COURSE_STATE_SIZE - course_state_size;
+		flashbuffer.radius[index] = COURSE_RADIUS_MAX;
+	}
 }
