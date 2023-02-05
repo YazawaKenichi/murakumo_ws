@@ -81,6 +81,7 @@ void tim10_update_length()
 void tim10_d_print()
 {
 	course_d_print();
+	velotrace_print_values();
 }
 
 float tim10_read_left()

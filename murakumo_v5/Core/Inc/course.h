@@ -13,6 +13,8 @@
 #include "IMU.h"
 #include "length.h"
 #include "print.h"
+#include "velotrace.h"
+#include "fixed_section.h"
 
 #ifndef TREAD
 #define TREAD 103
@@ -20,8 +22,12 @@
 
 #define D_COURSE 0
 #define D_COURSE_WHILE 0
+#define LEFT_MARKER_RADIUS 0
 
+//! フラッシュの角度情報を COURSE_RADIUS_MAX で初期化する
 #define COURSE_RADIUS_MAX 65535
+//! フラッシュの速度情報を COURSE_SPEED_DEFAULT で初期化する
+#define COURSE_SPEED_DEFAULT 999
 #define COURSE_SAMPLING_LENGTH (float) 0.01f // [ m ]
 
 void course_init(unsigned short int samplingtime_ms);
@@ -39,6 +45,6 @@ void course_state_function();
 void course_d_print();
 uint16_t course_radius2speed(float);
 void course_print_flash();
-void course_reset_flash_radius();
+void course_reset_flash();
 
 #endif

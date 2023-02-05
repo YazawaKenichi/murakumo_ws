@@ -5,5 +5,5 @@ tim10.c:40:6:tim10_fin	8	static
 tim10.c:46:6:tim10_main	8	static
 tim10.c:58:6:tim10_update_length	8	static
 tim10.c:81:6:tim10_d_print	8	static
-tim10.c:86:7:tim10_read_left	4	static
-tim10.c:91:7:tim10_read_right	4	static
+tim10.c:87:7:tim10_read_left	4	static
+tim10.c:92:7:tim10_read_right	4	static

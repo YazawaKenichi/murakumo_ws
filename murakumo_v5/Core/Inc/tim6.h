@@ -19,9 +19,7 @@
 #include "sidesensor.h"
 #include "tim7.h"
 #include "tim10.h"
-#if LEFT_MARKER_RADIUS
 #include "course.h"
-#endif
 #include "fixed_section.h"
 
 #define D_TIM6 (0 + D_MOTOR + D_SIDESENSOR + D_TIM7)

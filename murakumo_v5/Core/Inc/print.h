@@ -3,6 +3,8 @@
 
 #include "stdio.h"
 #include "defines.h"
+#include "Rotary.h"
+#include "analog.h"
 
 #define ESC_MAG	"\x1b[35m"
 #define ESC_RED "\x1b[31m"

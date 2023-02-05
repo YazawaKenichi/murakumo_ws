@@ -34,10 +34,11 @@ Core/Src/revision.o: ../Core/Src/revision.c ../Core/Inc/revision.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/IMU.h ../Core/Inc/defines.h ../Core/Inc/function.h \
- ../Core/Inc/geometry.h ../Core/Inc/print.h ../Core/Inc/course.h \
- ../Core/Inc/motor.h ../Core/Inc/encoder.h ../Core/Inc/flash.h \
- ../Core/Inc/analog.h ../Core/Inc/Rotary.h ../Core/Inc/Switch.h \
- ../Core/Inc/time.h ../Core/Inc/length.h
+ ../Core/Inc/geometry.h ../Core/Inc/print.h ../Core/Inc/Rotary.h \
+ ../Core/Inc/analog.h ../Core/Inc/flash.h ../Core/Inc/course.h \
+ ../Core/Inc/motor.h ../Core/Inc/encoder.h ../Core/Inc/Switch.h \
+ ../Core/Inc/time.h ../Core/Inc/length.h ../Core/Inc/velotrace.h \
+ ../Core/Inc/pid.h ../Core/Inc/fixed_section.h
 
 ../Core/Inc/revision.h:
 
@@ -119,20 +120,26 @@ Core/Src/revision.o: ../Core/Src/revision.c ../Core/Inc/revision.h \
 
 ../Core/Inc/print.h:
 
+../Core/Inc/Rotary.h:
+
+../Core/Inc/analog.h:
+
+../Core/Inc/flash.h:
+
 ../Core/Inc/course.h:
 
 ../Core/Inc/motor.h:
 
 ../Core/Inc/encoder.h:
 
-../Core/Inc/flash.h:
-
-../Core/Inc/analog.h:
-
-../Core/Inc/Rotary.h:
-
 ../Core/Inc/Switch.h:
 
 ../Core/Inc/time.h:
 
 ../Core/Inc/length.h:
+
+../Core/Inc/velotrace.h:
+
+../Core/Inc/pid.h:
+
+../Core/Inc/fixed_section.h:

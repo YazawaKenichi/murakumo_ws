@@ -34,12 +34,12 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/print.h ../Core/Inc/length.h ../Core/Inc/encoder.h \
- ../Core/Inc/course.h ../Core/Inc/motor.h ../Core/Inc/flash.h \
- ../Core/Inc/analog.h ../Core/Inc/Rotary.h ../Core/Inc/Switch.h \
+ ../Core/Inc/print.h ../Core/Inc/Rotary.h ../Core/Inc/analog.h \
+ ../Core/Inc/flash.h ../Core/Inc/length.h ../Core/Inc/encoder.h \
+ ../Core/Inc/course.h ../Core/Inc/motor.h ../Core/Inc/Switch.h \
  ../Core/Inc/time.h ../Core/Inc/function.h ../Core/Inc/IMU.h \
  ../Core/Inc/geometry.h ../Core/Inc/velotrace.h ../Core/Inc/pid.h \
- ../Core/Inc/slow.h
+ ../Core/Inc/fixed_section.h ../Core/Inc/slow.h
 
 ../Core/Inc/tim10.h:
 
@@ -115,6 +115,12 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
 
 ../Core/Inc/print.h:
 
+../Core/Inc/Rotary.h:
+
+../Core/Inc/analog.h:
+
+../Core/Inc/flash.h:
+
 ../Core/Inc/length.h:
 
 ../Core/Inc/encoder.h:
@@ -122,12 +128,6 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
 ../Core/Inc/course.h:
 
 ../Core/Inc/motor.h:
-
-../Core/Inc/flash.h:
-
-../Core/Inc/analog.h:
-
-../Core/Inc/Rotary.h:
 
 ../Core/Inc/Switch.h:
 
@@ -142,5 +142,7 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
 ../Core/Inc/velotrace.h:
 
 ../Core/Inc/pid.h:
+
+../Core/Inc/fixed_section.h:
 
 ../Core/Inc/slow.h:

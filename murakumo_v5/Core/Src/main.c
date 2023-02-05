@@ -342,14 +342,21 @@ int main(void)
           running_stop();
           break;
         case 0x0E:	// E
-          running_start();
-
-          while(switch_read_enter())
+          if(rotary_read_playmode() == flash_print)
           {
-            main_main();
+            course_print_flash();
           }
+          else
+          {
+            running_start();
 
-          running_stop();
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
           break;
         case 0x0F:
           if(rotary_read_playmode()== flash_print)

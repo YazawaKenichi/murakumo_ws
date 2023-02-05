@@ -17,7 +17,7 @@ void course_start()
 {
 	/* course_start */
 	course_reset_section_degree();
-	course_reset_flash_radius();
+	course_reset_flash();
 	imu_start();
 }
 
@@ -147,10 +147,9 @@ void course_state_function()
 	}
 	if(rotary_read_playmode() == accel)
 	{
-//		velocity_control_switch_function();
-#if USE_COURSE_STATE_COUNT
-		course_increment_state_count();
-#endif
+		float fixed_velocity_target;
+		fixed_velocity_target = fixed_speed();
+		velotrace_set_target_direct(fixed_velocity_target);
 	}
 	course_increment_state_count();
 }
@@ -167,13 +166,17 @@ void course_d_print()
 uint16_t course_radius2speed(float radius)
 {
 	uint16_t speed;
+	if(radius < 0)
+	{
+		radius = - radius;
+	}
 	if(radius < 0.1f) speed = 1000;
-    else if(radius < 0.25f) speed = 1250;
-    else if(radius < 0.5f) speed = 1500;
-    else if(radius < 0.75f) speed = 1750;
-    else if(radius < 1.0f) speed = 2000;
-    else if(radius < 1.5f) speed = 2500;
-    else if(radius < 2.0f) speed = 3000;
+    else if(radius < 0.25f) speed = 1000;
+    else if(radius < 0.5f) speed = 1000;
+    else if(radius < 0.75f) speed = 1250;
+    else if(radius < 1.0f) speed = 1500;
+    else if(radius < 1.5f) speed = 1750;
+    else if(radius < 2.0f) speed = 2000;
     else speed = 3000;
 	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
 	return speed;
@@ -189,8 +192,21 @@ void course_print_flash()
 		if(course_state_size > 0)
 		{
 			uint16_t index;
+			float print_data;
 			index = COURSE_STATE_SIZE - course_state_size;
-			printf("%6d, %8lf\r\n", index, flashbuffer.radius[index]);
+			switch(rotary_read_value())
+			{
+				case 15:
+					print_data = flashbuffer.radius[index];
+					break;
+				case 14:
+					print_data = flashbuffer.speed[index];
+					break;
+				default :
+					print_data = flashbuffer.radius[index];
+					break;
+			}
+			printf("%6d, %8lf\r\n", index, print_data);
 			course_state_size = course_state_size - 1;
 			HAL_Delay(100);
 		}
@@ -201,12 +217,13 @@ void course_print_flash()
 	}
 }
 
-void course_reset_flash_radius()
+void course_reset_flash()
 {
 	for(uint16_t course_state_size = COURSE_STATE_SIZE; course_state_size > 0; course_state_size = course_state_size - 1)
 	{
 		uint16_t index;
 		index = COURSE_STATE_SIZE - course_state_size;
 		flashbuffer.radius[index] = COURSE_RADIUS_MAX;
+		flashbuffer.speed[index] = COURSE_SPEED_DEFAULT;
 	}
 }

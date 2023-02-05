@@ -21,5 +21,6 @@
 #define DEACCEL_MAX 17  // [ m / s / s ]
 
 void fixed_section_main();
+float fixed_speed();
 
 #endif
