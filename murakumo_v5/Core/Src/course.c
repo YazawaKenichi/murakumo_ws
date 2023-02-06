@@ -135,9 +135,6 @@ void course_state_function()
 	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free )
 	{
 		float radius;
-#if USE_COURSE_STATE_COUNT
-		course_increment_state_count();
-#endif
 		flashbuffer.course_state_count_max = course_read_state_count();
 		course_calclate_radius();
 		radius = course_read_curvature_radius();
@@ -170,14 +167,14 @@ uint16_t course_radius2speed(float radius)
 	{
 		radius = - radius;
 	}
-	if(radius < 0.1f) speed = 1000;
-    else if(radius < 0.25f) speed = 1000;
-    else if(radius < 0.5f) speed = 1000;
-    else if(radius < 0.75f) speed = 1250;
-    else if(radius < 1.0f) speed = 1500;
-    else if(radius < 1.5f) speed = 1750;
-    else if(radius < 2.0f) speed = 2000;
-    else speed = 3000;
+	if(radius < 0.1f) speed = 1.000;
+    else if(radius < 0.25f) speed = 1.000;
+    else if(radius < 0.5f) speed = 1.000;
+    else if(radius < 0.75f) speed = 1.000;
+    else if(radius < 1.0f) speed = 1.000;
+    else if(radius < 1.5f) speed = 1.000;
+    else if(radius < 2.0f) speed = 1.000;
+    else speed = 1.000;
 	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
 	return speed;
 }

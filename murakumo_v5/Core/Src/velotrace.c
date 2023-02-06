@@ -6,6 +6,7 @@ float velotrace_samplingtime;
 
 PID velotrace_pid;
 
+/* pre setting */
 void velotrace_init(float samplingtime_)
 {
     velotrace_samplingtime = samplingtime_;
@@ -13,6 +14,7 @@ void velotrace_init(float samplingtime_)
 
 void velotrace_start()
 {
+    float target, kp, ki, kd;
     #if D_VELOTRACE
     printf("velotrace_samplingtime = 1, velotrace_s_error = 0, velotrace_before_error = 0\r\n");
     #endif
@@ -21,77 +23,141 @@ void velotrace_start()
     switch(rotary_read_playmode())
     {
         case search:
-            velotrace_set_gain(0);
-            velotrace_set_target_index(0);
+        case accel:
+            target = 1.000;
+            kp = 1000;
+            ki = 100;
+            kd = 0;
             break;
         case velotrace_tuning:
-            velotrace_set_target_index_zero();
-            velotrace_set_gain(rotary_read_value());
+            target = 0;
+            kp = velotrace_calc_gain_kp(rotary_read_value());
+            ki = velotrace_calc_gain_ki(rotary_read_value());
+            kd = velotrace_calc_gain_kd(rotary_read_value());
             break;
         case tracer_tuning:
-            velotrace_set_target_index_zero();
-            velotrace_set_gain_zero();
         default:
-            velotrace_set_gain(rotary_read_value());
-            velotrace_set_target_index(rotary_read_value());
+            target = 0;
+            kp = 0;
+            ki = 0;
+            kd = 0;
             break;
     }
+    velotrace_set_target_direct(target);
+    velotrace_set_gain_direct(kp, ki, kd);
 }
 
 void velotrace_stop()
 {
-    velotrace_set_target_index_zero();
+    velotrace_set_target_zero();
     velotrace_set_gain_zero();
 }
 
+/* reading */
 float velotrace_read_target()
 {
     return velotrace_pid.target;
 }
 
-float velotrace_read_target_index(unsigned short int i)
+float velotrace_read_gain_kp()
+{
+    return velotrace_pid.kp;
+}
+
+float velotrace_read_gain_ki()
+{
+    return velotrace_pid.ki;
+}
+
+float velotrace_read_gain_kd()
+{
+    return velotrace_pid.kd;
+}
+
+/* target setting */
+void velotrace_set_target_index(unsigned short int i)
+{
+    velotrace_pid.target = velotrace_calc_target(i);
+}
+
+void velotrace_set_target_direct(float target)
+{
+    velotrace_pid.target = target;
+}
+
+/* gain setting */
+void velotrace_set_gain_kp_index(unsigned short int i)
+{
+    velotrace_set_gain_kp_direct(velotrace_calc_gain_kp(i));
+}
+
+void velotrace_set_gain_ki_index(unsigned short int i)
+{
+    velotrace_set_gain_ki_direct(velotrace_calc_gain_ki(i));
+}
+
+void velotrace_set_gain_kd_index(unsigned short int i)
+{
+    velotrace_set_gain_kd_direct(velotrace_calc_gain_kd(i));
+}
+
+void velotrace_set_gain_kp_direct(float kp)
+{
+    velotrace_pid.kp = kp;
+}
+
+void velotrace_set_gain_ki_direct(float ki)
+{
+    velotrace_pid.ki = ki;
+}
+
+void velotrace_set_gain_kd_direct(float kd)
+{
+    velotrace_pid.kd = kd;
+}
+
+void velotrace_set_gain_direct(float kp, float ki, float kd)
+{
+    velotrace_set_gain_kp_direct(kp);
+    velotrace_set_gain_ki_direct(ki);
+    velotrace_set_gain_kd_direct(kd);
+}
+
+/* target kp ki kd set zero */
+void velotrace_set_target_zero()
+{
+    velotrace_set_target_direct(0);
+}
+
+void velotrace_set_gain_zero()
+{
+    velotrace_set_gain_kp_direct(0);
+    velotrace_set_gain_ki_direct(0);
+    velotrace_set_gain_kd_direct(0);
+}
+
+/* calclate pid values from rotary value */
+float velotrace_calc_target(unsigned short int i)
 {
     return VELOCITY_TARGET_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_TARGET_MAX - VELOCITY_TARGET_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-float velotrace_read_gain_kp(unsigned short int i)
+float velotrace_calc_gain_kp(unsigned short int i)
 {
     return VELOCITY_KP_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_KP_MAX - VELOCITY_KP_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-float velotrace_read_gain_ki(unsigned short int i)
+float velotrace_calc_gain_ki(unsigned short int i)
 {
     return VELOCITY_KI_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_KI_MAX - VELOCITY_KI_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-float velotrace_read_gain_kd(unsigned short int i)
+float velotrace_calc_gain_kd(unsigned short int i)
 {
     return VELOCITY_KD_MAX - ((VELOTRACE_STEP_SIZE - 1) - i) * (float) (VELOCITY_KD_MAX - VELOCITY_KD_MIN) / (float) (VELOTRACE_STEP_SIZE - 1);
 }
 
-void velotrace_set_gain(unsigned short int i)
-{
-    #if D_VELOTRACE
-    printf("velotrace_pid = velotrace_read_gain\r\n");
-    #endif
-    velotrace_pid.kp = velotrace_read_gain_kp(i);
-    velotrace_pid.ki = velotrace_read_gain_ki(i);
-    velotrace_pid.kd = velotrace_read_gain_kd(i);
-}
-
-void velotrace_set_target_direct(float speed)
-{
-    velotrace_pid.target = speed;
-}
-
-void velotrace_set_target_index(unsigned short int i)
-{
-    #if D_VELOTRACE
-    printf("velotrace_pid = velotrace_read_target_index\r\n");
-    #endif
-    velotrace_pid.target = velotrace_read_target_index(i);
-}
-
+/* all parameter */
 void velotrace_set_values(PID *_pid)
 {
     velotrace_pid.target = _pid->target;
@@ -103,18 +169,6 @@ void velotrace_set_values(PID *_pid)
 PID* velotrace_read_values()
 {
     return &velotrace_pid;
-}
-
-void velotrace_set_gain_zero()
-{
-    velotrace_pid.kp = 0;
-    velotrace_pid.ki = 0;
-    velotrace_pid.kd = 0;
-}
-
-void velotrace_set_target_index_zero()
-{
-    velotrace_pid.target = 0;
 }
 
 float velotrace_solve(float reference_)
@@ -146,6 +200,6 @@ void velotrace_print_values()
 #if D_VELOTRACE
 	printf("Velotrace\r\n");
 	printf("target = %5.3f\r\n", velotrace_read_target());
-	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", velotrace_read_gain_kp(rotary_read_value()), velotrace_read_gain_ki(rotary_read_value()), velotrace_read_gain_kd(rotary_read_value()));
+	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", velotrace_calc_gain_kp(rotary_read_value()), velotrace_calc_gain_ki(rotary_read_value()), velotrace_calc_gain_kd(rotary_read_value()));
 #endif
 }

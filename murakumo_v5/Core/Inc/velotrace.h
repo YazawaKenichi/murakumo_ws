@@ -19,29 +19,46 @@
 #define VELOCITY_KI_MIN 100
 #define VELOCITY_KD_MIN 0
 
-/* velotrace_init(1), velotrace_set_gain(), velotrace_set_target_index() */
-void velotrace_start();
+/* pre setting */
+void velotrace_init(float samplingtime_);   //! s_error and d_error are zero
+void velotrace_start(); //! velotrace_init(1), velotrace_set_gain_index(), velotrace_set_target_index()
 void velotrace_stop();
-/* s_error and d_error are zero */
-void velotrace_init(float samplingtime_);
-/* read target kp ki kd */
-float velotrace_read_target_index(unsigned short int i);
-float velotrace_read_gain_kp(unsigned short int i);
-float velotrace_read_gain_ki(unsigned short int i);
-float velotrace_read_gain_kd(unsigned short int i);
+
+/* reading */
+float velotrace_read_target();
+float velotrace_read_gain_kp();
+float velotrace_read_gain_ki();
+float velotrace_read_gain_kd();
+
 /* terget setting */
 void velotrace_set_target_index(unsigned short int i);
-void velotrace_set_values(PID*);
-PID *velotrace_read_values();
-/* kp ki kd settings */
-void velotrace_set_gain(unsigned short int i);
+void velotrace_set_target_direct(float target);
+
+/* gain setting */
+void velotrace_set_gain_kp_index(unsigned short int i);
+void velotrace_set_gain_ki_index(unsigned short int i);
+void velotrace_set_gain_kd_index(unsigned short int i);
+void velotrace_set_gain_kp_direct(float target);
+void velotrace_set_gain_ki_direct(float target);
+void velotrace_set_gain_kd_direct(float target);
+void velotrace_set_gain_direct(float, float, float);
+
 /* target kp ki kd set zero */
+void velotrace_set_target_zero();
 void velotrace_set_gain_zero();
-void velotrace_set_target_index_zero();
+
+/* calclate pid values from rotary value */
+float velotrace_calc_target(unsigned short int i);
+float velotrace_calc_gain_kp(unsigned short int i);
+float velotrace_calc_gain_ki(unsigned short int i);
+float velotrace_calc_gain_kd(unsigned short int i);
+
+/* all parameter */
+void velotrace_set_values(PID *_pid);
+PID* velotrace_read_values();
+
 /* calclate pid solving */
 float velotrace_solve(float reference_);
 void veloctracer_print_values();
-void velotrace_set_values(PID*);
-void velotrace_set_target_direct(float);
 
 #endif
