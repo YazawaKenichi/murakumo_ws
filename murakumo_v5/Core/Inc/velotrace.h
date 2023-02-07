@@ -12,11 +12,11 @@
 
 #define VELOCITY_TARGET_MAX 1    /* [m/s] */
 #define VELOCITY_TARGET_MIN 1
-#define VELOCITY_KP_MAX 1000
-#define VELOCITY_KI_MAX 100
+#define VELOCITY_KP_MAX 2000
+#define VELOCITY_KI_MAX 200   // 100
 #define VELOCITY_KD_MAX 0
-#define VELOCITY_KP_MIN 1000
-#define VELOCITY_KI_MIN 100
+#define VELOCITY_KP_MIN 2000   // 1000
+#define VELOCITY_KI_MIN 200   // 100
 #define VELOCITY_KD_MIN 0
 
 /* pre setting */
