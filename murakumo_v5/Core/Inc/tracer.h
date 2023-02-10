@@ -10,14 +10,24 @@
 
 #define TRACER_STEP_SIZE 16
 
-//! KP = 1.1 ~ 3.3 あたりがちょうどいいかも
-#define TRACER_KP_MAX 16.5f
+#define TRACER_KP_MAX 3.3f
 #define TRACER_KI_MAX 0
 #define TRACER_KD_MAX 0
 
-#define TRACER_KP_MIN 0
+#define TRACER_KP_MIN 1.1f
 #define TRACER_KI_MIN 0
 #define TRACER_KD_MIN 0
+
+#if OLD_BEST
+//! KP = 1.1 ~ 3.3 あたりがちょうどいいかも
+#define TRACER_KP_MAX ((3.3 + 1.1) / 2)
+#define TRACER_KI_MAX 0
+#define TRACER_KD_MAX 0
+
+#define TRACER_KP_MIN ((3.3 + 1.1) / 2)
+#define TRACER_KI_MIN 0
+#define TRACER_KD_MIN 0
+#endif
 
 #if OLD_BEST
 #define TRACER_KP_MAX 0.5f
