@@ -9,10 +9,12 @@
 #include "Switch.h"
 #include "Rotary.h"
 
-#define D_TIM7 (0 + D_TRACER + D_ANALOG)
+#define D_TIM7 0
 #define D_TIM7_WHILE (0 + D_TRACER_WHILE)
 
 #define TIM7_EMERGENCY_THRESHOLD 980
+
+#define TIM7_TIME_MS 1  //! [ ms ]
 
 void tim7_init();
 void tim7_start();

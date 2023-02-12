@@ -3,6 +3,7 @@
 float velotrace_s_error;
 float velotrace_before_error;
 float velotrace_samplingtime;
+uint16_t velotrace_gain_tuning_time_ms;
 
 PID velotrace_pid;
 
@@ -20,17 +21,18 @@ void velotrace_start()
     #endif
     velotrace_s_error = 0;
     velotrace_before_error = 0;
+    velotrace_gain_tuning_time_ms = 0;
     switch(rotary_read_playmode())
     {
         case search:
         case accel:
-            target = 1.000;
+            target = VELOCITY_TARGET_MIN;
             kp = 1000;
             ki = 100;
             kd = 0;
             break;
         case velotrace_tuning:
-            target = 0;
+            target = VELOCITY_TARGET_MIN;
             kp = velotrace_calc_gain_kp(rotary_read_value());
             ki = velotrace_calc_gain_ki(rotary_read_value());
             kd = velotrace_calc_gain_kd(rotary_read_value());
@@ -202,4 +204,16 @@ void velotrace_print_values()
 	printf("target = %5.3f\r\n", velotrace_read_target());
 	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", velotrace_calc_gain_kp(rotary_read_value()), velotrace_calc_gain_ki(rotary_read_value()), velotrace_calc_gain_kd(rotary_read_value()));
 #endif
+}
+
+void velotrace_gain_tuning()
+{
+    //! 右センサを読んでからの時間を格納する
+    velotrace_gain_tuning_time_ms = velotrace_gain_tuning_time_ms + velotrace_samplingtime * 1000;
+    //! 停止時間になったら
+    if(velotrace_gain_tuning_time_ms >= VELOTRACE_GAIN_TUNING_STOP_TIME_MS)
+    {
+        //! 速度の目標値をゼロにする
+        velotrace_pid.target = 0;
+    }
 }

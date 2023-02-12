@@ -2,4 +2,4 @@ tim6.c:9:6:tim6_init	8	static
 tim6.c:16:6:tim6_start	8	static
 tim6.c:27:6:tim6_stop	8	static
 tim6.c:35:6:tim6_main	32	static
-tim6.c:124:6:tim6_d_print	4	static
+tim6.c:124:6:tim6_d_print	8	static

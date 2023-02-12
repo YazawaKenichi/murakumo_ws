@@ -10,16 +10,18 @@
 
 #define TRACER_STEP_SIZE 16
 
-#define TRACER_KP_MAX 3.3f
+#if NAGAKI_NI_KIITEMITA
+#define TRACER_KP_MAX 1.33f
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 0
+#define TRACER_KD_MAX 10
 
-#define TRACER_KP_MIN 1.1f
+#define TRACER_KP_MIN 1.33f
 #define TRACER_KI_MIN 0
 #define TRACER_KD_MIN 0
+#endif
 
 #if OLD_BEST
-//! KP = 1.1 ~ 3.3 あたりがちょうどいいかも
+//! KP = 1.1 ~ 3.3 あたりがちょうどいいかも（いくらなんでも大きすぎるかも）
 #define TRACER_KP_MAX ((3.3 + 1.1) / 2)
 #define TRACER_KI_MAX 0
 #define TRACER_KD_MAX 0
@@ -29,15 +31,13 @@
 #define TRACER_KD_MIN 0
 #endif
 
-#if OLD_BEST
-#define TRACER_KP_MAX 0.5f
+#define TRACER_KP_MAX 0.03f
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 10
+#define TRACER_KD_MAX 0
 
-#define TRACER_KP_MIN 0.3f
+#define TRACER_KP_MIN 0
 #define TRACER_KI_MIN 0
-#define TRACER_KD_MIN 10
-#endif
+#define TRACER_KD_MIN 0
 
 /* 追従が弱い D が大きすぎる */
 #if OLD_BEST

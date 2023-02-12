@@ -14,7 +14,7 @@ void tim7_init()
     printf("tim7.c > tim7_init() > ");
     #endif
     analog_init();
-    tracer_init(1);
+    tracer_init(TIM7_TIME_MS);
     HAL_TIM_Base_Stop_IT(&htim7);
 }
 
@@ -176,6 +176,6 @@ void tim7_d_print()
     #if D_TIM7
     printf("tim7.c > tim7_d_print() > ");
     printf("i_count = %3d, i_start = %3d\r\n", i_count, i_start);
-    analog_d_print();
     #endif
+    analog_d_print();
 }

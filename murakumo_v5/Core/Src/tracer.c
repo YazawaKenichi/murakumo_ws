@@ -26,14 +26,14 @@ void tracer_stop()
     tracer_set_gain_zero();
 }
 
-void tracer_init(float samplingtime_)
+void tracer_init(float samplingtime_ms)
 {
     #if D_TRACER
     printf("tracer.c > ");
     printf("tracer_init > ");
     printf("sampling_time = 1, tracer_s_error = 0, tracer_before_error = 0\r\n");
     #endif
-    tracer_samplingtime = samplingtime_;
+    tracer_samplingtime = samplingtime_ms;
 }
 
 void tracer_set_gain_zero()

@@ -51,6 +51,13 @@ void tim10_main()
 	length_update();
 	//! 速度制御の指令値をアップデートし続ける
 	tim10_update_length();
+	if(rotary_read_playmode() == velotrace_tuning)
+	{
+		if(sidesensor_read_markerstate() == straight)
+		{
+			velotrace_gain_tuning();
+		}
+	}
 }
 
 //! tim10_main でのみ呼び出されるべき関数

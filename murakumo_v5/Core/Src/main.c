@@ -1218,14 +1218,8 @@ void main_d_print()
 {
   revision_print();
   tim10_d_print();
-  #if D_TIM7
-  printf("main.c > main_d_print > ");
   tim7_d_print();
-  #endif
-  #if D_TIM6
-  printf("main.c > main_d_print > ");
   tim6_d_print();
-  #endif
 }
 
 /* USER CODE END 4 */

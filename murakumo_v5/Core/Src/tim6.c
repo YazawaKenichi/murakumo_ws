@@ -126,6 +126,6 @@ void tim6_d_print()
     #if D_TIM6
     printf("tim6.c > tim6_d_print() > leftmotor = %5.3f, rightmotor = %5.3f\r\n", leftmotor, rightmotor); 
     printf("tim6.c > tim6_d_print() > sidesensor_d_print() > ");
-    sidesensor_d_print();
     #endif
+    sidesensor_d_print();
 }

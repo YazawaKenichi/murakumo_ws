@@ -8,4 +8,4 @@ tim7.c:147:6:tim7_set_emergency	16	static
 tim7.c:152:6:tim7_read_emergency	4	static
 tim7.c:157:7:tim7_read_left	4	static
 tim7.c:165:7:tim7_read_right	4	static
-tim7.c:173:6:tim7_d_print	4	static
+tim7.c:173:6:tim7_d_print	8	static
