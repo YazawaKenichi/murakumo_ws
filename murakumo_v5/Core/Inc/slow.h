@@ -21,16 +21,21 @@
 #define SLOW_SIGMOID_X0 (SLOW_LENGTH / 2)
 #define SLOW_SIGMOID_A  (13 / SLOW_LENGTH)
 
-char slow_read_enable();
-void slow_set_enable(char);
+void slow_init();
 void slow_start(PID*);
 void slow_stop();
-float slow_sigmoid(float);
-PID *slow_read_gain_values();
-void slow_set_values(float);
-void slow_set_give_velocity(float);
-void slow_set_velocity(float);
-float slow_read_velocity();
+void slow_fin();
+
 void slow_main();
+
+uint8_t slow_read_enable();
+float slow_read_velocity();
+PID *slow_read_gain_values();
+
+void slow_set_enable(uint8_t);
+void slow_set_values(float);
+void slow_set_velocity(float);
+
+float slow_sigmoid(float);
 
 #endif
