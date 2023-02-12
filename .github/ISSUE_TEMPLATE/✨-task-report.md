@@ -1,5 +1,5 @@
 ---
-name: Task report
+name: "✨ Task report"
 about: Report work to implement unimplemented processing
 title: "[ Task ] "
 labels: ''
