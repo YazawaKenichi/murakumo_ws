@@ -11,6 +11,7 @@ float encoder_length()
     printf("encoder.c > encoder_length() > ");
     printf("encoder * (float) LENGTHPERPULSE = %6.1f * %1.5f = %7.5f\r\n", encoder, LENGTHPERPULSE, encoder * (float) LENGTHPERPULSE);
     #endif
+    //! 単位は [ um ]
     return (float) encoder * (float) LENGTHPERPULSE;
 }
 
@@ -39,11 +40,12 @@ void encoder_d_print()
     #endif
 }
 
-/* only read tim10_update_length */
+/* only read tim10_update_values */
 void encoder_set()
 {
     encoder_left = TIM1 -> CNT - ENCODER_MIDDLE;
     encoder_right = -(TIM3 -> CNT - ENCODER_MIDDLE);
+    //! 単位 [ cnt / sampling_time_s ]
     encoder = (encoder_left + encoder_right) / (float) 2;
 
     #if D_ENCODER_WHILE

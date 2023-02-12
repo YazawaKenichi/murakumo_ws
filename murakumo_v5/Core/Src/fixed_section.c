@@ -1,7 +1,7 @@
 /**
  * @file fixed_section.c
  * @author YAZAWA Kenichi (s21c1036hn@gmail.com)
- * @brief 
+ * @brief 速度補正をするプログラム
  * @version 1.0
  * @date 2023-02-04
  * 
@@ -15,14 +15,16 @@
  * @fn
  * @brief 一定距離ごとに course_state_function() を呼び出す関数
  * @attention
- * course_state_function() を呼び出すと length_reset() が呼び出されることに注意
  * 
  */
 void fixed_section_main()
 {
-    float fixed_length = length_read();
+    float fixed_length;
+    //! 現在点の区間長を取得
+    fixed_length = section_length_read();
     if(fixed_length >= COURSE_SAMPLING_LENGTH)
     {
+        //! 現在点の区間長が閾値を超えた時
         course_state_function();
     }
 }

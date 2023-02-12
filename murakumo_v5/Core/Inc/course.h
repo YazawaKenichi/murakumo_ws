@@ -8,10 +8,10 @@
 #include "flash.h"
 #include "Rotary.h"
 #include "Switch.h"
+#include "section_length.h"
 #include "time.h"
 #include "function.h"   /// Low Pass Fileter が使いたい
 #include "IMU.h"
-#include "length.h"
 #include "print.h"
 #include "velotrace.h"
 #include "fixed_section.h"

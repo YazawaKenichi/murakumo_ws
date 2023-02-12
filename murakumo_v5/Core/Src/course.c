@@ -67,7 +67,7 @@ void course_reset_section_degree()
 void course_reset()
 {
 	course_reset_section_degree();
-	length_reset();
+	section_length_reset();
 }
 
 float course_read_curvature_radius()
@@ -103,8 +103,10 @@ void course_calclate_radius()
 	float section_degree, section_length;
 	float section_radian;
 
-    /* 長さを取得する */
-	section_length = length_read();
+    //! 現在の区間長を取得する */
+	section_length = section_length_read();
+	//! 現在点を次の区間開始点に設定する
+	section_length_set_buffer();
 	//! 角度を取得する
 	section_degree = course_read_section_degree();
 
@@ -154,7 +156,8 @@ void course_state_function()
 void course_d_print()
 {
 #if D_COURSE
-	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", length_read(), course_read_section_degree(), course_read_curvature_radius());
+	//! length.h を書き直す前の状態
+	//! printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", length_read(), course_read_section_degree(), course_read_curvature_radius());
 	// printf("course_state_function の実行回数 = %d\r\n", __debug_eradiusecute_count__);
 #endif
 	encoder_d_print();

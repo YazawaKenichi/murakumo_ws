@@ -17,6 +17,7 @@
 "./Core/Src/pid.o"
 "./Core/Src/print.o"
 "./Core/Src/revision.o"
+"./Core/Src/section_length.o"
 "./Core/Src/sidesensor.o"
 "./Core/Src/slow.o"
 "./Core/Src/stm32f4xx_hal_msp.o"

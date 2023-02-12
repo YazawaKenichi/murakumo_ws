@@ -2,22 +2,22 @@
 
 float velotrace_s_error;
 float velotrace_before_error;
-float velotrace_samplingtime;
+uint16_t velotrace_sampling_time_ms;
 uint16_t velotrace_gain_tuning_time_ms;
 
 PID velotrace_pid;
 
 /* pre setting */
-void velotrace_init(float samplingtime_)
+void velotrace_init(uint16_t samplingtime_ms)
 {
-    velotrace_samplingtime = samplingtime_;
+    velotrace_sampling_time_ms = samplingtime_ms;
 }
 
 void velotrace_start()
 {
     float target, kp, ki, kd;
     #if D_VELOTRACE
-    printf("velotrace_samplingtime = 1, velotrace_s_error = 0, velotrace_before_error = 0\r\n");
+    printf("velotrace_sampling_time_ms = 1, velotrace_s_error = 0, velotrace_before_error = 0\r\n");
     #endif
     velotrace_s_error = 0;
     velotrace_before_error = 0;
@@ -181,8 +181,8 @@ float velotrace_solve(float reference_)
 
     error = reference_ - velotrace_pid.target;
 
-    d_error = (error - velotrace_before_error) / (float) velotrace_samplingtime;
-    velotrace_s_error += error * (float) velotrace_samplingtime;
+    d_error = (error - velotrace_before_error) / (float) velotrace_sampling_time_ms;
+    velotrace_s_error += error * (float) velotrace_sampling_time_ms;
 
     result = - (velotrace_pid.kp * error + velotrace_pid.ki * velotrace_s_error + velotrace_pid.kd * d_error);
 
@@ -209,7 +209,7 @@ void velotrace_print_values()
 void velotrace_gain_tuning()
 {
     //! 右センサを読んでからの時間を格納する
-    velotrace_gain_tuning_time_ms = velotrace_gain_tuning_time_ms + velotrace_samplingtime * 1000;
+    velotrace_gain_tuning_time_ms += velotrace_sampling_time_ms;
     //! 停止時間になったら
     if(velotrace_gain_tuning_time_ms >= VELOTRACE_GAIN_TUNING_STOP_TIME_MS)
     {

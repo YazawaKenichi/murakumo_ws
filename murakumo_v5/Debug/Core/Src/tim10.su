@@ -1,9 +1,9 @@
 tim10.c:11:6:tim10_init	8	static
-tim10.c:21:6:tim10_start	8	static
-tim10.c:32:6:tim10_stop	8	static
-tim10.c:40:6:tim10_fin	8	static
-tim10.c:46:6:tim10_main	8	static
-tim10.c:65:6:tim10_update_length	8	static
-tim10.c:88:6:tim10_d_print	8	static
-tim10.c:94:7:tim10_read_left	4	static
-tim10.c:99:7:tim10_read_right	4	static
+tim10.c:22:6:tim10_start	8	static
+tim10.c:34:6:tim10_stop	8	static
+tim10.c:43:6:tim10_fin	8	static
+tim10.c:50:6:tim10_main	8	static
+tim10.c:71:6:tim10_update_values	8	static
+tim10.c:96:7:tim10_read_left	4	static
+tim10.c:101:7:tim10_read_right	4	static
+tim10.c:106:6:tim10_d_print	8	static

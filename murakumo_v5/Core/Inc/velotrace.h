@@ -5,7 +5,7 @@
 #include "print.h"
 #include "Rotary.h"
 
-#define D_VELOTRACE 1
+#define D_VELOTRACE 0
 #define D_VELOTRACE_WHILE 0
 
 #define VELOTRACE_STEP_SIZE 16
@@ -23,7 +23,7 @@
 #define VELOTRACE_GAIN_TUNING_STOP_TIME_MS 3000
 
 /* pre setting */
-void velotrace_init(float samplingtime_);   //! s_error and d_error are zero
+void velotrace_init(uint16_t samplingtime_);   //! s_error and d_error are zero
 void velotrace_start(); //! velotrace_init(1), velotrace_set_gain_index(), velotrace_set_target_index()
 void velotrace_stop();
 

@@ -3,11 +3,12 @@
 
 #include "defines.h"
 #include "print.h"
-#include "length.h"
 #include "course.h"
+#include "length.h"
 #include "velotrace.h"
 #include "slow.h"
 #include "sidesensor.h"
+#include "section_length.h"
 
 /* motor_free にして手押しで移動距離を測りたい場合はここを 1 にする */
 #define D_TIM10 0
@@ -38,6 +39,6 @@ void tim10_velocity_set_zero();
 float tim10_read_left();
 float tim10_read_right();
 
-void tim10_update_length();
+void tim10_update_values();
 
 #endif

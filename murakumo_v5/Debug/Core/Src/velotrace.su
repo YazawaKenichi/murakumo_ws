@@ -23,5 +23,5 @@ velotrace.c:157:7:velotrace_calc_gain_kd	16	static
 velotrace.c:163:6:velotrace_set_values	16	static
 velotrace.c:171:6:velotrace_read_values	4	static
 velotrace.c:176:7:velotrace_solve	32	static
-velotrace.c:200:6:velotrace_print_values	8	static
+velotrace.c:200:6:velotrace_print_values	4	static
 velotrace.c:209:6:velotrace_gain_tuning	4	static

@@ -12,7 +12,6 @@
 #ifndef __FIXED_SECTION_H__
 #define __FIXED_SECTION_H__
 
-#include "length.h"
 #include "course.h"
 
 //! 最大加速度
