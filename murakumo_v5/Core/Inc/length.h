@@ -14,7 +14,7 @@
 
 #include "encoder.h"
 
-#define D_LENGTH 1
+#define D_LENGTH 0
 
 void length_set_sampling_time_ms(unsigned short int);
 

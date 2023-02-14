@@ -14,7 +14,7 @@
 float length_left, length_right;
 float velocity_left, velocity_right;
 float length_update_sampling_time_s;
-float started;
+uint8_t length_started;
 
 void length_set_sampling_time_ms(unsigned short int samplingtime_ms)
 {
@@ -23,25 +23,25 @@ void length_set_sampling_time_ms(unsigned short int samplingtime_ms)
 
 void length_init(unsigned short int samplingtime_ms)
 {
-    started = 0;
+    length_started = 0;
     length_set_sampling_time_ms(samplingtime_ms);
     encoder_init();
 }
 
 void length_start()
 {
-    if(started <= 0)
+    if(0 >= length_started)
     {
         length_reset();
         encoder_start();
     }
-    started = 1;
+    length_started = 1;
 }
 
 void length_stop()
 {
     encoder_stop();
-    started = 0;
+    length_started = 0;
 }
 
 void length_fin()

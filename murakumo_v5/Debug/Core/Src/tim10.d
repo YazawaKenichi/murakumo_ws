@@ -40,7 +40,7 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
  ../Core/Inc/length.h ../Core/Inc/time.h ../Core/Inc/function.h \
  ../Core/Inc/IMU.h ../Core/Inc/geometry.h ../Core/Inc/velotrace.h \
  ../Core/Inc/pid.h ../Core/Inc/fixed_section.h ../Core/Inc/slow.h \
- ../Core/Inc/sidesensor.h
+ ../Core/Inc/sidesensor.h ../Core/Inc/tracer.h
 
 ../Core/Inc/tim10.h:
 
@@ -151,3 +151,5 @@ Core/Src/tim10.o: ../Core/Src/tim10.c ../Core/Inc/tim10.h \
 ../Core/Inc/slow.h:
 
 ../Core/Inc/sidesensor.h:
+
+../Core/Inc/tracer.h:

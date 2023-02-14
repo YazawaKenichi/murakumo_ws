@@ -172,10 +172,8 @@ float tim7_read_right()
 
 void tim7_d_print()
 {
-    /* d_print */
-    #if D_TIM7
-    printf("tim7.c > tim7_d_print() > ");
-    printf("i_count = %3d, i_start = %3d\r\n", i_count, i_start);
-    #endif
+#if D_TIM7
+    printf("tim7_left = %f, tim7_right = %f\r\n", tim7_left, tim7_right);
+#endif
     analog_d_print();
 }

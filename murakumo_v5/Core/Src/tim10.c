@@ -70,28 +70,16 @@ void tim10_main()
 //! 速度制御の指令値を更新する
 void tim10_update_values()
 {
-	/* slow start のプログラムいれたけど、できないよ！ */
-	#if USE_SLOWSTART
-	if(slow_read_enable())
+#if USE_SLOWSTART
+	if(rotary_read_playmode() == search)
 	{
-		//! 
-		slow_set_velocity(velocity);
 		slow_main();
-		//! slow で設定された目標速度と PID ゲイン値を velotrace に渡す
-		velotrace_set_values(slow_read_gain_values());
 	}
-	#endif
+#endif
 
 	tim10_left  = velotrace_solve(velocity_read());
 	tim10_right = tim10_left;
 }
-
- /*
-	if(length >= SAMPLING_LENGTH)
-	{
-		course_state_function();
-	}
- */
 
 float tim10_read_left()
 {
@@ -105,6 +93,9 @@ float tim10_read_right()
 
 void tim10_d_print()
 {
+#if D_TIM10
+	printf("tim10_left = %f, tim10_right = %f\r\n", tim10_left, tim10_right);
+#endif
 	length_d_print();
 	course_d_print();
 	velotrace_print_values();

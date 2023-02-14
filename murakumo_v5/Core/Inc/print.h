@@ -26,5 +26,6 @@ void print_rotary_value();
 void tracer_print_values();
 void velotrace_print_values();
 void print_analog_rate();
+void print_bin();
 
 #endif

@@ -77,8 +77,7 @@ void motor_set(float motor_left_, float motor_right_)
     {
         ...
         tracer_init();
-        tracer_set_gain(10, 8, 2);
-        tracer_set_target(0);
+        / * 記述中 * /
         ...
     }
 

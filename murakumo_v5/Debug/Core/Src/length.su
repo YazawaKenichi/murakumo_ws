@@ -11,4 +11,4 @@ length.c:73:7:velocity_read	16	static
 length.c:78:7:velocity_read_left	4	static
 length.c:83:7:velocity_read_right	4	static
 length.c:89:6:length_update	24	static
-length.c:104:6:length_d_print	24	static
+length.c:104:6:length_d_print	4	static

@@ -31,7 +31,7 @@
 #define TRACER_KD_MIN 0
 #endif
 
-#define TRACER_KP_MAX 0.03f
+#define TRACER_KP_MAX 1
 #define TRACER_KI_MAX 0
 #define TRACER_KD_MAX 0
 
@@ -49,31 +49,41 @@
 #define TRACER_KD_MIN 335.71f
 #endif
 
-/* s_error and d_error are zero and if search then gain and target are zero */
+/* pre setting */
+void tracer_init(float samplingtime_);
 void tracer_start();
 void tracer_stop();
-/* s_error and d_error are zero*/
-void tracer_init(float samplingtime_);
-/* read kp ki kd */
-float tracer_read_gain_kp(unsigned short int i);
-float tracer_read_gain_ki(unsigned short int i);
-float tracer_read_gain_kd(unsigned short int i);
-/* kp ki kd settings*/
-void tracer_set_gain(unsigned short int i);
-/* terget setting */
-void tracer_set_target(float target_);
+
+/* reading */
+float tracer_read_gain_kp();
+float tracer_read_gain_ki();
+float tracer_read_gain_kd();
+
+/* gain setting */
+void tracer_set_gain_kp_index(unsigned short int);
+void tracer_set_gain_ki_index(unsigned short int);
+void tracer_set_gain_kd_index(unsigned short int);
+void tracer_set_gain_kp_direct(float kp);
+void tracer_set_gain_ki_direct(float ki);
+void tracer_set_gain_kd_direct(float kd);
+void tracer_set_gain_direct(float, float, float);
+
+/* target kp ki kd set zero */
 void tracer_set_target_zero();
 void tracer_set_gain_zero();
+
+/* calclate pid values from rotary value */
+float tracer_calc_gain_kp(unsigned short int);
+float tracer_calc_gain_ki(unsigned short int);
+float tracer_calc_gain_kd(unsigned short int);
+
+/* all parameter */
+void tracer_set_values(PID *_pid);
+PID* tracer_read_values();
+
 /* calclate pid solving */
-float tracer_solve(int reference_);
-/* calclate pid solving with pid gain */
-float tracer_solve_with_gain(int, float, float, float);
-void tracer_d_print();
+float tracer_solve(int);
 void tracer_print_values();
-/* read pid struct */
-// PID tracer_read();
-/* set pid struct */
-// void tracer_set(PID);
 
 /* usuage */
 /*
@@ -81,8 +91,7 @@ void tracer_print_values();
     {
         ...
         tracer_init();
-        tracer_set_gain(10, 8, 2);
-        tracer_set_target(0);
+        / * 記述中 * /
         ...
     }
 

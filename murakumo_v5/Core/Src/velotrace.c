@@ -4,55 +4,61 @@ float velotrace_s_error;
 float velotrace_before_error;
 uint16_t velotrace_sampling_time_ms;
 uint16_t velotrace_gain_tuning_time_ms;
-
 PID velotrace_pid;
+uint8_t velotrace_started;
 
 /* pre setting */
 void velotrace_init(uint16_t samplingtime_ms)
 {
+    velotrace_started = 0;
     velotrace_sampling_time_ms = samplingtime_ms;
 }
 
 void velotrace_start()
 {
-    float target, kp, ki, kd;
-    #if D_VELOTRACE
-    printf("velotrace_sampling_time_ms = 1, velotrace_s_error = 0, velotrace_before_error = 0\r\n");
-    #endif
-    velotrace_s_error = 0;
-    velotrace_before_error = 0;
-    velotrace_gain_tuning_time_ms = 0;
-    switch(rotary_read_playmode())
+    if(velotrace_started <= 0)
     {
-        case search:
-        case accel:
-            target = VELOCITY_TARGET_MIN;
-            kp = 1000;
-            ki = 100;
-            kd = 0;
-            break;
-        case velotrace_tuning:
-            target = VELOCITY_TARGET_MIN;
-            kp = velotrace_calc_gain_kp(rotary_read_value());
-            ki = velotrace_calc_gain_ki(rotary_read_value());
-            kd = velotrace_calc_gain_kd(rotary_read_value());
-            break;
-        case tracer_tuning:
-        default:
-            target = 0;
-            kp = 0;
-            ki = 0;
-            kd = 0;
-            break;
+        float target, kp, ki, kd;
+        #if D_VELOTRACE
+        printf("velotrace_sampling_time_ms = 1, velotrace_s_error = 0, velotrace_before_error = 0\r\n");
+        #endif
+        velotrace_s_error = 0;
+        velotrace_before_error = 0;
+        velotrace_gain_tuning_time_ms = 0;
+        switch(rotary_read_playmode())
+        {
+            case search:
+            case accel:
+                target = VELOCITY_TARGET_MIN;
+                kp = 1000;
+                ki = 100;
+                kd = 0;
+                break;
+            case velotrace_tuning:
+                target = VELOCITY_TARGET_MIN;
+                kp = velotrace_calc_gain_kp(rotary_read_value());
+                ki = velotrace_calc_gain_ki(rotary_read_value());
+                kd = velotrace_calc_gain_kd(rotary_read_value());
+                break;
+            case tracer_tuning:
+            default:
+                target = 0;
+                kp = 0;
+                ki = 0;
+                kd = 0;
+                break;
+        }
+        velotrace_set_target_direct(target);
+        velotrace_set_gain_direct(kp, ki, kd);
     }
-    velotrace_set_target_direct(target);
-    velotrace_set_gain_direct(kp, ki, kd);
+    velotrace_started = 1;
 }
 
 void velotrace_stop()
 {
     velotrace_set_target_zero();
     velotrace_set_gain_zero();
+    velotrace_started = 0;
 }
 
 /* reading */

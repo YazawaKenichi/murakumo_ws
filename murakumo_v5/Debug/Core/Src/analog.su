@@ -1,12 +1,12 @@
 analog.c:15:6:analog_array_print	80	static
 analog.c:22:6:analog_rate_array_print	104	static
-analog.c:43:6:analog_d_print	4	static
+analog.c:43:6:analog_d_print	8	static
 analog.c:52:6:analog_print_analogmode	8	static
 analog.c:76:6:analog_print	8	static
 analog.c:84:6:analog_print_max	8	static
 analog.c:92:6:analog_print_min	8	static
 analog.c:100:6:analog_set_on_flash	32	static
-analog.c:116:6:analog_set_from_flash	24	static
+analog.c:116:6:analog_set_from_flash	32	static
 analog.c:134:6:analog_set_calibrationsize	16	static
 analog.c:139:9:analog_read_calibrationsize	4	static
 analog.c:144:6:analog_set_analogmode	16	static

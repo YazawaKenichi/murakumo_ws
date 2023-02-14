@@ -5,12 +5,14 @@ float leftmotor, rightmotor;
 #endif
 
 SideSensorState tim6_markerstate_before;
+uint8_t debug_num;
 
 void tim6_init()
 {
     motor_init();
     // sidesensor_init();
     HAL_TIM_Base_Stop_IT(&htim6);
+    debug_num = 0;
 }
 
 void tim6_start()
@@ -22,6 +24,7 @@ void tim6_start()
     sidesensor_start();
     motor_start();
 	HAL_TIM_Base_Start_IT(&htim6);	// PID
+    debug_num += 0b1;
 }
 
 void tim6_stop()
@@ -30,6 +33,7 @@ void tim6_stop()
 	HAL_TIM_Base_Stop_IT(&htim6);
     sidesensor_stop();
     course_stop();
+    debug_num += 0b10;
 }
 
 void tim6_main()
@@ -55,6 +59,8 @@ void tim6_main()
     markerstate_volatile = sidesensor_read_markerstate_volatile();
 #endif
 
+    debug_num = 0;
+    debug_num += 0b100;
     if(motor_read_enable() && playmode != motor_free)
     {
         #if !(TRACER_TUNING || VELOTRACE_TUNING)
@@ -63,14 +69,17 @@ void tim6_main()
             case tracer_tuning:
                 leftmotor   = 0 + tim7_read_left();
                 rightmotor  = 0 + tim7_read_right();
+                debug_num += 0b1000;
                 break;
             case velotrace_tuning:
                 leftmotor   = tim10_read_left() + 0;
                 rightmotor  = tim10_read_right() + 0;
+                debug_num += 0b10000;
                 break;
             default:
                 leftmotor   = tim10_read_left() + tim7_read_left();
                 rightmotor  = tim10_read_right() + tim7_read_right();
+                debug_num += 0b100000;
                 break;
         }
         #else
@@ -92,6 +101,7 @@ void tim6_main()
     {
         leftmotor = 0;
         rightmotor = 0;
+        debug_num += 0b1000000;
     }
 
 #if LEFT_MARKER_RADIUS
@@ -114,6 +124,7 @@ void tim6_main()
             motor_set(leftmotor, rightmotor);
             break;
         default:
+            debug_num += 0b10000000;
             motor_set(leftmotor, rightmotor);
             break;
     }
@@ -124,8 +135,10 @@ void tim6_main()
 void tim6_d_print()
 {
     #if D_TIM6
-    printf("tim6.c > tim6_d_print() > leftmotor = %5.3f, rightmotor = %5.3f\r\n", leftmotor, rightmotor); 
-    printf("tim6.c > tim6_d_print() > sidesensor_d_print() > ");
+    printf("tim6.c > debug_num = ");
+    print_bin(debug_num);
+    printf("\r\n");
+    printf("tim6.c > tim6_d_print() > motor_enable = %1d, leftmotor = %5.3f, rightmotor = %5.3f\r\n", motor_read_enable(), leftmotor, rightmotor); 
     #endif
     sidesensor_d_print();
 }

@@ -13,8 +13,17 @@
 
 #include "pid.h"
 #include "function.h"
+#include "length.h"
+#include "sidesensor.h"
+#include "velotrace.h"
+#include "tracer.h"
 
 #define SLOW_LENGTH 300
+
+#define SLOW_VELOTRACE_TARGET 0.3   //! [ m / s ]
+#define SLOW_TRACE_KP 3
+#define SLOW_TRACE_KI 0
+#define SLOW_TRACE_KD 0.5f
 
 #define THREE_SIGMA 0.9976f
 
@@ -22,7 +31,7 @@
 #define SLOW_SIGMOID_A  (13 / SLOW_LENGTH)
 
 void slow_init();
-void slow_start(PID*);
+void slow_start();
 void slow_stop();
 void slow_fin();
 
@@ -33,7 +42,7 @@ float slow_read_velocity();
 PID *slow_read_gain_values();
 
 void slow_set_enable(uint8_t);
-void slow_set_values(float);
+void slow_set_values(PID*);
 void slow_set_velocity(float);
 
 float slow_sigmoid(float);
