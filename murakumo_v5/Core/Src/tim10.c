@@ -57,7 +57,7 @@ void tim10_main()
 	section_length_update();
 	//! 速度制御の指令値をアップデートし続ける
 	tim10_update_values();
-	if(rotary_read_playmode() == velotrace_tuning)
+	if(rotary_read_playmode() == velotrace_tuning_2)
 	{
 		if(sidesensor_read_markerstate() == straight)
 		{
@@ -100,4 +100,5 @@ void tim10_d_print()
 	course_d_print();
 	velotrace_print_values();
 	section_length_d_print();
+	slow_print_default_pid();
 }

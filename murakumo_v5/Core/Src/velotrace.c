@@ -35,6 +35,12 @@ void velotrace_start()
                 kd = 0;
                 break;
             case velotrace_tuning:
+                target = 0;
+                kp = velotrace_calc_gain_kp(rotary_read_value());
+                ki = velotrace_calc_gain_ki(rotary_read_value());
+                kd = velotrace_calc_gain_kd(rotary_read_value());
+                break;
+            case velotrace_tuning_2:
                 target = VELOCITY_TARGET_MIN;
                 kp = velotrace_calc_gain_kp(rotary_read_value());
                 ki = velotrace_calc_gain_ki(rotary_read_value());
@@ -187,8 +193,8 @@ float velotrace_solve(float reference_)
 
     error = reference_ - velotrace_pid.target;
 
-    d_error = (error - velotrace_before_error) / (float) velotrace_sampling_time_ms;
-    velotrace_s_error += error * (float) velotrace_sampling_time_ms;
+    d_error = (error - velotrace_before_error) / (float) (velotrace_sampling_time_ms / (float) 1000);
+    velotrace_s_error += error * (float) (velotrace_sampling_time_ms / (float) 1000);
 
     result = - (velotrace_pid.kp * error + velotrace_pid.ki * velotrace_s_error + velotrace_pid.kd * d_error);
 

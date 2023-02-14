@@ -34,7 +34,7 @@ Core/Src/flash.o: ../Core/Src/flash.c ../Core/Inc/flash.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/Rotary.h ../Core/Inc/flash.h
+ ../Core/Inc/Rotary.h ../Core/Inc/pid.h ../Core/Inc/flash.h
 
 ../Core/Inc/flash.h:
 
@@ -113,5 +113,7 @@ Core/Src/flash.o: ../Core/Src/flash.c ../Core/Inc/flash.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
 ../Core/Inc/Rotary.h:
+
+../Core/Inc/pid.h:
 
 ../Core/Inc/flash.h:

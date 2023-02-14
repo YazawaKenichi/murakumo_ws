@@ -116,3 +116,12 @@ float slow_sigmoid(float x)
 {
     return sigmoid(x, SLOW_SIGMOID_A, SLOW_LENGTH / 2);
 }
+
+void slow_print_default_pid()
+{
+#if D_SLOW
+    printf("slow > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", slow_default_pid.kp, slow_default_pid.ki, slow_default_pid.kd);
+#endif
+}
+
+

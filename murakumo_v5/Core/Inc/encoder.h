@@ -6,7 +6,7 @@
 #include "stm32f4xx_hal_tim.h"
 #include "print.h"
 
-#define D_ENCODER 1
+#define D_ENCODER 0
 #define D_ENCODER_WHILE 0
 
 /* LENGTH PER PULSE */

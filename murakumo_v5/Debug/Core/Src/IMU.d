@@ -34,7 +34,8 @@ Core/Src/IMU.o: ../Core/Src/IMU.c ../Core/Inc/IMU.h ../Core/Inc/defines.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/function.h ../Core/Inc/geometry.h ../Core/Inc/print.h \
- ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h
+ ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
+ ../Core/Inc/pid.h
 
 ../Core/Inc/IMU.h:
 
@@ -119,3 +120,5 @@ Core/Src/IMU.o: ../Core/Src/IMU.c ../Core/Inc/IMU.h ../Core/Inc/defines.h \
 ../Core/Inc/analog.h:
 
 ../Core/Inc/flash.h:
+
+../Core/Inc/pid.h:

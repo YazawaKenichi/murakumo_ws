@@ -18,6 +18,8 @@
 #include "velotrace.h"
 #include "tracer.h"
 
+#define D_SLOW 1
+
 #define SLOW_LENGTH 300
 
 #define SLOW_VELOTRACE_TARGET 0.3   //! [ m / s ]
@@ -46,5 +48,7 @@ void slow_set_values(PID*);
 void slow_set_velocity(float);
 
 float slow_sigmoid(float);
+
+void slow_print_default_pid();
 
 #endif

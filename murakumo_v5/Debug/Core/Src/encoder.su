@@ -1,9 +1,9 @@
 encoder.c:8:7:encoder_length	4	static
 encoder.c:18:7:encoder_length_left	4	static
 encoder.c:27:7:encoder_length_right	4	static
-encoder.c:36:6:encoder_d_print	24	static
+encoder.c:36:6:encoder_d_print	4	static
 encoder.c:44:6:encoder_set	8	static
-encoder.c:59:6:encoder_init	8	static
+encoder.c:59:6:encoder_init	4	static
 encoder.c:66:6:encoder_fin	8	static
 encoder.c:71:6:encoder_start	8	static
 encoder.c:84:6:encoder_stop	8	static

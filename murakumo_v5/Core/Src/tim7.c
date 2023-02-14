@@ -65,7 +65,7 @@ void tim7_main()
 
     #if D_TIM7_WHILE
     printf("tim7.c > tim7_main() > ");
-    printf("analogl = %5d, analogr = %5d, direction = %5d\r\n", analogl, analogr, direction);
+    printf("direction = %5d\r\n", direction);
     #endif
 
     tim7_left   =   tracer_solve(direction);
@@ -136,6 +136,11 @@ int tim7_read_direction()
     	// tim7_main_emergency();
     }
 
+#if D_TIM7_WHILE
+	printf("tim7.c > tim7_main() > ");
+	printf("analogl = %5d, analogr = %5d\r\n", analogl, analogr);
+#endif
+
     return analogl - analogr;
 }
 
@@ -176,4 +181,5 @@ void tim7_d_print()
     printf("tim7_left = %f, tim7_right = %f\r\n", tim7_left, tim7_right);
 #endif
     analog_d_print();
+    tracer_print_values();
 }

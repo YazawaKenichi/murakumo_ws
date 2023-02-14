@@ -2,19 +2,19 @@
 
 float tracer_s_error;
 int tracer_before_error;
-float tracer_samplingtime;
+uint16_t tracer_sampling_time_ms;
 PID tracer_pid;
-uint8_t started;
+uint8_t tracer_started;
 
 void tracer_init(float samplingtime_ms)
 {
-    started = 0;
-    tracer_samplingtime = samplingtime_ms;
+    tracer_started = 0;
+    tracer_sampling_time_ms = samplingtime_ms;
 }
 
 void tracer_start()
 {
-    if(started <= 0)
+    if(tracer_started <= 0)
     {
         float kp, ki, kd;
         tracer_s_error = 0;
@@ -24,14 +24,18 @@ void tracer_start()
         kd = tracer_calc_gain_kd(rotary_read_value());
         tracer_set_target_zero();
         tracer_set_gain_direct(kp, ki, kd);
+    #if D_TRACER
+        printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", kp, ki, kd);
+        print_pid(&tracer_pid);
+    #endif
     }
-    started = 1;
+    tracer_started = 1;
 }
 
 void tracer_stop()
 {
     tracer_set_gain_zero();
-    started = 0;
+    tracer_started = 0;
 }
 
 /* reading */
@@ -73,12 +77,12 @@ void tracer_set_gain_kp_direct(float kp)
 
 void tracer_set_gain_ki_direct(float ki)
 {
-    tracer_pid.kp = ki;
+    tracer_pid.ki = ki;
 }
 
 void tracer_set_gain_kd_direct(float kd)
 {
-    tracer_pid.kp = kd;
+    tracer_pid.kd = kd;
 }
 
 void tracer_set_gain_direct(float kp, float ki, float kd)
@@ -142,10 +146,10 @@ float tracer_solve(int reference_)
     printf("reference_ = %5d\r\n", reference_);
     #endif
 
-    error = reference_;
+    error = reference_ - tracer_pid.target;
 
-    d_error = (error - tracer_before_error) / (float) tracer_samplingtime;
-    tracer_s_error += error * (float) tracer_samplingtime;
+    d_error = (error - tracer_before_error) / (float) (tracer_sampling_time_ms / (float) 1000);
+    tracer_s_error += error * (float) (tracer_sampling_time_ms / (float) 1000);
 
     result = tracer_pid.kp * error + tracer_pid.ki * tracer_s_error + tracer_pid.kd * d_error;
 
@@ -162,6 +166,7 @@ float tracer_solve(int reference_)
 void tracer_print_values()
 {
 #if D_TRACER
+    printf("trac > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
 #endif
 }
 

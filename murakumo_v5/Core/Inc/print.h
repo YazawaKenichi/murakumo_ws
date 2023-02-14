@@ -5,6 +5,7 @@
 #include "defines.h"
 #include "Rotary.h"
 #include "analog.h"
+#include "pid.h"
 
 #define ESC_MAG	"\x1b[35m"
 #define ESC_RED "\x1b[31m"
@@ -27,5 +28,6 @@ void tracer_print_values();
 void velotrace_print_values();
 void print_analog_rate();
 void print_bin();
+void print_pid(PID *);
 
 #endif

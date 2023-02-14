@@ -44,3 +44,8 @@ void print_bin(uint32_t bin)
 		count++;
 	}
 }
+
+void print_pid(PID* pid_)
+{
+	printf("target = %7.2f, kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n");
+}

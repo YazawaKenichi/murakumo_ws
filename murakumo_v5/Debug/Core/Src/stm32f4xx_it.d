@@ -35,9 +35,9 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/defines.h ../Core/Inc/LED.h ../Core/Inc/print.h \
  ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
- ../Core/Inc/Switch.h ../Core/Inc/tim6.h ../Core/Inc/motor.h \
- ../Core/Inc/sidesensor.h ../Core/Inc/tim7.h ../Core/Inc/tracer.h \
- ../Core/Inc/pid.h ../Core/Inc/tim10.h ../Core/Inc/course.h \
+ ../Core/Inc/pid.h ../Core/Inc/Switch.h ../Core/Inc/tim6.h \
+ ../Core/Inc/motor.h ../Core/Inc/sidesensor.h ../Core/Inc/tim7.h \
+ ../Core/Inc/tracer.h ../Core/Inc/tim10.h ../Core/Inc/course.h \
  ../Core/Inc/encoder.h ../Core/Inc/section_length.h ../Core/Inc/length.h \
  ../Core/Inc/time.h ../Core/Inc/function.h ../Core/Inc/IMU.h \
  ../Core/Inc/geometry.h ../Core/Inc/velotrace.h \
@@ -126,6 +126,8 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.c ../Core/Inc/main.h \
 
 ../Core/Inc/flash.h:
 
+../Core/Inc/pid.h:
+
 ../Core/Inc/Switch.h:
 
 ../Core/Inc/tim6.h:
@@ -137,8 +139,6 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.c ../Core/Inc/main.h \
 ../Core/Inc/tim7.h:
 
 ../Core/Inc/tracer.h:
-
-../Core/Inc/pid.h:
 
 ../Core/Inc/tim10.h:
 
