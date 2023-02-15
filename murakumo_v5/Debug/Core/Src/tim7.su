@@ -2,10 +2,10 @@ tim7.c:10:6:tim7_init	8	static
 tim7.c:21:6:tim7_start	8	static
 tim7.c:48:6:tim7_stop	8	static
 tim7.c:59:6:tim7_main	16	static
-tim7.c:81:5:tim7_read_direction	16	static
-tim7.c:147:6:tim7_main_emergency	8	static
-tim7.c:152:6:tim7_set_emergency	16	static
-tim7.c:157:6:tim7_read_emergency	4	static
-tim7.c:162:7:tim7_read_left	4	static
-tim7.c:170:7:tim7_read_right	4	static
-tim7.c:178:6:tim7_d_print	8	static
+tim7.c:81:5:tim7_read_direction	24	static
+tim7.c:158:6:tim7_main_emergency	8	static
+tim7.c:163:6:tim7_set_emergency	16	static
+tim7.c:168:6:tim7_read_emergency	4	static
+tim7.c:173:7:tim7_read_left	4	static
+tim7.c:181:7:tim7_read_right	4	static
+tim7.c:189:6:tim7_d_print	8	static

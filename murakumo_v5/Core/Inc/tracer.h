@@ -5,21 +5,21 @@
 #include "print.h"
 #include "Rotary.h"
 
-#define D_TRACER 1
+#define D_TRACER 0
 #define D_TRACER_WHILE 0
 
 #define TRACER_STEP_SIZE 16
 
 #define TRACER_KP_MAX 1
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 0.05f
+#define TRACER_KD_MAX 0.0133f
 
 #define TRACER_KP_MIN 1
 #define TRACER_KI_MIN 0
-#define TRACER_KD_MIN 0
+#define TRACER_KD_MIN 0.0133f
 
 /* pre setting */
-void tracer_init(float samplingtime_);
+void tracer_init(float);
 void tracer_start();
 void tracer_stop();
 

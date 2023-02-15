@@ -18,7 +18,7 @@
 #include "velotrace.h"
 #include "tracer.h"
 
-#define D_SLOW 1
+#define D_SLOW 0
 
 #define SLOW_LENGTH 300
 

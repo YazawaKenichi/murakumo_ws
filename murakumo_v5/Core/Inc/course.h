@@ -20,7 +20,7 @@
 #define TREAD 103
 #endif
 
-#define D_COURSE 0
+#define D_COURSE 1
 #define D_COURSE_WHILE 0
 #define LEFT_MARKER_RADIUS 1
 

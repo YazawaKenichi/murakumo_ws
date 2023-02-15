@@ -121,7 +121,7 @@ void tim6_main()
         case stop:
             switch_reset_enter();
             tim6_stop();
-            motor_set(leftmotor, rightmotor);
+            motor_set(0, 0);
             break;
         default:
             debug_num += 0b10000000;

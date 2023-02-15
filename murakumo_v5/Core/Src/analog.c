@@ -44,8 +44,8 @@ void analog_d_print()
 {
 #if D_ANALOG
 	analog_print_analogmode();
-	// analog_rate_array_print();
-	analog_array_print(analog);
+	analog_rate_array_print();
+	// analog_array_print(analog);
 #endif
 }
 

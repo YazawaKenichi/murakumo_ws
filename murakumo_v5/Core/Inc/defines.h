@@ -37,9 +37,11 @@
 #define USE_SLOWSTART 0
 #define USE_WRITE_FLASH 1
 
-// one side only
-#define LENGTH_SAMPLING 1
-#define LEFTMARKER_SAMPLING 0
+/* 片方だけ選択 */
+/* 長さでコース記憶 */
+#define LENGTH_SAMPLING 0
+/* 左マーカ */
+#define LEFTMARKER_SAMPLING 1
 
 #define SAMPLING_LENGTH 10000
 

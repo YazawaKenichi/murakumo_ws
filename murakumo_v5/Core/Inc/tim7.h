@@ -13,6 +13,7 @@
 #define D_TIM7_WHILE (0 + D_TRACER_WHILE)
 
 #define TIM7_EMERGENCY_THRESHOLD 980
+#define CLOSS_IGNORE_THRESHOLD 300
 
 #define TIM7_TIME_MS 1  //! [ ms ]
 

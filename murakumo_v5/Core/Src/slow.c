@@ -120,7 +120,8 @@ float slow_sigmoid(float x)
 void slow_print_default_pid()
 {
 #if D_SLOW
-    printf("slow > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", slow_default_pid.kp, slow_default_pid.ki, slow_default_pid.kd);
+    // printf("slow > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", slow_default_pid.kp, slow_default_pid.ki, slow_default_pid.kd);
+    printf("slow > target = %7.2f\r\n", slow_default_pid.target);
 #endif
 }
 

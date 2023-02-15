@@ -1211,7 +1211,6 @@ void main_main()
 	#if D_TIM6_WHILE
 	tim6_main();
 	#endif
-	HAL_Delay(1);
 }
 
 void main_d_print()

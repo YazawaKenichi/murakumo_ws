@@ -81,6 +81,7 @@ void tim7_main()
 int tim7_read_direction()
 {
     uint16_t analogl, analogr;
+    uint16_t short_middle;
 	#if !D_TIM7
     unsigned char i_count, i_start;
 	#endif
@@ -129,11 +130,21 @@ int tim7_read_direction()
             #endif
             analogr += analog_sensor_get(i);
         }
+        if(i < 6)
+        {
+            short_middle = analogl + analogr;
+        }
     }
 
     if(analogl + analogr >= TIM7_EMERGENCY_THRESHOLD * i_count)
     {
     	// tim7_main_emergency();
+    }
+
+    if(short_middle <= CLOSS_IGNORE_THRESHOLD)
+    {
+        analogl = 0;
+        analogr = 0;
     }
 
 #if D_TIM7_WHILE

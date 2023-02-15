@@ -212,8 +212,7 @@ float velotrace_solve(float reference_)
 void velotrace_print_values()
 {
 #if D_VELOTRACE
-	printf("Velotrace\r\n");
-	printf("target = %5.3f\r\n", velotrace_read_target());
+	printf("velo > target = %5.3f\r\n", velotrace_read_target());
 	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", velotrace_calc_gain_kp(rotary_read_value()), velotrace_calc_gain_ki(rotary_read_value()), velotrace_calc_gain_kd(rotary_read_value()));
 #endif
 }
