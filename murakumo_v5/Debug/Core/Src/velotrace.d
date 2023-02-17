@@ -34,7 +34,8 @@ Core/Src/velotrace.o: ../Core/Src/velotrace.c ../Core/Inc/velotrace.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h
+ ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
+ ../Core/Inc/function.h
 
 ../Core/Inc/velotrace.h:
 
@@ -117,3 +118,5 @@ Core/Src/velotrace.o: ../Core/Src/velotrace.c ../Core/Inc/velotrace.h \
 ../Core/Inc/analog.h:
 
 ../Core/Inc/flash.h:
+
+../Core/Inc/function.h:

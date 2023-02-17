@@ -17,6 +17,7 @@ void course_init(unsigned short int samplingtime_ms)
 void course_start()
 {
 	/* course_start */
+	course_state_count = 0;
 	course_reset_section_degree();
 	course_reset_flash();
 	imu_start();
@@ -158,24 +159,27 @@ void course_d_print()
 {
 #if D_COURSE
 	//! length.h を書き直す前の状態
-	printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", section_length_read(), course_read_section_degree(), course_read_curvature_radius());
+	float radius;
+	radius = course_read_curvature_radius();
+	// printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", section_length_read(), course_read_section_degree(), radius);
+	printf("radius = %3.3f, speed = %3.3f\r\n", radius, course_radius2speed(radius));
 	//! printf("course_state_function の実行回数 = %d\r\n", __debug_eradiusecute_count__);
 #endif
 	encoder_d_print();
 }
 
-uint16_t course_radius2speed(float radius)
+float course_radius2speed(float radius)
 {
-	uint16_t speed;
+	float speed;
 	radius = fabs(radius);
-	if(radius < 0.1f) speed = 1.000;
-    else if(radius < 0.25f) speed = 1.100;
-    else if(radius < 0.5f) speed = 1.200;
-    else if(radius < 0.75f) speed = 1.300;
-    else if(radius < 1.0f) speed = 1.400;
-    else if(radius < 1.5f) speed = 1.500;
-    else if(radius < 2.0f) speed = 1.600;
-    else speed = 1.700;
+	if(radius < 0.1f) speed = 1.000f;
+    else if(radius < 0.25f) speed = 1.200f;
+    else if(radius < 0.5f) speed = 1.200f;
+    else if(radius < 0.75f) speed = 1.500f;
+    else if(radius < 1.0f) speed = 1.500f;
+    else if(radius < 1.5f) speed = 1.500f;
+    else if(radius < 2.0f) speed = 2.000f;
+    else speed = 2.000f;
 	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
 	return speed;
 }

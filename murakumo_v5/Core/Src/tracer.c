@@ -4,6 +4,7 @@ float tracer_s_error;
 int tracer_before_error;
 uint16_t tracer_sampling_time_ms;
 PID tracer_pid;
+PID tracer_default;
 uint8_t tracer_started;
 
 void tracer_init(float samplingtime_ms)
@@ -22,6 +23,7 @@ void tracer_start()
         kp = tracer_calc_gain_kp(rotary_read_value());
         ki = tracer_calc_gain_ki(rotary_read_value());
         kd = tracer_calc_gain_kd(rotary_read_value());
+        tracer_set_default_now_gain(kp, ki, kd);
         tracer_set_target_zero();
         tracer_set_gain_direct(kp, ki, kd);
     #if D_TRACER
@@ -119,6 +121,20 @@ float tracer_calc_gain_ki(unsigned short int i)
 float tracer_calc_gain_kd(unsigned short int i)
 {
     return TRACER_KD_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KD_MAX - TRACER_KD_MIN) / (float) (TRACER_STEP_SIZE - 1);
+}
+
+/* set default */
+void tracer_set_gain_default()
+{
+    tracer_pid = tracer_default;
+}
+
+void tracer_set_default_now_gain(float kp, float ki, float kd)
+{
+    tracer_default.target = 0;
+    tracer_default.kp = kp;
+    tracer_default.ki = ki;
+    tracer_default.kd = kd;
 }
 
 /* all parameter */

@@ -12,11 +12,11 @@
 
 #define TRACER_KP_MAX 1
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 0.0133f
+#define TRACER_KD_MAX 0.02f
 
 #define TRACER_KP_MIN 1
 #define TRACER_KI_MIN 0
-#define TRACER_KD_MIN 0.0133f
+#define TRACER_KD_MIN 0
 
 /* pre setting */
 void tracer_init(float);
@@ -45,6 +45,10 @@ void tracer_set_gain_zero();
 float tracer_calc_gain_kp(unsigned short int);
 float tracer_calc_gain_ki(unsigned short int);
 float tracer_calc_gain_kd(unsigned short int);
+
+/* set default */
+void tracer_set_gain_default();                         //! デフォルトのゲイン値を取り戻す
+void tracer_set_default_now_gain(float, float, float);  //! 指定のパラメータをデフォルトのゲイン値に設定する
 
 /* all parameter */
 void tracer_set_values(PID *_pid);

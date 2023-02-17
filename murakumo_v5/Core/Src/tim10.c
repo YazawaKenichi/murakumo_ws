@@ -57,6 +57,13 @@ void tim10_main()
 	section_length_update();
 	//! 速度制御の指令値をアップデートし続ける
 	tim10_update_values();
+	if(rotary_read_playmode() == accel)
+	{
+		if(SAMPLING_LENGTH < section_length_read())
+		{
+			course_state_function();
+		}
+	}
 	if(rotary_read_playmode() == velotrace_tuning_2)
 	{
 		if(sidesensor_read_markerstate() == straight)

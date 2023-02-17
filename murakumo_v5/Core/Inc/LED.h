@@ -11,7 +11,7 @@ uint8_t led_read_current_rgb_value();
 void led_write_led1(uint8_t value_);
 void led_write_led2(uint8_t value_);
 void led_write_rgb(uint8_t rgb_);
-void led_write_led(uint8_t, uint8_t);
+void led_write_led(uint8_t mask, uint8_t value);
 
 /* usuage */
 /*

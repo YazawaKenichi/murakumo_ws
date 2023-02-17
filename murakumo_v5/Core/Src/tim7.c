@@ -110,7 +110,7 @@ int tim7_read_direction()
             break;
     }
 
-    for(unsigned char i = i_start; i < i_count; i++)
+    for(unsigned char i = i_start; i < (i_count + i_start); i++)
     {
         #if D_TIM7_WHILE
         printf("tim7.c > tim7_main() > for() > ");
@@ -130,7 +130,7 @@ int tim7_read_direction()
             #endif
             analogr += analog_sensor_get(i);
         }
-        if(i < 6)
+        if(i < SHORT_MIDDLE_SENSOR)
         {
             short_middle = analogl + analogr;
         }
@@ -141,10 +141,22 @@ int tim7_read_direction()
     	// tim7_main_emergency();
     }
 
-    if(short_middle <= CLOSS_IGNORE_THRESHOLD)
+    //if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR && sidesensor_read_markerstate() == cross)
+    if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR)
     {
-        analogl = 0;
-        analogr = 0;
+        /* 交差判定 */
+        analogl = 3 * (analog_sensor_get(12) + analog_sensor_get(14));
+        analogr = 3 * (analog_sensor_get(13) + analog_sensor_get(15));
+        /* 長い方のゲイン値にする */
+        tim7_tracer_set_gain_long();
+        led_write_led(0b11, 0b10);
+    }
+    else
+    {
+        /* その他判定 */
+        /* 短い方のゲイン値にする（戻すって言った方が正しいかも） */
+        tim7_tracer_set_gain_short();
+        led_write_led(0b11, 0b01);
     }
 
 #if D_TIM7_WHILE
@@ -193,4 +205,18 @@ void tim7_d_print()
 #endif
     analog_d_print();
     tracer_print_values();
+}
+
+void tim7_tracer_set_gain_short()
+{
+    tracer_set_gain_default();
+}
+
+void tim7_tracer_set_gain_long()
+{
+    float kp, ki, kd;
+    kp = TIM7_LONG_KP;
+    ki = TIM7_LONG_KI;
+    kd = TIM7_LONG_KD;
+    tracer_set_gain_direct(kp, ki, kd);
 }

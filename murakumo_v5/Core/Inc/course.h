@@ -22,7 +22,7 @@
 
 #define D_COURSE 1
 #define D_COURSE_WHILE 0
-#define LEFT_MARKER_RADIUS 1
+#define LEFT_MARKER_RADIUS 0
 
 //! フラッシュの角度情報を COURSE_RADIUS_MAX で初期化する
 #define COURSE_RADIUS_MAX 65535
@@ -43,7 +43,7 @@ void course_increment_state_count();
 void course_calclate_radius();
 void course_state_function();
 void course_d_print();
-uint16_t course_radius2speed(float);
+float course_radius2speed(float);
 void course_print_flash();
 void course_reset_flash();
 

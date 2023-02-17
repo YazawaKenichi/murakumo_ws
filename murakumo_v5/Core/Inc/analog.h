@@ -4,8 +4,9 @@
 #include "print.h"
 #include "defines.h"
 #include "flash.h"
+#include "function.h"
 
-#define D_ANALOG 0
+#define D_ANALOG 1
 
 #define ANALOG_CALIBRATION_IN_WHILE 0
 #define ATTACH_LONGSENSOR 0	// use normal sensor and long sensor
@@ -16,6 +17,8 @@
 #ifndef CALIBRATIONSIZE
 #define CALIBRATIONSIZE 16
 #endif
+
+#define ANALOG_LPF_GAMMA 0
 
 typedef enum ANALOGMODE
 {

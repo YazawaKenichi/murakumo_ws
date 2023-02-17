@@ -31,8 +31,8 @@ void tim6_stop()
 {
     motor_stop();
 	HAL_TIM_Base_Stop_IT(&htim6);
-    sidesensor_stop();
     course_stop();
+    sidesensor_stop();
     debug_num += 0b10;
 }
 
@@ -107,7 +107,7 @@ void tim6_main()
 #if LEFT_MARKER_RADIUS
     //! 一定区間で切るプログラムにするときはいらなくなる処理
     //! 今度は tim10 とかに course_state_function() をいれる必要が出てくる
-    if(markerstate_volatile == curve)
+    if(markerstate_volatile == curve || markerstate_volatile == stop)
     {
         course_state_function();
     }

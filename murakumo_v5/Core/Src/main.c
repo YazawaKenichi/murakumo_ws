@@ -1151,10 +1151,18 @@ void main_init()
 
 void running_start()
 {
-  HAL_Delay(2500);
   #if USE_LED
   led_start();
   #endif
+  HAL_Delay(1000);
+  led_write_rgb(0b100);
+  HAL_Delay(1000);
+  led_write_led(0b01, 0b01);
+  HAL_Delay(1000);
+  led_write_led(0b10, 0b10);
+  HAL_Delay(1000);
+  led_write_led(0b11, 0b00);
+  led_write_rgb(0b010);
   #if D_TIM7
   printf("main.c > running_start() > ");
   #endif
@@ -1188,6 +1196,7 @@ void running_stop()
   /* imu バイアス補正のための終了 */
   if(rotary_read_playmode() == motor_free)
     imu_revision_stop();
+  led_write_rgb(0b001);
 }
 
 void main_print_while()
@@ -1195,6 +1204,22 @@ void main_print_while()
 	printf("////////////////////////////// WHILE //////////////////////////////\n\r");
   rotary_print_playmode();
 	print_rotary_value();
+  if(rotary_read() < 4)
+  {
+    led_write_led(0b11, 0b10);
+  }
+  else if(rotary_read() < 8)
+  {
+    led_write_led(0b11, 0b01);
+  }
+  else if(rotary_read() == 15)
+  {
+    led_write_led(0b11, 0b11);
+  }
+  else
+  {
+    led_write_led(0b11, 0b00);
+  }
 }
 
 void main_main()
