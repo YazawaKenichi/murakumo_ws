@@ -5,7 +5,7 @@ float course_section_degree;
 //! float course_section_length;
 float course_section_radius;
 float course_update_section_sampling_time_s;
-unsigned int __debug_execute_count__;
+float __course_debug_target_speed__;
 
 void course_init(unsigned short int samplingtime_ms)
 {
@@ -19,7 +19,10 @@ void course_start()
 	/* course_start */
 	course_state_count = 0;
 	course_reset_section_degree();
-	course_reset_flash();
+	if(rotary_read_playmode() == search)
+	{
+		course_reset_flash();
+	}
 	imu_start();
 }
 
@@ -136,7 +139,9 @@ void course_calclate_radius()
  */
 void course_state_function()
 {
-	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free )
+	PlayMode pm;
+	pm = rotary_read_playmode();
+	if(pm == search || pm == motor_free )
 	{
 		float radius;
 		flashbuffer.course_state_count_max = course_read_state_count();
@@ -146,10 +151,13 @@ void course_state_function()
 		flashbuffer.speed[course_state_count] = course_radius2speed(radius);
 		course_reset();
 	}
-	if(rotary_read_playmode() == accel)
+	if(pm == accel)
 	{
 		float fixed_velocity_target;
+		// course_calclate_radius() を呼び出していないのでリセットする必要がある
+		section_length_set_buffer();
 		fixed_velocity_target = fixed_speed();
+		__course_debug_target_speed__ = fixed_velocity_target;
 		velotrace_set_target_direct(fixed_velocity_target);
 	}
 	course_increment_state_count();
@@ -159,11 +167,12 @@ void course_d_print()
 {
 #if D_COURSE
 	//! length.h を書き直す前の状態
-	float radius;
-	radius = course_read_curvature_radius();
+	// float radius;
+	// radius = course_read_curvature_radius();
 	// printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", section_length_read(), course_read_section_degree(), radius);
-	printf("radius = %3.3f, speed = %3.3f\r\n", radius, course_radius2speed(radius));
+	// printf("radius = %3.3f, speed = %3.3f\r\n", radius, course_radius2speed(radius));
 	//! printf("course_state_function の実行回数 = %d\r\n", __debug_eradiusecute_count__);
+	printf("__course_debug_target_speed__ = %2.5f\r\n", __course_debug_target_speed__);
 #endif
 	encoder_d_print();
 }

@@ -10,7 +10,7 @@
 #include "sidesensor.h"
 #include "section_length.h"
 
-#define D_TIM10 0
+#define D_TIM10 1
 
 #define D_TIM10_WHILE (0 + D_COURSE_WHILE)
 

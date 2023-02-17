@@ -50,6 +50,8 @@ float fixed_speed()
     course_state_count = course_read_state_count();
     speed_now = flashbuffer.speed[course_state_count];
     speed_next = flashbuffer.speed[course_state_count + 1];
+    /* reRo Wiki のやり方 */
+#if FIX_WIKI
     section_time = COURSE_SAMPLING_LENGTH / (float) (speed_next - speed_now);
     accel = (speed_next - speed_now) / section_time;
     if(accel > ACCEL_MAX)
@@ -64,6 +66,12 @@ float fixed_speed()
     {
         speed_target = speed_now;
     }
+#endif
+
+    /* LPF 通してみる */
+#if FIX_LPF
+    speed_target = low_pass_filter(speed_next, speed_now, 0.5f);
+#endif
 
     return speed_target;
 }

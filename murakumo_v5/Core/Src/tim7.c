@@ -28,16 +28,6 @@ void tim7_start()
     tim7_left = 0;
     tim7_right = 0;
     analog_set_from_flash(flashbuffer.analogmin, flashbuffer.analogmax);
-    if(rotary_read_playmode() == search)
-    {
-        analog_set_analogmode(analogmode_short);
-    }
-    else
-    {
-        analog_set_analogmode(analogmode_all);
-    }
-
-    /* 本番直前なので無条件に analogmode_short にする */
     analog_set_analogmode(analogmode_short);
 
     analog_start();

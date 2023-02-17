@@ -6,6 +6,7 @@ float velocity_left, velocity_right, velocity;
 float tim10_left, tim10_right;
 unsigned int samplingtime_ms;
 float samplingtime_s;
+uint32_t __debug_tim10_count__, __debug_tim10_count_2__;
 
 /* only use in main.c */
 void tim10_init()
@@ -23,6 +24,8 @@ void tim10_start()
 {
 	tim10_left = 0;
 	tim10_right = 0;
+	__debug_tim10_count__ = 0;
+	__debug_tim10_count_2__ = 0;
 	course_start();
 	length_start();
 	section_length_start();
@@ -49,6 +52,7 @@ void tim10_fin()
 
 void tim10_main()
 {
+	PlayMode rrpm;
 	//! 角度をアップデートし続ける
 	course_update_section_degree();
 	//! 長さをアップデートし続ける
@@ -57,11 +61,15 @@ void tim10_main()
 	section_length_update();
 	//! 速度制御の指令値をアップデートし続ける
 	tim10_update_values();
-	if(rotary_read_playmode() == accel)
+	rrpm = rotary_read_playmode();
+	__debug_tim10_count_2__ = __debug_tim10_count_2__ + 1;
+	if(rrpm == search || rrpm == accel)
 	{
-		if(SAMPLING_LENGTH < section_length_read())
+		if(COURSE_SAMPLING_LENGTH < section_length_read())
 		{
+			//! 区間長の長さリセットは既にこの関数内に入っている
 			course_state_function();
+			__debug_tim10_count__ = __debug_tim10_count__ + 1;
 		}
 	}
 	if(rotary_read_playmode() == velotrace_tuning_2)
@@ -101,7 +109,8 @@ float tim10_read_right()
 void tim10_d_print()
 {
 #if D_TIM10
-	printf("tim10_left = %f, tim10_right = %f\r\n", tim10_left, tim10_right);
+	// printf("tim10_left = %f, tim10_right = %f\r\n", tim10_left, tim10_right);
+	printf("__debug_tim10_count  __ = %16ld\r\n__debug_tim10_count_2__ = %16ld\r\n", __debug_tim10_count__, __debug_tim10_count_2__);
 #endif
 	length_d_print();
 	course_d_print();

@@ -1144,7 +1144,7 @@ void main_init()
   tim7_init();
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
-  /* imu のバイアス補正のための初期化 */
+  /* imu のバイアス補正のための初期�? */
   if(rotary_read_playmode() == motor_free)
     imu_revision_init();
 }
@@ -1193,7 +1193,7 @@ void running_stop()
   tim7_stop();
   /* HAL_TIM_Base_Stop_IT, HAL_TIM_Encoder_Stop, sidesensor_stop */
   tim10_stop();
-  /* imu バイアス補正のための終了 */
+  /* imu バイアス補正のための終�? */
   if(rotary_read_playmode() == motor_free)
     imu_revision_stop();
   led_write_rgb(0b001);

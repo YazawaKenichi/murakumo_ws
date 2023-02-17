@@ -43,8 +43,6 @@
 /* 左マーカ */
 #define LEFTMARKER_SAMPLING 1
 
-#define SAMPLING_LENGTH 10000
-
 /* main.h で再び宣言されるのを防ぐ */
 #define EXTERN
 #ifdef EXTERN
