@@ -39,7 +39,8 @@ C_SRCS += \
 ../Core/Src/time.c \
 ../Core/Src/tracer.c \
 ../Core/Src/velodef.c \
-../Core/Src/velotrace.c 
+../Core/Src/velotrace.c \
+../Core/Src/virtual_marker.c 
 
 OBJS += \
 ./Core/Src/IMU.o \
@@ -76,7 +77,8 @@ OBJS += \
 ./Core/Src/time.o \
 ./Core/Src/tracer.o \
 ./Core/Src/velodef.o \
-./Core/Src/velotrace.o 
+./Core/Src/velotrace.o \
+./Core/Src/virtual_marker.o 
 
 C_DEPS += \
 ./Core/Src/IMU.d \
@@ -113,7 +115,8 @@ C_DEPS += \
 ./Core/Src/time.d \
 ./Core/Src/tracer.d \
 ./Core/Src/velodef.d \
-./Core/Src/velotrace.d 
+./Core/Src/velotrace.d \
+./Core/Src/virtual_marker.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -125,7 +128,7 @@ Core/Src/main.o: ../Core/Src/main.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/IMU.d ./Core/Src/IMU.o ./Core/Src/LED.d ./Core/Src/LED.o ./Core/Src/Rotary.d ./Core/Src/Rotary.o ./Core/Src/Switch.d ./Core/Src/Switch.o ./Core/Src/analog.d ./Core/Src/analog.o ./Core/Src/correction.d ./Core/Src/correction.o ./Core/Src/course.d ./Core/Src/course.o ./Core/Src/defines.d ./Core/Src/defines.o ./Core/Src/encoder.d ./Core/Src/encoder.o ./Core/Src/fixed_section.d ./Core/Src/fixed_section.o ./Core/Src/flash.d ./Core/Src/flash.o ./Core/Src/function.d ./Core/Src/function.o ./Core/Src/geometry.d ./Core/Src/geometry.o ./Core/Src/length.d ./Core/Src/length.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/motor.d ./Core/Src/motor.o ./Core/Src/pid.d ./Core/Src/pid.o ./Core/Src/print.d ./Core/Src/print.o ./Core/Src/revision.d ./Core/Src/revision.o ./Core/Src/section_length.d ./Core/Src/section_length.o ./Core/Src/sidesensor.d ./Core/Src/sidesensor.o ./Core/Src/slow.d ./Core/Src/slow.o ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o ./Core/Src/tim10.d ./Core/Src/tim10.o ./Core/Src/tim11.d ./Core/Src/tim11.o ./Core/Src/tim6.d ./Core/Src/tim6.o ./Core/Src/tim7.d ./Core/Src/tim7.o ./Core/Src/time.d ./Core/Src/time.o ./Core/Src/tracer.d ./Core/Src/tracer.o ./Core/Src/velodef.d ./Core/Src/velodef.o ./Core/Src/velotrace.d ./Core/Src/velotrace.o
+	-$(RM) ./Core/Src/IMU.d ./Core/Src/IMU.o ./Core/Src/LED.d ./Core/Src/LED.o ./Core/Src/Rotary.d ./Core/Src/Rotary.o ./Core/Src/Switch.d ./Core/Src/Switch.o ./Core/Src/analog.d ./Core/Src/analog.o ./Core/Src/correction.d ./Core/Src/correction.o ./Core/Src/course.d ./Core/Src/course.o ./Core/Src/defines.d ./Core/Src/defines.o ./Core/Src/encoder.d ./Core/Src/encoder.o ./Core/Src/fixed_section.d ./Core/Src/fixed_section.o ./Core/Src/flash.d ./Core/Src/flash.o ./Core/Src/function.d ./Core/Src/function.o ./Core/Src/geometry.d ./Core/Src/geometry.o ./Core/Src/length.d ./Core/Src/length.o ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/motor.d ./Core/Src/motor.o ./Core/Src/pid.d ./Core/Src/pid.o ./Core/Src/print.d ./Core/Src/print.o ./Core/Src/revision.d ./Core/Src/revision.o ./Core/Src/section_length.d ./Core/Src/section_length.o ./Core/Src/sidesensor.d ./Core/Src/sidesensor.o ./Core/Src/slow.d ./Core/Src/slow.o ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o ./Core/Src/tim10.d ./Core/Src/tim10.o ./Core/Src/tim11.d ./Core/Src/tim11.o ./Core/Src/tim6.d ./Core/Src/tim6.o ./Core/Src/tim7.d ./Core/Src/tim7.o ./Core/Src/time.d ./Core/Src/time.o ./Core/Src/tracer.d ./Core/Src/tracer.o ./Core/Src/velodef.d ./Core/Src/velodef.o ./Core/Src/velotrace.d ./Core/Src/velotrace.o ./Core/Src/virtual_marker.d ./Core/Src/virtual_marker.o
 
 .PHONY: clean-Core-2f-Src
 

@@ -6,4 +6,4 @@ IMU.c:168:6:imu_start	4	static
 IMU.c:173:6:imu_stop	4	static
 IMU.c:200:6:imu_update_gyro	32	static
 IMU.c:257:6:imu_update_accel	24	static
-IMU.c:281:7:imu_read_yaw	4	static
+IMU.c:283:7:imu_read_yaw	4	static

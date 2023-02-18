@@ -35,8 +35,12 @@ Core/Src/tim7.o: ../Core/Src/tim7.c ../Core/Inc/tim7.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
- ../Core/Inc/function.h ../Core/Inc/pid.h ../Core/Inc/tracer.h \
- ../Core/Inc/Switch.h ../Core/Inc/sidesensor.h
+ ../Core/Inc/sidesensor.h ../Core/Inc/function.h ../Core/Inc/pid.h \
+ ../Core/Inc/tracer.h ../Core/Inc/Switch.h ../Core/Inc/virtual_marker.h \
+ ../Core/Inc/course.h ../Core/Inc/motor.h ../Core/Inc/encoder.h \
+ ../Core/Inc/section_length.h ../Core/Inc/length.h ../Core/Inc/time.h \
+ ../Core/Inc/IMU.h ../Core/Inc/geometry.h ../Core/Inc/velotrace.h \
+ ../Core/Inc/fixed_section.h ../Core/Inc/LED.h
 
 ../Core/Inc/tim7.h:
 
@@ -118,6 +122,8 @@ Core/Src/tim7.o: ../Core/Src/tim7.c ../Core/Inc/tim7.h \
 
 ../Core/Inc/flash.h:
 
+../Core/Inc/sidesensor.h:
+
 ../Core/Inc/function.h:
 
 ../Core/Inc/pid.h:
@@ -126,4 +132,26 @@ Core/Src/tim7.o: ../Core/Src/tim7.c ../Core/Inc/tim7.h \
 
 ../Core/Inc/Switch.h:
 
-../Core/Inc/sidesensor.h:
+../Core/Inc/virtual_marker.h:
+
+../Core/Inc/course.h:
+
+../Core/Inc/motor.h:
+
+../Core/Inc/encoder.h:
+
+../Core/Inc/section_length.h:
+
+../Core/Inc/length.h:
+
+../Core/Inc/time.h:
+
+../Core/Inc/IMU.h:
+
+../Core/Inc/geometry.h:
+
+../Core/Inc/velotrace.h:
+
+../Core/Inc/fixed_section.h:
+
+../Core/Inc/LED.h:

@@ -20,6 +20,11 @@ uint8_t sidesensor_read()
     return subsens;
 }
 
+void sidesensor_init()
+{
+	/* sidesensor_init */
+}
+
 void sidesensor_start()
 {
     marker = 0;

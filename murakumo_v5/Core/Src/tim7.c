@@ -131,7 +131,7 @@ int tim7_read_direction()
     	// tim7_main_emergency();
     }
 
-    //if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR && sidesensor_read_markerstate() == cross)
+    //if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR && virtual_marker_read_markerstate() == cross)
     if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR)
     {
         /* 交差判定 */

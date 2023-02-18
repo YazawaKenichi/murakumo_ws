@@ -8,7 +8,8 @@
 #include "tracer.h"
 #include "Switch.h"
 #include "Rotary.h"
-#include "sidesensor.h"
+#include "virtual_marker.h"
+#include "LED.h"
 
 #define D_TIM7 0
 #define D_TIM7_WHILE (0 + D_TRACER_WHILE)

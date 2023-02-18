@@ -16,7 +16,7 @@
 #include "motor.h"
 #include "defines.h"
 #include "Rotary.h"
-#include "sidesensor.h"
+#include "virtual_marker.h"
 #include "tim7.h"
 #include "tim10.h"
 #include "course.h"
@@ -32,6 +32,11 @@
 #define TRACER_TUNING 1
 #define VELOTRACE_TUNING 1
 #endif
+
+#define CURVE_MARGIN 1
+//! 減速位置
+#define CURVE_MARGIN_LENGTH 0.125 // [ m ]
+#define CURVE_MARGIN_THRESHOLD 700
 
 #define TEMPORARY 0
 

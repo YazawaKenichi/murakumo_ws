@@ -80,7 +80,7 @@ void slow_main()
     }
     else
     {
-        if(sidesensor_read_markerstate() == stop)
+        if(virtual_marker_read_markerstate() == stop)
         {
             /* コース終了コードが指定されたとき */
             /* 元々指定されていた PID 値を全てゼロに偽装する */

@@ -14,7 +14,7 @@
 #include "pid.h"
 #include "function.h"
 #include "length.h"
-#include "sidesensor.h"
+#include "virtual_marker.h"
 #include "velotrace.h"
 #include "tracer.h"
 

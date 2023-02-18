@@ -13,6 +13,11 @@
 
 float fixed_section_speed_now;
 
+void fixed_section_start()
+{
+    fixed_section_speed_now = flashbuffer.speed[0];
+}
+
 /**
  * @fn
  * @brief 一定距離ごとに course_state_function() を呼び出す関数
@@ -41,47 +46,48 @@ void fixed_section_main()
  * で大丈夫なはず。
  * 
  * course_state_count がインクリメントされる前に呼び出されている
- * そのため現在の速度は flashbuffer.speed[course_state_count] で、
- * 今から flashbuffer.speed[course_state_count + 1] に変更する必要がある
+ * そのため現在の速度は flashbuffer.radius[course_state_count] で、
+ * 今から flashbuffer.radius[course_state_count + 1] に変更する必要がある
  * 
  */
 float fixed_speed()
 {
-    float section_time;
     float speed_now, speed_next;
-    float accel;
     float speed_target;
     uint16_t course_state_count;
 
-    /* LPF 通してみる */
-#if FIX_LPF
-    speed_next = low_pass_filter(speed_next, speed_now, 0.5f);
-#endif
-
     /* この関数は course_state_count がインクリメントされる前に呼び出されていることに注意 */
     course_state_count = course_read_state_count();
-    speed_now = flashbuffer.speed[course_state_count];
     speed_next = flashbuffer.speed[course_state_count + 1];
-    /* 俺のやり方（これが wiki のやり方と一致しているのかしてないのかよくわからない） */
-#if FIX_WIKI
-    section_time = COURSE_SAMPLING_LENGTH / (float) (speed_next - speed_now);
-    accel = (speed_next - speed_now) / section_time;
-    if(accel > ACCEL_MAX)
+#if FIX_LPF
+    /* LPF 通してみる */
+    speed_now = flashbuffer.speed[course_state_count];
+    //! v2 の設定
+    speed_next = low_pass_filter(speed_next, speed_now, 0.5f);
+#endif
+    //! v1 の設定
+    speed_now = fixed_section_speed_now;
+    if(ACCEL_LENGTH >= pow(speed_next - speed_now, 2))
     {
-        speed_target = ACCEL_MAX * COURSE_SAMPLING_LENGTH + speed_next;
-    }
-    if(accel < - DEACCEL_MAX)
-    {
-        speed_target = - DEACCEL_MAX * COURSE_SAMPLING_LENGTH + speed_next;
+        speed_target = speed_next;
     }
     else
     {
-        speed_target = speed_now;
-    }
+        /* 俺のやり方（これが wiki のやり方と一致しているのかしてないのかよくわからない） */
+#if FIX_WIKI
+        if(speed_next >= speed_now)
+        {
+            speed_target = sqrt(ACCEL_LENGTH) + speed_now;
+        }
+        else
+        {
+            speed_target = speed_now - sqrt(ACCEL_LENGTH);
+        }
 #endif
+    }
 
     /* 今回指定された目標値を現在の速度値として記憶させる */
-    fixed_section_speed_now = speed_now;
+    fixed_section_speed_now = speed_target;
 
     return speed_target;
 }

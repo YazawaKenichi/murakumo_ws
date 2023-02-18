@@ -33,6 +33,7 @@
 "./Core/Src/tracer.o"
 "./Core/Src/velodef.o"
 "./Core/Src/velotrace.o"
+"./Core/Src/virtual_marker.o"
 "./Core/Startup/startup_stm32f405rgtx.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o"

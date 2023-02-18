@@ -15,17 +15,20 @@
 #include "course.h"
 #include "function.h"
 
-#define FIX_WIKI 0
-#define FIX_LPF 1
+#define FIX_WIKI 1
+#define FIX_LPF 0
 
 //! 最大加速度
-#define ACCEL_MAX 17 // [ m / s / s ]
+#define ACCEL_MAX 5.5f // [ m / s / s ]
 //! 最大減速度
-#define DEACCEL_MAX 17  // [ m / s / s ]
+#define DEACCEL_MAX ACCEL_MAX  // [ m / s / s ]
+
+#define ACCEL_LENGTH ((float) ACCEL_MAX * (float) COURSE_SAMPLING_LENGTH)
 
 //! LPF のガンマ値
 #define FIXED_SPEED_GAMMA 0.25f
 
+void fixed_section_start();
 void fixed_section_main();
 float fixed_speed();
 

@@ -35,7 +35,7 @@ Core/Src/analog.o: ../Core/Src/analog.c ../Core/Inc/analog.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/pid.h \
- ../Core/Inc/flash.h ../Core/Inc/function.h
+ ../Core/Inc/flash.h ../Core/Inc/sidesensor.h ../Core/Inc/function.h
 
 ../Core/Inc/analog.h:
 
@@ -118,5 +118,7 @@ Core/Src/analog.o: ../Core/Src/analog.c ../Core/Inc/analog.h \
 ../Core/Inc/pid.h:
 
 ../Core/Inc/flash.h:
+
+../Core/Inc/sidesensor.h:
 
 ../Core/Inc/function.h:

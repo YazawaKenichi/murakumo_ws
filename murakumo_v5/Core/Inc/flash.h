@@ -6,6 +6,7 @@
 #include "print.h"
 #include "string.h"
 #include "stm32f4xx_hal.h"
+#include "sidesensor.h"
 
 #define BACKUP_FLASH_SECTORNUM FLASH_SECTOR_11
 #define BACKUP_FLASH_SECTOR_SIZE (1024*16)
@@ -20,8 +21,8 @@ typedef struct
     uint16_t course_state_count_max;
     uint16_t analogmin[CALIBRATIONSIZE];
     uint16_t analogmax[CALIBRATIONSIZE];
-    float radius[COURSE_STATE_SIZE];
     float speed[COURSE_STATE_SIZE];
+    float marker[COURSE_STATE_SIZE];
 } FlashBuffer;
 
 void flash_erase(void);

@@ -63,6 +63,7 @@ void tim10_main()
 	tim10_update_values();
 	rrpm = rotary_read_playmode();
 	__debug_tim10_count_2__ = __debug_tim10_count_2__ + 1;
+#if 0	//! TIM6 に fixed_section_main() があり、そこで同じような処理をしているため飛ばす
 	if(rrpm == search || rrpm == accel)
 	{
 		if(COURSE_SAMPLING_LENGTH < section_length_read())
@@ -72,9 +73,10 @@ void tim10_main()
 			__debug_tim10_count__ = __debug_tim10_count__ + 1;
 		}
 	}
+#endif
 	if(rotary_read_playmode() == velotrace_tuning_2)
 	{
-		if(sidesensor_read_markerstate() == straight)
+		if(virtual_marker_read_markerstate() == straight)
 		{
 			velotrace_gain_tuning();
 		}
