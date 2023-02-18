@@ -206,65 +206,94 @@ float course_radius2speed(float radius)
 
 void course_fixing_radius2speed()
 {
+	float speed[COURSE_STATE_SIZE];
+	uint16_t imax;
+	imax = flashbuffer.course_state_count_max;
 	/* まず矩形グラフを作成する */
-	for(uint16_t course_state_size = flashbuffer.course_state_count_max; course_state_size > 0; course_state_size = course_state_size - 1)
+	for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
 	{
 		uint16_t index;
-		index = flashbuffer.course_state_count_max - course_state_size;
+		index = imax - course_state_size;
 		flashbuffer.speed[index] = course_radius2speed(course_radius[index]);
+		#if D_COURSE
+		printf("course_fixing_radius2speed() > rect 矩形グラフ\r\n");
+		#endif
 	}
 
 	float accel_glaph[COURSE_STATE_SIZE];
 	float decel_glaph[COURSE_STATE_SIZE];
 
 	accel_glaph[0] = 1;
-	decel_glaph[flashbuffer.course_state_count_max] = 1;
+	decel_glaph[imax] = 1;
 
 	/* 加速方向でのこぎりグラフを作成する */
-	for(uint16_t course_state_size = flashbuffer.course_state_count_max; course_state_size > 0; course_state_size = course_state_size - 1)
+	for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
 	{
 		uint16_t index;
 		float v1, v2, vref;
-		index = flashbuffer.course_state_count_max - course_state_size;
+		index = imax - course_state_size;
 		v1 = accel_glaph[index];
 		v2 = flashbuffer.speed[index + 1];
-		if(ACCEL_LENGTH >= pow(v2 - v1, 2))
+		if(v2 > v1)
 		{
-			vref = v2;
+			if(ACCEL_LENGTH >= pow(v2 - v1, 2))
+			{
+				vref = v2;
+			}
+			else
+			{
+				vref = sqrt(ACCEL_LENGTH) + v1;
+			}
 		}
 		else
 		{
-			vref = sqrt(ACCEL_LENGTH) + v1;
+			vref = v2;
 		}
 		accel_glaph[index + 1] = vref;
+		#if D_COURSE
+		printf("course_fixing_radius2speed() > accel 加速グラフ\r\n");
+		#endif
 	}
 
 	/* 減速方向でのこぎりグラフを作成する */
-	for(uint16_t course_state_size = flashbuffer.course_state_count_max; course_state_size > 0; course_state_size = course_state_size - 1)
+	for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
 	{
 		uint16_t index;
 		float v2, v3, vref;
 		index = course_state_size;
 		v3 = decel_glaph[index];
 		v2 = flashbuffer.speed[index - 1];
-		if(ACCEL_LENGTH >= pow(v3 - v2, 2))
+		if(v2 > v3)
 		{
-			vref = v2;
+			if(ACCEL_LENGTH >= pow(v3 - v2, 2))
+			{
+				vref = v2;
+			}
+			else
+			{
+				vref = sqrt(ACCEL_LENGTH) + v3;
+			}
 		}
 		else
 		{
-			vref = sqrt(ACCEL_LENGTH) + v3;
+			vref = v2;
 		}
 		decel_glaph[index - 1] = vref;
+		#if D_COURSE
+		printf("course_fixing_radius2speed() > decel 減速グラフ\r\n");
+		#endif
 	}
 
 	/* 加速方向と減速方向で遅い方の速度を速度値として記憶させる */
-	for(uint16_t course_state_size = flashbuffer.course_state_count_max; course_state_size > 0; course_state_size = course_state_size - 1)
+	for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
 	{
 		uint16_t index;
-		index = flashbuffer.course_state_count_max - course_state_size;
-		printf("%4d, %7.3f, %7.3f\r\n", index, accel_glaph[index], decel_glaph[index]);
+		index = imax - course_state_size;
 		flashbuffer.speed[index] = (accel_glaph[index] > decel_glaph[index]) ? decel_glaph[index] : accel_glaph[index];
+		#if D_COURSE
+		printf("course_fixing_radius2speed() > speed 速度グラフ\r\n");
+		printf("%4d, %7.3f, %7.3f\r\n", index, accel_glaph[index], decel_glaph[index]);
+		#endif
 	}
 }
 
@@ -286,9 +315,9 @@ void course_print_flash()
 					print_data = flashbuffer.speed[index];
 					break;
 				case 14:
+					print_data = flashbuffer.marker[index];
 					break;
 				case 13:
-					print_data = flashbuffer.marker[index];
 					break;
 				default :
 					break;

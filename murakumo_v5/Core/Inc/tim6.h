@@ -34,7 +34,7 @@
 #endif
 
 #define CURVE_MARGIN 1
-//! 減速位置
+//! 減速位置    //! LEFT_MARKER_RADIUS が有効の時のみ使用可能
 #define CURVE_MARGIN_LENGTH 0.125 // [ m ]
 #define CURVE_MARGIN_THRESHOLD 700
 

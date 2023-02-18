@@ -20,7 +20,7 @@
 #define TREAD 103
 #endif
 
-#define D_COURSE 0
+#define D_COURSE 1
 #define D_COURSE_WHILE 0
 #define LEFT_MARKER_RADIUS 0
 
@@ -28,7 +28,7 @@
 #define COURSE_RADIUS_MAX 65535
 //! フラッシュの速度情報を COURSE_SPEED_DEFAULT で初期化する
 #define COURSE_SPEED_DEFAULT 0.999f
-#define COURSE_SAMPLING_LENGTH (float) 0.500f // [ m ]
+#define COURSE_SAMPLING_LENGTH (float) 0.010f // [ m ]
 
 void course_init(unsigned short int samplingtime_ms);
 void course_start();
