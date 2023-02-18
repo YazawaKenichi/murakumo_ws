@@ -11,6 +11,8 @@
 
 #include "fixed_section.h"
 
+float fixed_section_speed_now;
+
 /**
  * @fn
  * @brief 一定距離ごとに course_state_function() を呼び出す関数
@@ -38,6 +40,10 @@ void fixed_section_main()
  * ( 速度 PID の目標値 ) = fixed_speed();
  * で大丈夫なはず。
  * 
+ * course_state_count がインクリメントされる前に呼び出されている
+ * そのため現在の速度は flashbuffer.speed[course_state_count] で、
+ * 今から flashbuffer.speed[course_state_count + 1] に変更する必要がある
+ * 
  */
 float fixed_speed()
 {
@@ -47,10 +53,16 @@ float fixed_speed()
     float speed_target;
     uint16_t course_state_count;
 
+    /* LPF 通してみる */
+#if FIX_LPF
+    speed_next = low_pass_filter(speed_next, speed_now, 0.5f);
+#endif
+
+    /* この関数は course_state_count がインクリメントされる前に呼び出されていることに注意 */
     course_state_count = course_read_state_count();
     speed_now = flashbuffer.speed[course_state_count];
     speed_next = flashbuffer.speed[course_state_count + 1];
-    /* reRo Wiki のやり方 */
+    /* 俺のやり方（これが wiki のやり方と一致しているのかしてないのかよくわからない） */
 #if FIX_WIKI
     section_time = COURSE_SAMPLING_LENGTH / (float) (speed_next - speed_now);
     accel = (speed_next - speed_now) / section_time;
@@ -68,10 +80,8 @@ float fixed_speed()
     }
 #endif
 
-    /* LPF 通してみる */
-#if FIX_LPF
-    speed_target = low_pass_filter(speed_next, speed_now, 0.5f);
-#endif
+    /* 今回指定された目標値を現在の速度値として記憶させる */
+    fixed_section_speed_now = speed_now;
 
     return speed_target;
 }
