@@ -14,7 +14,7 @@ void motor_stop();
 void motor_init();
 void motor_enable(uint8_t enable_);
 char motor_read_enable();
-void motor_set(double motor_left_, double motor_right_);
+void motor_set(float motor_left_, float motor_right_);
 
 #endif
 

@@ -46,7 +46,14 @@
 #define REG_BANK_SEL 0x7F
 
 //! (M_PI / 180) [rad / deg]
-#define RADPERDEG (M_PI / (double) 180)
+#define RADPERDEG (M_PI / (float) 180)
+
+//! バイアス補正
+#define BIAS_AVERAGE (-0.137694f + 0.0025f)  // 求めた平均値
+#define TRUE_VALUE 0    // 真値
+
+//! Low Pass Filter
+#define LPF_RATE 0.3f
 
 uint8_t imu_read_byte(uint8_t);
 void imu_write_byte(uint8_t, uint8_t);

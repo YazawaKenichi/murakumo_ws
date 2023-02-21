@@ -1,5 +1,5 @@
 flash.c:12:6:flash_erase	32	static
-flash.c:24:6:flash_writting	32	static
+flash.c:24:6:flash_writting	40	static
 flash.c:40:6:flash_reading	24	static
 flash.c:45:6:flash_write	8	static
 flash.c:50:6:flash_read	8	static

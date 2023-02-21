@@ -1,5 +1,5 @@
 time.c:38:6:time_update_ms	16	static
 time.c:48:6:time_init	4	static
-time.c:54:14:time_countup	24	static
+time.c:54:6:time_countup	24	static
 time.c:67:14:time_read_ms	4	static
 time.c:72:14:time_read_origin	4	static

@@ -2,10 +2,11 @@
 
 /* marker : 一回目の左右の色と二回目の左右の色が格納される */
 /* markerstate : 直前のマーカの種類が格納される */
+/* markerstate_volatile : 左右マーカを読み取った瞬間だけ格納され、次の周でデフォルトに戻される */
 /* rightmarkercount : 右マーカの数が格納される */
 
 unsigned char subsensbuf, marker, sidedeltacount, rightmarkercount;
-SideSensorState markerstate;
+SideSensorState markerstate, markerstate_volatile;
 char sidesensor_start_or_stop;
 
 uint8_t sidesensor_read()
@@ -19,13 +20,19 @@ uint8_t sidesensor_read()
     return subsens;
 }
 
+void sidesensor_init()
+{
+	/* sidesensor_init */
+}
+
 void sidesensor_start()
 {
     marker = 0;
     subsensbuf = 0;
     sidedeltacount = 0;
     rightmarkercount = 0;
-	markerstate = start;
+	markerstate = none;
+	markerstate_volatile = none;
     // HAL_TIM_Base_Start_IT(&htim14);
 }
 
@@ -39,16 +46,23 @@ SideSensorState sidesensor_read_markerstate()
 	return markerstate;
 }
 
+SideSensorState sidesensor_read_markerstate_volatile()
+{
+	return markerstate_volatile;
+}
+
 void sidesensor_right()
 {
     if(rightmarkercount == 1 - 1)
     {
         // start
+		markerstate_volatile = straight;
 		markerstate = straight;
     }
     else if(rightmarkercount == 2 - 1)
     {
         // stop
+		markerstate_volatile = stop;
 		markerstate = stop;
     }
     rightmarkercount++;
@@ -58,18 +72,21 @@ void sidesensor_left()
 {
     // curve
     markerstate = curve;
+	markerstate_volatile = curve;
 }
 
 void sidesensor_cross()
 {
     // cross
     markerstate = cross;
+	markerstate_volatile = cross;
 }
 
 void sidesensor_straight()
 {
 	// straight
 	markerstate = straight;
+	markerstate_volatile = straight;
 }
 
 void sidesensor_main()
@@ -77,6 +94,7 @@ void sidesensor_main()
 	unsigned char subsens;
 
 	subsens = sidesensor_read();
+	markerstate_volatile = none;
 
 	if(subsens != subsensbuf)
 	{
@@ -124,6 +142,9 @@ void sidesensor_print_sidesensorstate(SideSensorState markerstate_)
 {
 	switch(markerstate_)
 	{
+		case none:
+			printf("none\r\n");
+			break;
 		case straight:
 			printf("straight\r\n");
 			break;

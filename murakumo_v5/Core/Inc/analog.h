@@ -4,6 +4,7 @@
 #include "print.h"
 #include "defines.h"
 #include "flash.h"
+#include "function.h"
 
 #define D_ANALOG 0
 
@@ -16,6 +17,8 @@
 #ifndef CALIBRATIONSIZE
 #define CALIBRATIONSIZE 16
 #endif
+
+#define ANALOG_LPF_GAMMA 0
 
 typedef enum ANALOGMODE
 {

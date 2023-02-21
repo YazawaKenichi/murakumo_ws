@@ -33,16 +33,15 @@
 #define USE_DANGERSTOP 0
 #define USE_LR_DIFFERENCE 1
 #define USE_PID_ARRAY 1
-#define USE_COURSE_STATE_TIME 1
 
 #define USE_SLOWSTART 0
 #define USE_WRITE_FLASH 1
 
-// one side only
-#define LENGTH_SAMPLING 1
-#define LEFTMARKER_SAMPLING 0
-
-#define SAMPLING_LENGTH 10000
+/* 片方だけ選択 */
+/* 長さでコース記憶 */
+#define LENGTH_SAMPLING 0
+/* 左マーカ */
+#define LEFTMARKER_SAMPLING 1
 
 /* main.h で再び宣言されるのを防ぐ */
 #define EXTERN

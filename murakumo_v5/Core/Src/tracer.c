@@ -1,109 +1,171 @@
 #include "tracer.h"
 
-double tracer_s_error;
+float tracer_s_error;
 int tracer_before_error;
-double tracer_samplingtime;
-
+uint16_t tracer_sampling_time_ms;
 PID tracer_pid;
+PID tracer_default;
+uint8_t tracer_started;
+
+void tracer_init(float samplingtime_ms)
+{
+    tracer_started = 0;
+    tracer_sampling_time_ms = samplingtime_ms;
+}
 
 void tracer_start()
 {
-    tracer_s_error = 0;
-    tracer_before_error = 0;
-    tracer_set_gain(rotary_read_value());
-    tracer_set_target(0);
+    if(tracer_started <= 0)
+    {
+        float kp, ki, kd;
+        tracer_s_error = 0;
+        tracer_before_error = 0;
+        kp = tracer_calc_gain_kp(rotary_read_value());
+        ki = tracer_calc_gain_ki(rotary_read_value());
+        kd = tracer_calc_gain_kd(rotary_read_value());
+        tracer_set_default_now_gain(kp, ki, kd);
+        tracer_set_target_zero();
+        tracer_set_gain_direct(kp, ki, kd);
     #if D_TRACER
-    printf("tracer.c > tracer_start > ");
-    printf("target = %5.2f\r\n", tracer_pid.target);
-    printf("tracer.c > tracer_start > ");
-    printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
+        printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", kp, ki, kd);
+        print_pid(&tracer_pid);
     #endif
+    }
+    tracer_started = 1;
 }
 
 void tracer_stop()
 {
-    tracer_set_target_zero();
     tracer_set_gain_zero();
+    tracer_started = 0;
 }
 
-void tracer_init(double samplingtime_)
+/* reading */
+float tracer_read_gain_kp()
 {
-    #if D_TRACER
-    printf("tracer.c > ");
-    printf("tracer_init > ");
-    printf("sampling_time = 1, tracer_s_error = 0, tracer_before_error = 0\r\n");
-    #endif
-    tracer_samplingtime = samplingtime_;
+    return tracer_pid.kp;
 }
 
-void tracer_set_gain_zero()
+float tracer_read_gain_ki()
+{
+    return tracer_pid.ki;
+}
+
+float tracer_read_gain_kd()
+{
+    return tracer_pid.kd;
+}
+
+/* target setting */
+void tracer_set_gain_kp_index(unsigned short int i)
+{
+    tracer_set_gain_kp_direct(tracer_calc_gain_kp(i));
+}
+
+void tracer_set_gain_ki_index(unsigned short int i)
+{
+    tracer_set_gain_ki_direct(tracer_calc_gain_ki(i));
+}
+
+void tracer_set_gain_kd_index(unsigned short int i)
+{
+    tracer_set_gain_kd_direct(tracer_calc_gain_kd(i));
+}
+
+void tracer_set_gain_kp_direct(float kp)
+{
+    tracer_pid.kp = kp;
+}
+
+void tracer_set_gain_ki_direct(float ki)
+{
+    tracer_pid.ki = ki;
+}
+
+void tracer_set_gain_kd_direct(float kd)
+{
+    tracer_pid.kd = kd;
+}
+
+void tracer_set_gain_direct(float kp, float ki, float kd)
+{
+    tracer_set_gain_kp_direct(kp);
+    tracer_set_gain_ki_direct(ki);
+    tracer_set_gain_kd_direct(kd);
+}
+
+/* kp ki kd set zero */
+void tracer_set_target_zero()
 {
     tracer_pid.target = 0;
 }
 
-void tracer_set_target_zero()
+void tracer_set_gain_zero()
 {
     tracer_pid.kp = 0;
     tracer_pid.ki = 0;
     tracer_pid.kd = 0;
 }
 
-double tracer_read_gain_kp(unsigned short int i)
+/* calclate pid values from rotary value */
+float tracer_calc_gain_kp(unsigned short int i)
 {
-    return TRACER_KP_MAX - ((TRACER_STEP_SIZE - 1) - i) * (double) (TRACER_KP_MAX - TRACER_KP_MIN) / (double) (TRACER_STEP_SIZE - 1);
+    return TRACER_KP_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KP_MAX - TRACER_KP_MIN) / (float) (TRACER_STEP_SIZE - 1);
 }
 
-double tracer_read_gain_ki(unsigned short int i)
+float tracer_calc_gain_ki(unsigned short int i)
 {
-    return TRACER_KI_MAX - ((TRACER_STEP_SIZE - 1) - i) * (double) (TRACER_KI_MAX - TRACER_KI_MIN) / (double) (TRACER_STEP_SIZE - 1);
+    return TRACER_KI_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KI_MAX - TRACER_KI_MIN) / (float) (TRACER_STEP_SIZE - 1);
 }
 
-double tracer_read_gain_kd(unsigned short int i)
+float tracer_calc_gain_kd(unsigned short int i)
 {
-    return TRACER_KD_MAX - ((TRACER_STEP_SIZE - 1) - i) * (double) (TRACER_KD_MAX - TRACER_KD_MIN) / (double) (TRACER_STEP_SIZE - 1);
+    return TRACER_KD_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KD_MAX - TRACER_KD_MIN) / (float) (TRACER_STEP_SIZE - 1);
 }
 
-void tracer_set_gain(unsigned short int i)
+/* set default */
+void tracer_set_gain_default()
 {
-    #if D_TRACER
-    printf("tracer.c > ");
-    printf("tracer_set_gain() > ");
-    #endif
-    tracer_pid.kp = tracer_read_gain_kp(i);
-    tracer_pid.ki = tracer_read_gain_ki(i);
-    tracer_pid.kd = tracer_read_gain_kd(i);
-    #if D_TRACER
-    printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
-    #endif
+    tracer_pid = tracer_default;
 }
 
-void tracer_set_target(double target_)
+void tracer_set_default_now_gain(float kp, float ki, float kd)
 {
-    #if D_TRACER
-    printf("tracer.c > ");
-    printf("tracer_set_target() > ");
-    #endif
-    tracer_pid.target = target_;
-    #if D_TRACER
-    printf("target_ = %5.2f, target = %5.2f\r\n", target_, tracer_pid.target);
-    #endif
+    tracer_default.target = 0;
+    tracer_default.kp = kp;
+    tracer_default.ki = ki;
+    tracer_default.kd = kd;
 }
 
-double tracer_solve(int reference_)
+/* all parameter */
+void tracer_set_values(PID *_pid)
+{
+    tracer_set_target_zero();
+    tracer_pid.kp = _pid->kp;
+    tracer_pid.ki = _pid->ki;
+    tracer_pid.kd = _pid->kd;
+}
+
+PID* tracer_read_values()
+{
+    return &tracer_pid;
+}
+
+float tracer_solve(int reference_)
 {
     int error;
-    double d_error;
-    double result;
+    float d_error;
+    float result;
 
     #if D_TRACER_WHILE
     printf("tracer.c > tracer_solve() > ");
     printf("reference_ = %5d\r\n", reference_);
     #endif
 
-    error = reference_;
+    error = reference_ - tracer_pid.target;
 
-    d_error = (error - tracer_before_error) / (double) tracer_samplingtime;
-    tracer_s_error += error * (double) tracer_samplingtime;
+    d_error = (error - tracer_before_error) / (float) (tracer_sampling_time_ms / (float) 1000);
+    tracer_s_error += error * (float) (tracer_sampling_time_ms / (float) 1000);
 
     result = tracer_pid.kp * error + tracer_pid.ki * tracer_s_error + tracer_pid.kd * d_error;
 
@@ -117,47 +179,16 @@ double tracer_solve(int reference_)
     return result;
 }
 
-double tracer_solve_with_gain(int reference_, double kp_, double ki_, double kd_)
-{
-    int error;
-    int d_error;
-    double result;
-
-    error = reference_;
-
-    d_error = error - tracer_before_error;
-    tracer_s_error += error;
-
-    result = kp_ * error + ki_ * tracer_s_error * tracer_samplingtime + kd_ * d_error / tracer_samplingtime;
-
-    tracer_before_error = error;
-
-    return result;
-}
-
-void tracer_d_print()
-{
-    printf("tracer.c > tracer_d_print() > target = %5d, kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", 0, tracer_read_gain_kp(0), tracer_read_gain_ki(0), tracer_read_gain_kd(0));
-    printf("tracer.c > tracer_d_print() > tracer_before_error = %5d, tracer_s_error = %7.2f\r\n", tracer_before_error, tracer_s_error);
-}
-
 void tracer_print_values()
 {
-	printf("Tracer\r\n");
-	printf("target = 0\r\n");
-	printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", tracer_read_gain_kp(rotary_read_value()), tracer_read_gain_ki(rotary_read_value()), tracer_read_gain_kd(rotary_read_value()));
+#if D_TRACER
+    printf("trac > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
+#endif
 }
 
-/*
-PID tracer_read()
+void tracer_gain_tuning()
 {
-    return pid;
+    /* tracer_gain_tuning */
 }
-*/
 
-/*
-void tracer_set(PID pid_)
-{
-    pid = pid_;
-}
-*/
+

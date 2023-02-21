@@ -3,10 +3,10 @@
 
 typedef struct
 {
-    double target;
-    double kp;
-    double ki;
-    double kd;
+    float target;
+    float kp;
+    float ki;
+    float kd;
 } PID;
 
 #endif

@@ -21,3 +21,31 @@ void print_analog_rate()
 			analog_sensor_get(11), analog_sensor_get(9), analog_sensor_get(7), analog_sensor_get(5), analog_sensor_get(3),
 			analog_sensor_get(1));
 }
+
+void print_bin(uint32_t bin)
+{
+    uint8_t count;
+	count = 0;
+	printf("0b");
+	for(uint32_t index = (1 << (sizeof(bin) * 4 - 1)); index > 0; index = index >> 1)
+	{
+		if(count % 4 == 0)
+		{
+			printf(" ");
+		}
+		if(bin & index)
+		{
+			printf("1");
+		}
+		else
+		{
+			printf("0");
+		}
+		count++;
+	}
+}
+
+void print_pid(PID* pid_)
+{
+	printf("target = %7.2f, kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n");
+}

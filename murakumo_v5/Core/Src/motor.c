@@ -36,7 +36,7 @@ char motor_read_enable()
     return enable;
 }
 
-void motor_set(double motor_left_, double motor_right_)
+void motor_set(float motor_left_, float motor_right_)
 {
     if(motor_left_ < 0)
     {
@@ -77,8 +77,7 @@ void motor_set(double motor_left_, double motor_right_)
     {
         ...
         tracer_init();
-        tracer_set_gain(10, 8, 2);
-        tracer_set_target(0);
+        / * 記述中 * /
         ...
     }
 

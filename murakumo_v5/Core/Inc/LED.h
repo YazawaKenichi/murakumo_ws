@@ -1,18 +1,17 @@
-#define __LED_H__ // 今は使われてないライブラリ
-
 #ifndef __LED_H__
 #define __LED_H__
 
 #include "stm32f4xx_hal.h"
 
-/* set led1 value */
-void write_led1(uint8_t value_);
-/* set led2 value */
-void write_led2(uint8_t value_);
-/* set full color led value */
-void write_rgb(uint8_t rgb_);
-/* set led1 and led2 value */
-void write_led(uint8_t mask_, uint8_t value_);
+void led_init();
+void led_start();
+void led_stop();
+uint8_t led_read_current_value();
+uint8_t led_read_current_rgb_value();
+void led_write_led1(uint8_t value_);
+void led_write_led2(uint8_t value_);
+void led_write_rgb(uint8_t rgb_);
+void led_write_led(uint8_t mask, uint8_t value);
 
 /* usuage */
 /*
@@ -30,4 +29,3 @@ void write_led(uint8_t mask_, uint8_t value_);
     }
 */
 #endif
-

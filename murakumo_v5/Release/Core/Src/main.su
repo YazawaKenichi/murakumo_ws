@@ -1,0 +1,10 @@
+main.c:88:6:HAL_TIM_PeriodElapsedCallback	16	static
+main.c:402:6:SystemClock_Config	88	static,ignoring_inline_asm
+main.c:1140:6:main_init	8	static
+main.c:1159:6:running_start	8	static
+main.c:1192:6:running_stop	8	static
+main.c:1209:6:main_print_while	8	static
+main.c:1248:6:main_d_print	8	static
+main.c:1232:6:main_main	0	static
+main.c:128:5:main	80	static,ignoring_inline_asm
+main.c:1262:6:Error_Handler	0	static,ignoring_inline_asm

@@ -67,6 +67,9 @@ void rotary_print_playmode()
 		case velotrace_tuning:
 			printf("velotrace_tuning");
 			break;
+        case velotrace_tuning_2:
+            printf("velotrace_tuning_2");
+            break;
 		case banquet:
 			printf("banquet");
 			break;

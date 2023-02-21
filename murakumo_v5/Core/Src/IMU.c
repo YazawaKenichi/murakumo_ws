@@ -12,6 +12,7 @@
 // volatile int16_t xa, ya, za;
 // volatile int16_t xg, yg, zg;
 
+uint8_t initialized = 0;
 Inertial inertial;
 
 uint8_t imu_read_byte( uint8_t reg )
@@ -55,17 +56,21 @@ void imu_write_byte(uint8_t reg, uint8_t val)
  */
 void imu_init()
 {
-	printf("Starting SPI2 (IMU)\r\n");
-	uint8_t wai, ret;
-	ret = imu_initialize(&wai);
-	printf("who_am_i = %d\r\n", wai);
-	if(ret == 1)
+	if(initialized == 0)
 	{
-		printf("SPI INIT COLLECT!\r\n");
-	}
-	else
-	{
-		printf("SPI INIT FAILURE x_x \r\n");
+		printf("Starting SPI2 (IMU)\r\n");
+		uint8_t wai, ret;
+		ret = imu_initialize(&wai);
+		printf("who_am_i = %d\r\n", wai);
+		if(ret == 1)
+		{
+			printf("SPI INIT COLLECT!\r\n");
+		}
+		else
+		{
+			printf("SPI INIT FAILURE x_x \r\n");
+		}
+		initialized = initialized + 1;
 	}
 }
 
@@ -197,8 +202,6 @@ void imu_update_gyro()
 	float k_gyro;
 	int16_t byte_data;
 	float tmp;
-	float LPF_RATE;
-	LPF_RATE = 0.3;
 
 	k_gyro = (GYRO_RANGE / (float) MAXDATA_RANGE);
 
@@ -268,22 +271,17 @@ void imu_update_accel()
 	inertial.linear.z = byte_data * k_accel;
 }
 
+float inertial_angular_z_buffer;
 /**
  * @fn imu_read_yaw()
  * @brief 
  * 
  * @return float 
+ * @attention [ degree ]
+ * 
  */
 float imu_read_yaw()
 {
-	return inertial.angular.z;
-}
-
-float imu_read_direct_yaw()
-{
-	float k_gyro;
-	int16_t byte_data;
-	k_gyro = (GYRO_RANGE / (float) MAXDATA_RANGE);
-	byte_data = ((int16_t)imu_read_byte(GYRO_ZOUT_H) << 8) | ((int16_t)imu_read_byte(GYRO_ZOUT_L));
-	return (byte_data * k_gyro);
+	//! バイアス補正を加味した返り値（ inertial.angular.z はすでに LPF を通されている ）
+	return inertial.angular.z - (BIAS_AVERAGE - TRUE_VALUE);
 }

@@ -2,49 +2,51 @@
 
 /* encoders are updated only in encoder file. */
 int16_t encoder_left, encoder_right;
-double encoder;
+float encoder;
 
 /* public */
-double encoder_length()
+float encoder_length()
 {
     #if D_ENCODER_WHILE
     printf("encoder.c > encoder_length() > ");
-    printf("encoder * (double) LENGTHPERPULSE = %6.1f * %1.5f = %7.5f\r\n", encoder, LENGTHPERPULSE, encoder * (double) LENGTHPERPULSE);
+    printf("encoder * (float) LENGTHPERPULSE = %6.1f * %1.5f = %7.5f\r\n", encoder, LENGTHPERPULSE, encoder * (float) LENGTHPERPULSE);
     #endif
-    return (double) encoder * (double) LENGTHPERPULSE;
+    //! 単位は [ um ]
+    return (float) encoder * (float) LENGTHPERPULSE;
 }
 
-double encoder_length_left()
+float encoder_length_left()
 {
     #if D_ENCODER_WHILE
     printf("encoder.c > encoder_length_left() > ");
-    printf("encoder_left * (double) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_left, LENGTHPERPULSE, encoder_left * (double) LENGTHPERPULSE);
+    printf("encoder_left * (float) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_left, LENGTHPERPULSE, encoder_left * (float) LENGTHPERPULSE);
     #endif
-    return (double) encoder_left * (double) LENGTHPERPULSE;
+    return (float) encoder_left * (float) LENGTHPERPULSE;
 }
 
-double encoder_length_right()
+float encoder_length_right()
 {
     #if D_ENCODER_WHILE
     printf("encoder.c > encoder_length_right() > ");
-    printf("encoder_right * (double) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_right, LENGTHPERPULSE, encoder_right * (double) LENGTHPERPULSE);
+    printf("encoder_right * (float) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_right, LENGTHPERPULSE, encoder_right * (float) LENGTHPERPULSE);
     #endif
-    return (double) encoder_right * (double) LENGTHPERPULSE;
+    return (float) encoder_right * (float) LENGTHPERPULSE;
 }
 
 void encoder_d_print()
 {
     #if D_ENCODER
-    printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %7.2f\r\n", encoder_left, encoder_right, encoder);
+    printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %f\r\n", encoder_left, encoder_right, encoder);
     #endif
 }
 
-/* only read tim10_update_length */
+/* only read tim10_update_values */
 void encoder_set()
 {
     encoder_left = TIM1 -> CNT - ENCODER_MIDDLE;
     encoder_right = -(TIM3 -> CNT - ENCODER_MIDDLE);
-    encoder = (encoder_left + encoder_right) / (double) 2;
+    //! 単位 [ cnt / sampling_time_s ]
+    encoder = (encoder_left + encoder_right) / (float) 2;
 
     #if D_ENCODER_WHILE
     printf("encoder.c > encoder_set() > ");

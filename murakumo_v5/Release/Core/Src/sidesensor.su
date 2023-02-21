@@ -1,0 +1,13 @@
+sidesensor.c:12:9:sidesensor_read	8	static
+sidesensor.c:23:6:sidesensor_init	0	static
+sidesensor.c:28:6:sidesensor_start	0	static
+sidesensor.c:39:6:sidesensor_stop	0	static
+sidesensor.c:44:17:sidesensor_read_markerstate	0	static
+sidesensor.c:49:17:sidesensor_read_markerstate_volatile	0	static
+sidesensor.c:54:6:sidesensor_right	0	static
+sidesensor.c:71:6:sidesensor_left	0	static
+sidesensor.c:78:6:sidesensor_cross	0	static
+sidesensor.c:85:6:sidesensor_straight	0	static
+sidesensor.c:92:6:sidesensor_main	16	static
+sidesensor.c:141:6:sidesensor_print_sidesensorstate	0	static
+sidesensor.c:169:6:sidesensor_d_print	0	static

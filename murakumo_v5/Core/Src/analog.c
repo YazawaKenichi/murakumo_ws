@@ -8,6 +8,7 @@ uint16_t analog[CALIBRATIONSIZE];
 uint16_t analogmax[CALIBRATIONSIZE];
 uint16_t analogmin[CALIBRATIONSIZE];
 uint16_t analograte[CALIBRATIONSIZE];
+uint16_t analog_before[CALIBRATIONSIZE];
 uint16_t analogbuffers[SENSGETCOUNT][CALIBRATIONSIZE];
 
 AnalogMode analogmode;
@@ -37,13 +38,16 @@ void analog_rate_array_print()
 		sum_ += analog_sensor_get(i);
 	}
 
-	printf("average = %4.2f\r\n\r\n", sum_ / (double) size_);
+	printf("average = %4.2f\r\n\r\n", sum_ / (float) size_);
 }
 
 void analog_d_print()
 {
+#if D_ANALOG
 	analog_print_analogmode();
 	analog_rate_array_print();
+	// analog_array_print(analog);
+#endif
 }
 
 void analog_print_analogmode()
@@ -96,29 +100,41 @@ void analog_print_min()
 
 void analog_set_on_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 {
+	#if D_ANALOG
 	printf("analog_set_to_flash()\r\n");
+	#endif
 	for(unsigned int i = 0; i < CALIBRATIONSIZE; i++)
 	{
+		#if D_ANALOG
 		printf(ESC_MAG);
 		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
 		printf(ESC_DEF);
+		#endif
 		*(analogmin_ + i) = analogmin[i];
 		*(analogmax_ + i) = analogmax[i];
+		#if D_ANALOG
 		printf(ESC_GRE);
 		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
 		printf(ESC_DEF);
+		#endif
 	}
 }
 
 void analog_set_from_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 {
+	#if D_ANALOG
 	printf("analog_set_from_flash()\r\n");
+	#endif
 	for(unsigned int i = 0; i < CALIBRATIONSIZE; i++)
 	{
+		#if D_ANALOG
 		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		#endif
 		analogmin[i] = *(analogmin_ + i);
 		analogmax[i] = *(analogmax_ + i);
+		#if D_ANALOG
 		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		#endif
 	}
 }
 
@@ -179,7 +195,9 @@ void analog_init()
 
 void analog_start()
 {
+	#if D_ANALOG
 	printf("analog_sensor_start()\r\n");
+	#endif
 	analog_sensor_start();
 }
 
@@ -190,7 +208,9 @@ void analog_stop()
 
 void analog_sensor_start()
 {
+	#if D_ANALOG
 	printf("sensgettime = 0\r\nHAL_ADC_Start_DMA()\r\n");
+	#endif
     sensgettime = 0;
     if(HAL_ADC_Start_DMA(&hadc1, (uint32_t*) analograw, CALIBRATIONSIZE) != HAL_OK)
     {
@@ -205,10 +225,16 @@ void analog_sensor_stop()
 
 uint16_t analog_sensor_get(unsigned char i)
 {
-	analograte[i] = 1000 * (analog[i] - analogmin[i]) / (double) (analogmax[i] - analogmin[i]);
+	uint16_t analog_before;
+	//! 前の値を保存しておく
+	analog_before = analograte[i];
+	//! 割合を取得する
+	analograte[i] = 1000 * (analog[i] - analogmin[i]) / (float) (analogmax[i] - analogmin[i]);
 #if USE_SIGMOID_TRACE
-	analograte[i] = 1000 * sigmoid(analograte[i], (16 - i)/(double)800, 500);
+	analograte[i] = 1000 * sigmoid(analograte[i], (16 - i)/(float)800, 500);
 #endif
+	//! ローパスフィルタに通す
+	analograte[i] = low_pass_filter(analograte[i], analog_before, ANALOG_LPF_GAMMA);
 	return analograte[i];
 }
 

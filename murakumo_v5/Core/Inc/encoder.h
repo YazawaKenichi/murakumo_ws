@@ -11,6 +11,7 @@
 
 /* LENGTH PER PULSE */
 #define TIREDIAMETER 21000  /* [um] */
+#define ERROR -7250
 #define PULSEPERROTATE 4096 /* [cnt] */
 #define PINION 25
 #define SUPER 64
@@ -19,13 +20,14 @@
 #define M_PI 3.14159265358979f
 #endif
 
-#define REDUCTION_RATIO (PINION / (double) SUPER)
-#define LENGTHPERPULSE (M_PI * TIREDIAMETER * REDUCTION_RATIO / (double) PULSEPERROTATE)    /* [um / cnt] */
+#define REDUCTION_RATIO (PINION / (float) SUPER)
+//! LENGTHPERPULSE = (pi * 21000 * (25 / 64)) / 4096 = 6.29 [ um / cnt ]
+#define LENGTHPERPULSE (M_PI * (TIREDIAMETER - ERROR) * REDUCTION_RATIO / (float) PULSEPERROTATE)    /* [um / cnt] */
 #define ENCODER_MIDDLE (PULSEPERROTATE / 2)
 
-double encoder_length_left();
-double encoder_length_right();
-double encoder_length();
+float encoder_length_left();
+float encoder_length_right();
+float encoder_length();
 void encoder_d_print();
 void encoder_set();
 void encoder_init();

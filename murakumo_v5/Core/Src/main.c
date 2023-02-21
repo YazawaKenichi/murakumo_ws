@@ -332,30 +332,45 @@ int main(void)
           running_stop();
           break;
         case 0x0D:	// D
-          running_start();
-
-          while(switch_read_enter())
+          if(rotary_read_playmode() == flash_print)
           {
-            main_main();
+            course_print_flash();
           }
+          else
+          {
+            running_start();
 
-          running_stop();
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
           break;
         case 0x0E:	// E
-          running_start();
-
-          while(switch_read_enter())
+          if(rotary_read_playmode() == flash_print)
           {
-            main_main();
+            course_print_flash();
           }
+          else
+          {
+            running_start();
 
-          running_stop();
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
           break;
         case 0x0F:
           if(rotary_read_playmode()== flash_print)
           {
+            course_print_flash();
           }
-          else    // if(!(rotary_read_playmode()== flash_print))
+          else
           {
             running_start();
 
@@ -1124,6 +1139,9 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void main_init()
 {
+  #if USE_LED
+  led_init();
+  #endif
   flash_init();
   /* switch_init, HAL_TIM_BASE_Start_IT(&htim11), rotary_init */
   tim11_init();
@@ -1133,10 +1151,25 @@ void main_init()
   tim7_init();
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
+  /* imu のバイアス補正のための初期�? */
+  if(rotary_read_playmode() == motor_free)
+    imu_revision_init();
 }
 
 void running_start()
 {
+  #if USE_LED
+  led_start();
+  #endif
+  HAL_Delay(1000);
+  led_write_rgb(0b100);
+  HAL_Delay(1000);
+  led_write_led(0b01, 0b01);
+  HAL_Delay(1000);
+  led_write_led(0b10, 0b10);
+  HAL_Delay(1000);
+  led_write_led(0b11, 0b00);
+  led_write_rgb(0b010);
   #if D_TIM7
   printf("main.c > running_start() > ");
   #endif
@@ -1151,23 +1184,49 @@ void running_start()
   printf("tim6_start()\r\n");
   #endif
   tim6_start();
+  /* imu のバイアス補正のための準備 */
+  if(rotary_read_playmode() == motor_free)
+    imu_revision_start();
 }
 
 void running_stop()
 {
+  #if USE_LED
+  led_stop();
+  #endif
   /* HAL_TIM_Base_Stop_IT, HAL_ADC_Stop_DMA, motor_enable = 0, HAL_TIM_PWM_Stop */
   tim6_stop();
   /* tim7 */
   tim7_stop();
   /* HAL_TIM_Base_Stop_IT, HAL_TIM_Encoder_Stop, sidesensor_stop */
   tim10_stop();
+  /* imu バイアス補正のための終�? */
+  if(rotary_read_playmode() == motor_free)
+    imu_revision_stop();
+  led_write_rgb(0b001);
 }
 
 void main_print_while()
 {
-	printf("///// WHILE /////\n\r");
+	printf("////////////////////////////// WHILE //////////////////////////////\n\r");
   rotary_print_playmode();
 	print_rotary_value();
+  if(rotary_read() < 4)
+  {
+    led_write_led(0b11, 0b10);
+  }
+  else if(rotary_read() < 8)
+  {
+    led_write_led(0b11, 0b01);
+  }
+  else if(rotary_read() == 15)
+  {
+    led_write_led(0b11, 0b11);
+  }
+  else
+  {
+    led_write_led(0b11, 0b00);
+  }
 }
 
 void main_main()
@@ -1184,21 +1243,14 @@ void main_main()
 	#if D_TIM6_WHILE
 	tim6_main();
 	#endif
-	HAL_Delay(200);
 }
 
 void main_d_print()
 {
-  printf("main.c > main_d_print > ");
+  revision_print();
   tim10_d_print();
-  #if D_TIM7
-  printf("main.c > main_d_print > ");
   tim7_d_print();
-  #endif
-  #if D_TIM6
-  printf("main.c > main_d_print > ");
   tim6_d_print();
-  #endif
 }
 
 /* USER CODE END 4 */

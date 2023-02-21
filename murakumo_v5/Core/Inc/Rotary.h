@@ -16,7 +16,9 @@ typedef enum PLAYMODE
     motor_free,             /* 4.モータの出力をしないまま動作させる */
     tracer_tuning,          /* 5.ライントレースのゲインチューニングが可能 */ 
     velotrace_tuning,       /* 6.速度制御のゲインチューニングが可能 */
-    banquet,                /* 7.宴会芸 */
+    velotrace_tuning_2,     /* 7.速度制御のゲインチューニングが可能 */
+    banquet,                /* 8.宴会芸 */
+    tuning,                 /* 9.センサのチューニングをするときのモード*/
     flash_print = 15        /* 15.ROM の内容を標準出力 */
 } PlayMode;
 
