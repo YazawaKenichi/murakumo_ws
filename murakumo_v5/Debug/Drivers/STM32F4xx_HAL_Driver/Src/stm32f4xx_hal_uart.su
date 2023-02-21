@@ -58,4 +58,4 @@ stm32f4xx_hal_uart.c:3475:13:UART_DMARxOnlyAbortCallback	24	static
 stm32f4xx_hal_uart.c:3501:26:UART_Transmit_IT	24	static
 stm32f4xx_hal_uart.c:3541:26:UART_EndTransmit_IT	16	static
 stm32f4xx_hal_uart.c:3566:26:UART_Receive_IT	56	static,ignoring_inline_asm
-stm32f4xx_hal_uart.c:3664:13:UART_SetConfig	160	static
+stm32f4xx_hal_uart.c:3664:13:UART_SetConfig	56	static

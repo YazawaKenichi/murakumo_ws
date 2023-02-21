@@ -19,11 +19,13 @@
 #define FIX_LPF 0
 
 //! 最大加速度
-#define ACCEL_MAX 0.03f // [ m / s / s ]
-//! 最大減速度
-#define DEACCEL_MAX ACCEL_MAX  // [ m / s / s ]
-
-#define ACCEL_LENGTH ((float) ACCEL_MAX * (float) COURSE_SAMPLING_LENGTH)
+#define ACCEL_MAX_MAX 1 // [ m / s / s ]
+#define ACCEL_MAX_MIN 0.5f
+#define ACCEL_STEP_SIZE 16
+//! 最大減速度  //! 使ってない
+//! #define DEACCEL_MAX ACCEL_MAX  // [ m / s / s ]
+//! 使ってない
+//! #define ACCEL_LENGTH ((float) ACCEL_MAX * (float) COURSE_SAMPLING_LENGTH)
 
 //! LPF のガンマ値
 #define FIXED_SPEED_GAMMA 0.25f

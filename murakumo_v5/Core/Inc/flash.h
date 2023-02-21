@@ -22,6 +22,7 @@ typedef struct
     uint16_t analogmin[CALIBRATIONSIZE];
     uint16_t analogmax[CALIBRATIONSIZE];
     float speed[COURSE_STATE_SIZE];
+    float radius[COURSE_STATE_SIZE];
     float marker[COURSE_STATE_SIZE];
 } FlashBuffer;
 

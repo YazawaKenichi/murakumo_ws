@@ -55,6 +55,8 @@ float fixed_speed()
     float speed_now, speed_next;
     float speed_target;
     uint16_t course_state_count;
+	float accel_length;
+	accel_length = COURSE_SAMPLING_LENGTH * (float) (ACCEL_MAX_MAX + ACCEL_MAX_MIN) / (float) 2;
 
     /* この関数は course_state_count がインクリメントされる前に呼び出されていることに注意 */
     course_state_count = course_read_state_count();
@@ -67,7 +69,7 @@ float fixed_speed()
 #endif
     //! v1 の設定
     speed_now = fixed_section_speed_now;
-    if(ACCEL_LENGTH >= pow(speed_next - speed_now, 2))
+    if(accel_length >= pow(speed_next - speed_now, 2))
     {
         speed_target = speed_next;
     }
@@ -77,11 +79,11 @@ float fixed_speed()
 #if FIX_WIKI
         if(speed_next >= speed_now)
         {
-            speed_target = sqrt(ACCEL_LENGTH) + speed_now;
+            speed_target = sqrt(accel_length) + speed_now;
         }
         else
         {
-            speed_target = speed_now - sqrt(ACCEL_LENGTH);
+            speed_target = speed_now - sqrt(accel_length);
         }
 #endif
     }

@@ -20,7 +20,7 @@
 #define TREAD 103
 #endif
 
-#define D_COURSE 1
+#define D_COURSE 0  //! これ入れると stop 処理に printf が入って遅くなる
 #define D_COURSE_WHILE 0
 #define LEFT_MARKER_RADIUS 0
 
@@ -48,5 +48,6 @@ float course_radius2speed(float);
 void course_fixing_radius2speed();
 void course_print_flash();
 void course_reset_flash();
+float accel_max_calc(uint8_t);
 
 #endif

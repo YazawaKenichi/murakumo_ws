@@ -1,0 +1,10 @@
+encoder.c:8:7:encoder_length	0	static
+encoder.c:18:7:encoder_length_left	0	static
+encoder.c:27:7:encoder_length_right	0	static
+encoder.c:36:6:encoder_d_print	0	static
+encoder.c:59:6:encoder_init	0	static
+encoder.c:84:6:encoder_stop	8	static
+encoder.c:66:6:encoder_fin	0	static
+encoder.c:91:6:encoder_set_middle	0	static
+encoder.c:44:6:encoder_set	0	static
+encoder.c:71:6:encoder_start	8	static

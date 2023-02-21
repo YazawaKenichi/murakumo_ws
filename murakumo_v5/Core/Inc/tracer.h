@@ -12,11 +12,11 @@
 
 #define TRACER_KP_MAX 1
 #define TRACER_KI_MAX 0
-#define TRACER_KD_MAX 0.02f
+#define TRACER_KD_MAX 0.014f
 
 #define TRACER_KP_MIN 1
 #define TRACER_KI_MIN 0
-#define TRACER_KD_MIN 0
+#define TRACER_KD_MIN 0.014f
 
 /* pre setting */
 void tracer_init(float);

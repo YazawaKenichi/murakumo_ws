@@ -30,6 +30,20 @@ void course_start()
 
 void course_stop()
 {
+	uint16_t imax;
+	imax = flashbuffer.course_state_count_max;
+	if(rotary_read_playmode() == accel)
+	{
+		for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
+		{
+			uint16_t index;
+			uint16_t imax;
+			imax = flashbuffer.course_state_count_max;
+			index = imax - course_state_size;
+			//! ストップするときに半径を格納
+			flashbuffer.radius[index] = course_radius[index];
+		}
+	}
 	course_fixing_radius2speed();
 	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free)
 	{
@@ -194,19 +208,19 @@ float course_radius2speed(float radius)
 	radius = fabs(radius);
 	if(radius < 0.1f) speed = 1.000f;
     else if(radius < 0.25f) speed = 1.200f;
-    else if(radius < 0.5f) speed = 1.200f;
-    else if(radius < 0.75f) speed = 1.250f;
+    else if(radius < 0.5f) speed = 1.250f;
+    else if(radius < 0.75f) speed = 1.50f;
     else if(radius < 1.0f) speed = 1.500f;
     else if(radius < 1.5f) speed = 2.000f;
-    else if(radius < 2.0f) speed = 2.500f;
-    else speed = 3.000f;
+    else if(radius < 2.0f) speed = 2.000f;
+    else speed = 3.00f;
 	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
 	return speed;
 }
 
 void course_fixing_radius2speed()
 {
-	float speed[COURSE_STATE_SIZE];
+	float accel_length;
 	uint16_t imax;
 	imax = flashbuffer.course_state_count_max;
 	/* まず矩形グラフを作成する */
@@ -226,6 +240,8 @@ void course_fixing_radius2speed()
 	accel_glaph[0] = 1;
 	decel_glaph[imax] = 1;
 
+	accel_length = COURSE_SAMPLING_LENGTH * (float) (ACCEL_MAX_MAX + ACCEL_MAX_MIN) / (float) 2;
+
 	/* 加速方向でのこぎりグラフを作成する */
 	for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
 	{
@@ -236,13 +252,13 @@ void course_fixing_radius2speed()
 		v2 = flashbuffer.speed[index + 1];
 		if(v2 > v1)
 		{
-			if(ACCEL_LENGTH >= pow(v2 - v1, 2))
+			if(accel_length >= pow(v2 - v1, 2))
 			{
 				vref = v2;
 			}
 			else
 			{
-				vref = sqrt(ACCEL_LENGTH) + v1;
+				vref = sqrt(accel_length) + v1;
 			}
 		}
 		else
@@ -265,13 +281,13 @@ void course_fixing_radius2speed()
 		v2 = flashbuffer.speed[index - 1];
 		if(v2 > v3)
 		{
-			if(ACCEL_LENGTH >= pow(v3 - v2, 2))
+			if(accel_length >= pow(v3 - v2, 2))
 			{
 				vref = v2;
 			}
 			else
 			{
-				vref = sqrt(ACCEL_LENGTH) + v3;
+				vref = sqrt(accel_length) + v3;
 			}
 		}
 		else
@@ -318,6 +334,7 @@ void course_print_flash()
 					print_data = flashbuffer.marker[index];
 					break;
 				case 13:
+					print_data = flashbuffer.course_state_count_max;
 					break;
 				default :
 					break;
@@ -341,4 +358,9 @@ void course_reset_flash()
 		index = COURSE_STATE_SIZE - course_state_size;
 		flashbuffer.speed[index] = COURSE_SPEED_DEFAULT;
 	}
+}
+
+float accel_max_calc(uint8_t i)
+{
+	return ACCEL_MAX_MAX - ((ACCEL_STEP_SIZE - 1) - i) * (float) (ACCEL_MAX_MAX - ACCEL_MAX_MIN) / (float) (ACCEL_STEP_SIZE - 1);
 }
