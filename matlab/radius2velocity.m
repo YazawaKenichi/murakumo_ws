@@ -1,35 +1,38 @@
 MINI = "mini_course.txt";
 LONG = "long_course.txt";
+RAW = "raw_data.txt";
 
-filepath = LONG;
+filepath = RAW;
+
+ACCEL_MAX = 0.05;
 
 [fixed, accel, decel, rect] = main(filepath);
 
-glaph_plot([rect, fixed])
-legend("元データ", "調整後", "加速方向", "減速方向")
-xlabel("距離 [ x10 mm / s ]")
-ylabel("速度 [ m / s ]")
-hold off
+glaph_plot([rect, fixed]);
+legend("元データ", "調整後", "加速方向", "減速方向");
+xlabel("距離 [ x10 mm / s ]");
+ylabel("速度 [ m / s ]");
+hold off;
 
 % 半径から理想的な速度の矩形波 %
 function speed_rect = radius2rect(radius_)
     radius_ = abs(radius_);
-    rth1 = 0.1;
-    rth2 = 0.15;
-    rth3 = 0.2;
-    rth4 = 0.25;
-    rth5 = 0.3;
-    rth6 = 0.4;
-    rth7 = 0.5;
+    rth1 = 0.075;
+    rth2 = 0.125;
+    rth3 = 0.175;
+    rth4 = 0.45;
+    rth5 = 0.8;
+    rth6 = 1.5;
+    rth7 = 2.5;
 
     vth1 = 1.0;
-    vth2 = 1.1;
-    vth3 = 1.2;
-    vth4 = 1.3;
-    vth5 = 1.4;
-    vth6 = 1.5;
-    vth7 = 1.6;
-    vth8 = 1.7;
+    vth2 = 1.2;
+    vth3 = 1.5;
+    vth4 = 2.0;
+    vth5 = 2.5;
+    vth6 = 2.5;
+    vth7 = 2.5;
+    vth8 = 2.5;
     
     res = zeros(length(radius_),1);
     
@@ -57,10 +60,11 @@ end
 
 % 加速方向の鋸歯状波 %
 function accel = rect2accel(rect_)
+    global ACCEL_MAX;
     ref = zeros(length(rect_) ,1);
-    ACCEL_MAX = 0.05;
+    accel_max = ACCEL_MAX;
     SAMPLING_LENGTH = 0.01;
-    accel_length = ACCEL_MAX * SAMPLING_LENGTH;
+    accel_length = accel_max * SAMPLING_LENGTH;
     % 初期値の設定 %
     ref(1) = 1;
     for index = 1:length(rect_)-1
@@ -87,11 +91,12 @@ end
 
 % 減速方向の鋸歯状波 % % 要素末から処理することに注意 %
 function decel = rect2decel(rect_)
+    global ACCEL_MAX;
     ref = zeros(length(rect_), 1);
     imax = length(rect_);
-    ACCEL_MAX = 0.05;
+    accel_max = ACCEL_MAX;
     SAMPLING_LENGTH = 0.01;
-    accel_length = ACCEL_MAX * SAMPLING_LENGTH;
+    accel_length = accel_max * SAMPLING_LENGTH;
     % 初期値の設定 %
     ref(imax) = max(rect_);
     for index = imax:-1:1+1

@@ -10,13 +10,13 @@
 
 #define VELOTRACE_STEP_SIZE 16
 
-#define VELOCITY_TARGET_MAX 1.25f    /* [m/s] */
-#define VELOCITY_TARGET_MIN 1.25f
-#define VELOCITY_KP_MAX 580
-#define VELOCITY_KI_MAX 100000
+#define VELOCITY_TARGET_MAX 3.00f    /* [m/s] */
+#define VELOCITY_TARGET_MIN 1.00f
+#define VELOCITY_KP_MAX 1000
+#define VELOCITY_KI_MAX 100
 #define VELOCITY_KD_MAX 0
-#define VELOCITY_KP_MIN 580
-#define VELOCITY_KI_MIN 100000
+#define VELOCITY_KP_MIN 1000
+#define VELOCITY_KI_MIN 100
 #define VELOCITY_KD_MIN 0
 
 //! スタートマーカを読んでから指定時間後に停止する

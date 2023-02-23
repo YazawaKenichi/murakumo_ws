@@ -24,8 +24,8 @@
 #define D_COURSE_WHILE 0
 #define LEFT_MARKER_RADIUS 0
 
-//! フラッシュの角度情報を COURSE_RADIUS_MAX で初期化する
-#define COURSE_RADIUS_MAX 65535
+//! フラッシュの角度情報を COURSE_RADIUS_DEFAULT で初期化する
+#define COURSE_RADIUS_DEFAULT 9.99f
 //! フラッシュの速度情報を COURSE_SPEED_DEFAULT で初期化する
 #define COURSE_SPEED_DEFAULT 0.999f
 #define COURSE_SAMPLING_LENGTH (float) 0.010f // [ m ]

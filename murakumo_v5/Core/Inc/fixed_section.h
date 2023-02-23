@@ -19,8 +19,8 @@
 #define FIX_LPF 0
 
 //! 最大加速度
-#define ACCEL_MAX_MAX 1 // [ m / s / s ]
-#define ACCEL_MAX_MIN 0.5f
+#define ACCEL_MAX_MAX 0.2f // [ m / s / s ]
+#define ACCEL_MAX_MIN 0.01f
 #define ACCEL_STEP_SIZE 16
 //! 最大減速度  //! 使ってない
 //! #define DEACCEL_MAX ACCEL_MAX  // [ m / s / s ]

@@ -6,8 +6,8 @@ float course_section_degree;
 //! float course_section_length;
 float course_section_radius;
 float course_update_section_sampling_time_s;
+float course_accel_max;
 float __course_debug_target_speed__;
-float course_radius[COURSE_STATE_SIZE];
 
 void course_init(unsigned short int samplingtime_ms)
 {
@@ -20,32 +20,24 @@ void course_start()
 {
 	/* course_start */
 	course_state_count = 0;
+	course_accel_max = accel_max_calc(rotary_read_value());
 	course_reset_section_degree();
 	if(rotary_read_playmode() == search)
 	{
 		course_reset_flash();
+	}
+	if(rotary_read_playmode() == accel)
+	{
+		//! 走る前に速度を計算して書き込んでからスタートする
+		course_fixing_radius2speed();
+		flash_write();
 	}
 	imu_start();
 }
 
 void course_stop()
 {
-	uint16_t imax;
-	imax = flashbuffer.course_state_count_max;
-	if(rotary_read_playmode() == accel)
-	{
-		for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
-		{
-			uint16_t index;
-			uint16_t imax;
-			imax = flashbuffer.course_state_count_max;
-			index = imax - course_state_size;
-			//! ストップするときに半径を格納
-			flashbuffer.radius[index] = course_radius[index];
-		}
-	}
-	course_fixing_radius2speed();
-	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free)
+	if(rotary_read_playmode() == search || rotary_read_playmode() == accel)
 	{
 		flash_write();
 	}
@@ -167,11 +159,10 @@ void course_state_function()
 	pm = rotary_read_playmode();
 	if(pm == search || pm == motor_free )
 	{
-		float radius;
 		flashbuffer.course_state_count_max = course_read_state_count();
 		course_calclate_radius();
-		radius = course_read_curvature_radius();
-		course_radius[course_state_count] = radius;
+		flashbuffer.radius[course_state_count] = course_read_curvature_radius();
+		//! 区間長と区間角度と区間半径をリセット
 		course_reset();
 		//! マーカを読んだ場所の記録
 		flashbuffer.marker[course_state_count] = length_read();
@@ -191,12 +182,6 @@ void course_state_function()
 void course_d_print()
 {
 #if D_COURSE
-	//! length.h を書き直す前の状態
-	// float radius;
-	// radius = course_read_curvature_radius();
-	// printf("length = %7.2lf, degree = %7.2lf, radius = %7.2lf\r\n", section_length_read(), course_read_section_degree(), radius);
-	// printf("radius = %3.3f, speed = %3.3f\r\n", radius, course_radius2speed(radius));
-	//! printf("course_state_function の実行回数 = %d\r\n", __debug_eradiusecute_count__);
 	printf("__course_debug_target_speed__ = %2.5f\r\n", __course_debug_target_speed__);
 #endif
 	encoder_d_print();
@@ -206,14 +191,14 @@ float course_radius2speed(float radius)
 {
 	float speed;
 	radius = fabs(radius);
-	if(radius < 0.1f) speed = 1.000f;
-    else if(radius < 0.25f) speed = 1.200f;
-    else if(radius < 0.5f) speed = 1.250f;
-    else if(radius < 0.75f) speed = 1.50f;
-    else if(radius < 1.0f) speed = 1.500f;
-    else if(radius < 1.5f) speed = 2.000f;
-    else if(radius < 2.0f) speed = 2.000f;
-    else speed = 3.00f;
+	if(radius < 0.075f) speed = 1.000f;
+    else if(radius < 0.125f) speed = 1.200f;
+    else if(radius < 0.175f) speed = 1.500f;
+    else if(radius < 0.45f) speed = 2.00f;
+    else if(radius < 0.8f) speed = 2.500f;
+    else if(radius < 1.5f) speed = 2.500f;
+    else if(radius < 2.5f) speed = 2.500f;
+    else speed = 2.50f;
 	// speed = - (4238566523291511 * pow(radius, 5)) / (double) 633825300114114700748351602688 + (8582934509267735 * pow(radius, 4)) / (double) 77371252455336267181195264 - (1459060547913519 * pow(radius, 3)) / (double) 2361183241434822606848 + (2682365349594497 * pow(radius, 2)) / (double) 2305843009213693952 + (1737420468106149 * radius) / (double) 4503599627370496 + 7057670738269725 / (double) 8796093022208;
 	return speed;
 }
@@ -228,7 +213,7 @@ void course_fixing_radius2speed()
 	{
 		uint16_t index;
 		index = imax - course_state_size;
-		flashbuffer.speed[index] = course_radius2speed(course_radius[index]);
+		flashbuffer.speed[index] = course_radius2speed(flashbuffer.radius[index]);
 		#if D_COURSE
 		printf("course_fixing_radius2speed() > rect 矩形グラフ\r\n");
 		#endif
@@ -238,9 +223,9 @@ void course_fixing_radius2speed()
 	float decel_glaph[COURSE_STATE_SIZE];
 
 	accel_glaph[0] = 1;
-	decel_glaph[imax] = 1;
+	decel_glaph[imax] = 20;
 
-	accel_length = COURSE_SAMPLING_LENGTH * (float) (ACCEL_MAX_MAX + ACCEL_MAX_MIN) / (float) 2;
+	accel_length = (float) COURSE_SAMPLING_LENGTH * course_accel_max;
 
 	/* 加速方向でのこぎりグラフを作成する */
 	for(uint16_t course_state_size = imax; course_state_size > 0; course_state_size = course_state_size - 1)
@@ -331,11 +316,13 @@ void course_print_flash()
 					print_data = flashbuffer.speed[index];
 					break;
 				case 14:
-					print_data = flashbuffer.marker[index];
+					print_data = flashbuffer.radius[index];
 					break;
 				case 13:
-					print_data = flashbuffer.course_state_count_max;
+					print_data = flashbuffer.marker[index];
 					break;
+				case 12:
+					print_data = flashbuffer.course_state_count_max;
 				default :
 					break;
 			}
@@ -357,6 +344,7 @@ void course_reset_flash()
 		uint16_t index;
 		index = COURSE_STATE_SIZE - course_state_size;
 		flashbuffer.speed[index] = COURSE_SPEED_DEFAULT;
+		flashbuffer.radius[index] = COURSE_RADIUS_DEFAULT;
 	}
 }
 

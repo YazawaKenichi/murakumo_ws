@@ -29,7 +29,13 @@ void velotrace_start()
         {
             case search:
             case accel:
-                target = VELOCITY_TARGET_MIN;
+                /* velotrace をロータリスイッチから切り替える時
+                target = velotrace_calc_target(rotary_read_value());
+                kp = velotrace_calc_gain_kp(rotary_read_value());
+                ki = velotrace_calc_gain_ki(rotary_read_value());
+                kd = velotrace_calc_gain_kd(rotary_read_value());
+                */
+                target = 1;
                 kp = 1000;
                 ki = 100;
                 kd = 0;
@@ -41,7 +47,7 @@ void velotrace_start()
                 kd = velotrace_calc_gain_kd(rotary_read_value());
                 break;
             case velotrace_tuning_2:
-                target = VELOCITY_TARGET_MIN;
+                target = velotrace_calc_target(rotary_read_value());
                 kp = velotrace_calc_gain_kp(rotary_read_value());
                 ki = velotrace_calc_gain_ki(rotary_read_value());
                 kd = velotrace_calc_gain_kd(rotary_read_value());
