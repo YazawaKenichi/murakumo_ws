@@ -1,6 +1,6 @@
 % エンコーダの回転数だけでオドメトリを取る %
 
-FILEPATH = "
+FILEPATH = "";
 
 filepath = FILEPATH;
 
