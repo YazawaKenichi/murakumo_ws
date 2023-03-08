@@ -27,7 +27,7 @@ void tim7_start()
     tim7_set_emergency(0);
     tim7_left = 0;
     tim7_right = 0;
-    analog_set_from_flash(flashbuffer.analogmin, flashbuffer.analogmax);
+    analog_set_from_flash(analog.min, analog.max);
     analog_set_analogmode(analogmode_short);
 
     analog_start();

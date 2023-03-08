@@ -107,14 +107,14 @@ void analog_set_on_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 	{
 		#if D_ANALOG
 		printf(ESC_MAG);
-		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, analog.min[i], i, analog.max[i]);
 		printf(ESC_DEF);
 		#endif
 		*(analogmin_ + i) = analogmin[i];
 		*(analogmax_ + i) = analogmax[i];
 		#if D_ANALOG
 		printf(ESC_GRE);
-		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, analog.min[i], i, analog.max[i]);
 		printf(ESC_DEF);
 		#endif
 	}
@@ -128,12 +128,12 @@ void analog_set_from_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 	for(unsigned int i = 0; i < CALIBRATIONSIZE; i++)
 	{
 		#if D_ANALOG
-		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, analog.min[i], i, analog.max[i]);
 		#endif
 		analogmin[i] = *(analogmin_ + i);
 		analogmax[i] = *(analogmax_ + i);
 		#if D_ANALOG
-		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, flashbuffer.analogmin[i], i, flashbuffer.analogmax[i]);
+		printf("flash.analogmin[%2d] = %5d, flash.analogmax[%2d] = %5d\r\n", i, analog.min[i], i, analog.max[i]);
 		#endif
 	}
 }
@@ -179,9 +179,9 @@ void analog_calibration_stop()
 	analog_stop();
 	analog_print_max();
 	analog_print_min();
-	/* flashbuffer.analogmin/max = analogmin/max */
-	analog_set_on_flash(flashbuffer.analogmin, flashbuffer.analogmax);
-	flash_write();
+	/* analog.min/max = analogmin/max */
+	analog_set_on_flash(analog.min, analog.max);
+	flash_write_all();
 }
 
 void analog_init()

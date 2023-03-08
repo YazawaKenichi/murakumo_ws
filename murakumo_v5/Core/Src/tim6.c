@@ -115,7 +115,7 @@ void tim6_main()
     {
         uint16_t marker_state_tmp;
         marker_state_tmp = course_read_state_count();
-        if(flashbuffer.marker[marker_state_tmp] - length_read() <= CURVE_MARGIN_LENGTH)
+        if(coursedata.marker[marker_state_tmp] - length_read() <= CURVE_MARGIN_LENGTH)
         {
             if(analog_sensor_get(14) <= CURVE_MARGIN_THRESHOLD && analog_sensor_get(15) <= CURVE_MARGIN_THRESHOLD)
             {
