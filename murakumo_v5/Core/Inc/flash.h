@@ -18,6 +18,7 @@
 #include "string.h"
 #include "stm32f4xx_hal.h"
 #include "sidesensor.h"
+#include "geometry.h"
 
 #define FLASH_SECTOR_8_START_ADDRESS 0x08080000
 #define FLASH_SECTOR_9_START_ADDRESS 0x080A0000

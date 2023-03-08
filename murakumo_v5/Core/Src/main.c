@@ -1186,7 +1186,7 @@ void running_start()
   printf("tim10_start()\r\n");
   #endif
   tim10_start();
-  /* analogmin/max = analog.min/max, sensgettime = 0, HAL_ADC_Start_DMA, samplingtime = s_error = before_error = 0, if search ( p/i/d = [0], target = [0]), motor_enable = 0 */
+  /* analogmin/max = analogdata.min/max, sensgettime = 0, HAL_ADC_Start_DMA, samplingtime = s_error = before_error = 0, if search ( p/i/d = [0], target = [0]), motor_enable = 0 */
   #if D_PRINT
   printf("tim6_start()\r\n");
   #endif
