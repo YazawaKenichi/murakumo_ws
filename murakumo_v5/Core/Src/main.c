@@ -1159,8 +1159,8 @@ void main_init()
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
   /* imu のバイアス補正のための初期�? */
-  if(rotary_read_playmode() == motor_free)
-    imu_revision_init();
+  // if(rotary_read_playmode() == motor_free)
+    // imu_revision_init();
 }
 
 void running_start()
@@ -1192,8 +1192,8 @@ void running_start()
   #endif
   tim6_start();
   /* imu のバイアス補正のための準備 */
-  if(rotary_read_playmode() == motor_free)
-    imu_revision_start();
+  // if(rotary_read_playmode() == motor_free)
+    // imu_revision_start();
 }
 
 void running_stop()
@@ -1208,8 +1208,8 @@ void running_stop()
   /* HAL_TIM_Base_Stop_IT, HAL_TIM_Encoder_Stop, sidesensor_stop */
   tim10_stop();
   /* imu バイアス補正のための終�? */
-  if(rotary_read_playmode() == motor_free)
-    imu_revision_stop();
+  // if(rotary_read_playmode() == motor_free)
+    // imu_revision_stop();
   led_write_rgb(0b001);
 }
 

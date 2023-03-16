@@ -104,7 +104,7 @@ void tim6_main()
 #if LEFT_MARKER_RADIUS
     //! 一定区間で切るプログラムにするときはいらなくなる処理
     //! 今度は tim10 とかに course_state_function() をいれる必要が出てくる
-    if(playmode == search)
+    if(playmode == search || playmode == motor_free)
     {
         if(markerstate_volatile == curve || markerstate_volatile == stop || markerstate_volatile == cross)
         {

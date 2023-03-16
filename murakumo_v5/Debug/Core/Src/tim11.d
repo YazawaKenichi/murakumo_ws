@@ -35,8 +35,8 @@ Core/Src/tim11.o: ../Core/Src/tim11.c ../Core/Inc/tim11.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
- ../Core/Inc/sidesensor.h ../Core/Inc/function.h ../Core/Inc/pid.h \
- ../Core/Inc/Switch.h ../Core/Inc/time.h
+ ../Core/Inc/sidesensor.h ../Core/Inc/geometry.h ../Core/Inc/function.h \
+ ../Core/Inc/pid.h ../Core/Inc/Switch.h ../Core/Inc/time.h
 
 ../Core/Inc/tim11.h:
 
@@ -119,6 +119,8 @@ Core/Src/tim11.o: ../Core/Src/tim11.c ../Core/Inc/tim11.h \
 ../Core/Inc/flash.h:
 
 ../Core/Inc/sidesensor.h:
+
+../Core/Inc/geometry.h:
 
 ../Core/Inc/function.h:
 

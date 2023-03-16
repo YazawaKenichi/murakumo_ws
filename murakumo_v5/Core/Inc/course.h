@@ -49,5 +49,6 @@ void course_fixing_radius2speed();
 void course_print_flash();
 void course_reset_flash();
 float accel_max_calc(uint8_t);
+void course_data_saving();
 
 #endif

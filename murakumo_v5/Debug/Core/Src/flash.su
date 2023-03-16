@@ -1,6 +1,8 @@
-flash.c:12:6:flash_erase	32	static
-flash.c:24:6:flash_writting	32	static
-flash.c:40:6:flash_reading	24	static
-flash.c:45:6:flash_write	8	static
-flash.c:50:6:flash_read	8	static
-flash.c:56:6:flash_init	8	static
+flash.c:26:6:flash_erase	40	static
+flash.c:38:6:flash_writting	32	static
+flash.c:47:6:flash_reading	24	static
+flash.c:53:6:flash_write	16	static
+flash.c:82:6:flash_read	16	static
+flash.c:110:6:flash_init	8	static
+flash.c:115:6:flash_read_all	8	static
+flash.c:123:6:flash_write_all	8	static

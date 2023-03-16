@@ -22,22 +22,24 @@ void course_start()
 	course_state_count = 0;
 	course_accel_max = accel_max_calc(rotary_read_value());
 	course_reset_section_degree();
-	if(rotary_read_playmode() == search)
+	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free)
 	{
 		course_reset_flash();
 	}
 	if(rotary_read_playmode() == accel)
 	{
+		flash_read_all();
 		//! 走る前に速度を計算して書き込んでからスタートする
 		course_fixing_radius2speed();
-		flash_write_all();
+		//! FLASH_SECTOR_11 is CourseData
+		flash_write(FLASH_SECTOR_11);
 	}
 	imu_start();
 }
 
 void course_stop()
 {
-	if(rotary_read_playmode() == search || rotary_read_playmode() == accel)
+	if(rotary_read_playmode() == search || rotary_read_playmode() == accel || rotary_read_playmode() == motor_free)
 	{
 		flash_write_all();
 	}
@@ -162,6 +164,8 @@ void course_state_function()
 		coursedata.course_state_count_max = course_read_state_count();
 		course_calclate_radius();
 		coursedata.radius[course_state_count] = course_read_curvature_radius();
+		//! 必要な情報を保管しておく
+		course_data_saving();
 		//! 区間長と区間角度と区間半径をリセット
 		course_reset();
 		//! マーカを読んだ場所の記録
@@ -308,25 +312,33 @@ void course_print_flash()
 		if(course_state_size > 0)
 		{
 			uint16_t index;
-			float print_data;
+			float print_data_a, print_data_b;
 			index = COURSE_STATE_SIZE - course_state_size;
 			switch(rotary_read_value())
 			{
 				case 15:
-					print_data = coursedata.speed[index];
+					//! CourseData
+					print_data_a = coursedata.speed[index];
+					print_data_b = coursedata.radius[index];
 					break;
 				case 14:
-					print_data = coursedata.radius[index];
+					//! ImuData
+					print_data_a = 9.999f;
+					print_data_b = 8.888f;
 					break;
 				case 13:
-					print_data = coursedata.marker[index];
+					//! EncoderData
+					print_data_a = encoderdata.left[index];
+					print_data_b = encoderdata.right[index];
 					break;
 				case 12:
-					print_data = coursedata.course_state_count_max;
+					//! CourseData
+					print_data_a = coursedata.marker[index];
+					print_data_a = coursedata.course_state_count_max;
 				default :
 					break;
 			}
-			printf("%6d, %8lf\r\n", index, print_data);
+			printf("%6d, %8lf, %8lf\r\n", index, print_data_a, print_data_b);
 			course_state_size = course_state_size - 1;
 			HAL_Delay(100);
 		}
@@ -345,10 +357,18 @@ void course_reset_flash()
 		index = COURSE_STATE_SIZE - course_state_size;
 		coursedata.speed[index] = COURSE_SPEED_DEFAULT;
 		coursedata.radius[index] = COURSE_RADIUS_DEFAULT;
+		encoderdata.left[index] = 8.888f;
+		encoderdata.right[index] = 7.777f;
 	}
 }
 
 float accel_max_calc(uint8_t i)
 {
 	return ACCEL_MAX_MAX - ((ACCEL_STEP_SIZE - 1) - i) * (float) (ACCEL_MAX_MAX - ACCEL_MAX_MIN) / (float) (ACCEL_STEP_SIZE - 1);
+}
+
+void course_data_saving()
+{
+	encoderdata.left[course_state_count] = section_length_read_left();
+	encoderdata.right[course_state_count] = section_length_read_right();
 }

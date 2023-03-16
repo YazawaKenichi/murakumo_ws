@@ -35,54 +35,13 @@ void flash_erase(uint32_t sector_num)
 	HAL_FLASHEx_Erase(&erase, &pageError);
 }
 
-void flash_writting(uint32_t sector_num)
+void flash_writting(uint32_t address, uint8_t *data, uint32_t size)
 {
-	uint32_t start_address;
-	uint8_t *ptr;
-	uint32_t len;
-
-	HAL_FLASH_Unlock();
-	flash_erase(sector_num);
-
-	//! AnalogData : Sector8
-	if(sector_num == FLASH_SECTOR_8)
+	for (uint32_t add = address; add < (address + size); add++)
 	{
-		start_address = FLASH_SECTOR_8_START_ADDRESS;
-		ptr = (uint8_t *) analogdata;
-		len = sizeof(AnalogData)
-	}
-
-	//! EncoderData : Sector9
-	if(sector_num == FLASH_SECTOR_9)
-	{
-		start_address = FLASH_SECTOR_9_START_ADDRESS;
-		ptr = (uint8_t *) encoderdata;
-		len = sizeof(EncoderData)
-	}
-
-	//! ImuData : Sector10
-	if(sector_num == FLASH_SECTOR_10)
-	{
-		start_address = FLASH_SECTOR_10_START_ADDRESS;
-		ptr = (uint8_t *) imudata;
-		len = sizeof(ImuData)
-	}
-
-	//! CourseData : Sector11
-	if(sector_num == FLASH_SECTOR_11)
-	{
-		start_address = FLASH_SECTOR_11_START_ADDRESS;
-		ptr = (uint8_t *) coursedata;
-		len = sizeof(CourseData)
-	}
-
-	for (uint32_t add = start_address; add < (start_address + len); add++)
-	{
-		HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, add, *ptr);
+		HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, add, *data);
 		data++;
 	}
-
-	HAL_FLASH_Lock();
 }
 
 void flash_reading(uint32_t address, uint8_t *data, uint32_t size)
@@ -90,50 +49,61 @@ void flash_reading(uint32_t address, uint8_t *data, uint32_t size)
 	memcpy(data, (uint64_t*) address, size);
 }
 
+/* FLASH_SECTOR_num を渡すとそのセクタに対応する構造体のデータを書き込んでくれる関数 */
 void flash_write(uint32_t sector_num)
 {
-	flash_writting(sector_num);
+	HAL_FLASH_Unlock();
+	flash_erase(sector_num);
+
+	if(sector_num == FLASH_SECTOR_8)
+	{
+		flash_writting(FLASH_SECTOR_8_START_ADDRESS, (uint8_t *) &analogdata, sizeof(AnalogData));
+	}
+
+	if(sector_num == FLASH_SECTOR_9)
+	{
+		flash_writting(FLASH_SECTOR_9_START_ADDRESS, (uint8_t *) &encoderdata, sizeof(EncoderData));
+	}
+
+	if(sector_num == FLASH_SECTOR_10)
+	{
+		flash_writting(FLASH_SECTOR_10_START_ADDRESS, (uint8_t *) &imudata, sizeof(ImuData));
+	}
+
+	if(sector_num == FLASH_SECTOR_11)
+	{
+		flash_writting(FLASH_SECTOR_11_START_ADDRESS, (uint8_t *) &coursedata, sizeof(CourseData));
+	}
+
+	HAL_FLASH_Lock();
 }
 
-void flash_read(uint32_t start_address)
+/* FLASH_SECTOR_num を渡すとそのセクタに対応する構造体のデータを読み取ってくれる関数 */
+void flash_read(uint32_t sector_num)
 {
-	uint32_t start_address;
-	uint_8 *ptr;
-	uint32_t size;
-
 	//! AnalogData : Sector8
 	if(sector_num == FLASH_SECTOR_8)
 	{
-		start_address = FLASH_SECTOR_8_START_ADDRESS;
-		ptr = (uint8_t *) analogdata;
-		size = sizeof(AnalogData)
+		flash_reading(FLASH_SECTOR_8_START_ADDRESS, (uint8_t *) &analogdata, sizeof(AnalogData));
 	}
 
 	//! EncoderData : Sector9
 	if(sector_num == FLASH_SECTOR_9)
 	{
-		start_address = FLASH_SECTOR_9_START_ADDRESS;
-		ptr = (uint8_t *) encoderdata;
-		size = sizeof(EncoderData)
+		flash_reading(FLASH_SECTOR_9_START_ADDRESS, (uint8_t *) &encoderdata, sizeof(EncoderData));
 	}
 
 	//! ImuData : Sector10
 	if(sector_num == FLASH_SECTOR_10)
 	{
-		start_address = FLASH_SECTOR_10_START_ADDRESS;
-		ptr = (uint8_t *) imudata;
-		size = sizeof(ImuData)
+		flash_reading(FLASH_SECTOR_10_START_ADDRESS, (uint8_t *) &imudata, sizeof(ImuData));
 	}
 
 	//! CourseData : Sector11
 	if(sector_num == FLASH_SECTOR_11)
 	{
-		start_address = FLASH_SECTOR_11_START_ADDRESS;
-		ptr = (uint8_t *) coursedata;
-		size = sizeof(CourseData)
+		flash_reading(FLASH_SECTOR_11_START_ADDRESS, (uint8_t *) &coursedata, sizeof(CourseData));
 	}
-
-	flash_reading(start_address, ptr, size);
 }
 
 /* flash_read called only this method. */

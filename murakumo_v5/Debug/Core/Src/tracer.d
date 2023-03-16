@@ -35,7 +35,7 @@ Core/Src/tracer.o: ../Core/Src/tracer.c ../Core/Inc/tracer.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/Rotary.h ../Core/Inc/analog.h ../Core/Inc/flash.h \
- ../Core/Inc/sidesensor.h ../Core/Inc/function.h
+ ../Core/Inc/sidesensor.h ../Core/Inc/geometry.h ../Core/Inc/function.h
 
 ../Core/Inc/tracer.h:
 
@@ -120,5 +120,7 @@ Core/Src/tracer.o: ../Core/Src/tracer.c ../Core/Inc/tracer.h \
 ../Core/Inc/flash.h:
 
 ../Core/Inc/sidesensor.h:
+
+../Core/Inc/geometry.h:
 
 ../Core/Inc/function.h:

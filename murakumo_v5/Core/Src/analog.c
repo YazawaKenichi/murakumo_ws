@@ -181,7 +181,8 @@ void analog_calibration_stop()
 	analog_print_min();
 	/* analogdata.min/max = analogmin/max */
 	analog_set_on_flash(analogdata.min, analogdata.max);
-	flash_write_all();
+	//! FLASH_SECTOR_8 is AnalogData
+	flash_write(FLASH_SECTOR_8);
 }
 
 void analog_init()
