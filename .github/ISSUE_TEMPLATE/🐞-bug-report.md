@@ -2,7 +2,7 @@
 name: "\U0001F41E Bug report"
 about: Bug report in Hardware or Software
 title: "[ Bug ] "
-labels: ''
+labels: bug
 assignees: ''
 
 ---
