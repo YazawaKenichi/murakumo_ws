@@ -11,6 +11,11 @@
 
 #include "fixed_section.h"
 
+void fixed_section_start()
+{
+	//! 作っとく
+}
+
 /**
  * @fn
  * @brief 一定距離ごとに course_state_function() を呼び出す関数
