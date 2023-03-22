@@ -50,7 +50,7 @@ void flash_reading(uint32_t address, uint8_t *data, uint32_t size)
 }
 
 /* FLASH_SECTOR_num を渡すとそのセクタに対応する構造体のデータを書き込んでくれる関数 */
-void flash_write(uint32_t sector_num)
+void flash_write(unsigned sector_num)
 {
 	HAL_FLASH_Unlock();
 	flash_erase(sector_num);
@@ -79,7 +79,7 @@ void flash_write(uint32_t sector_num)
 }
 
 /* FLASH_SECTOR_num を渡すとそのセクタに対応する構造体のデータを読み取ってくれる関数 */
-void flash_read(uint32_t sector_num)
+void flash_read(unsigned sector_num)
 {
 	//! AnalogData : Sector8
 	if(sector_num == FLASH_SECTOR_8)

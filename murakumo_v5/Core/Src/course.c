@@ -24,12 +24,14 @@ void course_start()
 	course_reset_section_degree();
 	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free)
 	{
+		//! speed radius right left に初期値を与える
 		course_reset_flash();
 	}
 	if(rotary_read_playmode() == accel)
 	{
-		flash_read_all();
-		//! 走る前に速度を計算して書き込んでからスタートする
+		//! coursedata だけでいい
+		flash_read(FLASH_SECTOR_11);
+		//! 走る前に速度を計算して書き込んでからスタートする ( 使うのは coursedata のみ )
 		course_fixing_radius2speed();
 		//! FLASH_SECTOR_11 is CourseData
 		flash_write(FLASH_SECTOR_11);
@@ -39,9 +41,15 @@ void course_start()
 
 void course_stop()
 {
-	if(rotary_read_playmode() == search || rotary_read_playmode() == accel || rotary_read_playmode() == motor_free)
+	if(rotary_read_playmode() == search || rotary_read_playmode() == motor_free)
 	{
-		flash_write_all();
+		flash_write(FLASH_SECTOR_9);
+		flash_write(FLASH_SECTOR_10);
+		flash_write(FLASH_SECTOR_11);
+	}
+	if(rotary_read_playmode() == accel)
+	{
+		flash_write(FLASH_SECTOR_11);
 	}
 	imu_stop();
 }

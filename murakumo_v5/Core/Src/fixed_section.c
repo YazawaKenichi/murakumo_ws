@@ -11,13 +11,6 @@
 
 #include "fixed_section.h"
 
-float fixed_section_speed_now;
-
-void fixed_section_start()
-{
-    fixed_section_speed_now = coursedata.speed[0];
-}
-
 /**
  * @fn
  * @brief 一定距離ごとに course_state_function() を呼び出す関数
@@ -36,6 +29,8 @@ void fixed_section_main()
     }
 }
 
+//! 使ってないから切って良い
+#ifdef USE_FIXED_SPEED
 /**
  * @fn
  * @brief 加速度調整をする関数
@@ -93,3 +88,5 @@ float fixed_speed()
 
     return speed_target;
 }
+
+#endif

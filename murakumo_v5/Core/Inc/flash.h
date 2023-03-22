@@ -60,8 +60,8 @@ typedef struct
 void flash_erase(uint32_t);
 void flash_writting(uint32_t, uint8_t *, uint32_t);
 void flash_reading(uint32_t, uint8_t *, uint32_t);
-void flash_write(uint32_t);
-void flash_read(uint32_t);
+void flash_write(unsigned);
+void flash_read(unsigned);
 void flash_init();
 void flash_read_all();
 void flash_write_all();
