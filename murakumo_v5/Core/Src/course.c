@@ -136,6 +136,8 @@ void course_calclate_radius()
 
     //! 現在の区間長を取得する */
 	section_length = section_length_read();
+	//! 必要な情報をバッファに保存する
+	course_data_saving();
 	//! 現在点を次の区間開始点に設定する
 	section_length_set_buffer();
 	//! 角度を取得する
@@ -170,12 +172,10 @@ void course_state_function()
 	if(pm == search || pm == motor_free )
 	{
 		coursedata.course_state_count_max = course_read_state_count();
+		//! 区間長を計算して現在点を次の区間開始点に設定する。区間の角度を取り出す。これら２つから区間半径を計算する。
 		course_calclate_radius();
+		//! 計算された半径を格納する
 		coursedata.radius[course_state_count] = course_read_curvature_radius();
-		//! 必要な情報を保管しておく
-		course_data_saving();
-		//! 区間長と区間角度と区間半径をリセット
-		course_reset();
 		//! マーカを読んだ場所の記録
 		coursedata.marker[course_state_count] = length_read();
 	}
@@ -183,6 +183,7 @@ void course_state_function()
 	{
 		float fixed_velocity_target;
 		// course_calclate_radius() を呼び出していないのでリセットする必要がある
+		//! 現在地を区間開始点にする
 		section_length_set_buffer();
 		fixed_velocity_target = coursedata.speed[course_state_count];
 		__course_debug_target_speed__ = fixed_velocity_target;
@@ -377,6 +378,8 @@ float accel_max_calc(uint8_t i)
 
 void course_data_saving()
 {
-	encoderdata.left[course_state_count] = section_length_read_left();
-	encoderdata.right[course_state_count] = section_length_read_right();
+	uint16_t index;
+	index = course_read_state_count();
+	encoderdata.left[index] = section_length_read_left();
+	encoderdata.right[index] = section_length_read_right();
 }
