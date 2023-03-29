@@ -12,7 +12,10 @@
 /* LENGTH PER PULSE */
 #define TIREDIAMETER 21000  /* [um] */
 #define ERROR -7250
-#define PULSEPERROTATE 4096 /* [cnt] */
+//! 左右のエンコーダの分解能を記入する
+#define PULSEPERROTATE_LEFT (1024 * 4) /* [cnt] */
+#define PULSEPERROTATE_RIGHT (1024 * 4) /* [cnt] */
+
 #define PINION 25
 #define SUPER 64
 
@@ -22,8 +25,11 @@
 
 #define REDUCTION_RATIO (PINION / (float) SUPER)
 //! LENGTHPERPULSE = (pi * 21000 * (25 / 64)) / 4096 = 6.29 [ um / cnt ]
-#define LENGTHPERPULSE (M_PI * (TIREDIAMETER - ERROR) * REDUCTION_RATIO / (float) PULSEPERROTATE)    /* [um / cnt] */
-#define ENCODER_MIDDLE (PULSEPERROTATE / 2)
+#define LENGTHPERPULSE_LEFT (M_PI * (TIREDIAMETER - ERROR) * REDUCTION_RATIO / (float) PULSEPERROTATE_LEFT)    /* [um / cnt] */
+#define LENGTHPERPULSE_RIGHT (M_PI * (TIREDIAMETER - ERROR) * REDUCTION_RATIO / (float) PULSEPERROTATE_RIGHT)
+
+#define ENCODER_MIDDLE_LEFT (PULSEPERROTATE_LEFT / 2)
+#define ENCODER_MIDDLE_RIGHT (PULSEPERROTATE_RIGHT / 2)
 
 float encoder_length_left();
 float encoder_length_right();

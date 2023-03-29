@@ -1,3 +1,14 @@
+/**
+ * @file encoder.c
+ * @author YAZAWA Kenichi (s21c1036hn@gmail.com)
+ * @brief 
+ * @version 1.0
+ * @date 2023-03-30
+ * 
+ * (C) 2023 YAZAWA Kenichi
+ * 
+ */
+
 #include "encoder.h"
 
 /* encoders are updated only in encoder file. */
@@ -12,7 +23,7 @@ float encoder_length()
     printf("encoder * (float) LENGTHPERPULSE = %6.1f * %1.5f = %7.5f\r\n", encoder, LENGTHPERPULSE, encoder * (float) LENGTHPERPULSE);
     #endif
     //! 単位は [ um ]
-    return (float) encoder * (float) LENGTHPERPULSE;
+    return (float) encoder_length_left() * encoder_length_right() / 2;
 }
 
 float encoder_length_left()
@@ -21,7 +32,7 @@ float encoder_length_left()
     printf("encoder.c > encoder_length_left() > ");
     printf("encoder_left * (float) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_left, LENGTHPERPULSE, encoder_left * (float) LENGTHPERPULSE);
     #endif
-    return (float) encoder_left * (float) LENGTHPERPULSE;
+    return (float) encoder_left * (float) LENGTHPERPULSE_LEFT;
 }
 
 float encoder_length_right()
@@ -30,7 +41,7 @@ float encoder_length_right()
     printf("encoder.c > encoder_length_right() > ");
     printf("encoder_right * (float) LENGTHPERPULSE = %5d * %1.5f = %7.5f\r\n", encoder_right, LENGTHPERPULSE, encoder_right * (float) LENGTHPERPULSE);
     #endif
-    return (float) encoder_right * (float) LENGTHPERPULSE;
+    return (float) encoder_right * (float) LENGTHPERPULSE_RIGHT;
 }
 
 void encoder_d_print()
@@ -54,9 +65,10 @@ void encoder_set()
     er_now = TIM3->CNT;
     encoder_set_middle();
 
-    encoder_left = el_now - ENCODER_MIDDLE;
-    encoder_right = -(er_now - ENCODER_MIDDLE);
+    encoder_left = el_now - ENCODER_MIDDLE_LEFT;
+    encoder_right = -(er_now - ENCODER_MIDDLE_RIGHT);
     //! 単位 [ cnt / sampling_time_s ]
+    //! encoder_length() で読み出しても返されるのはこの値ではないことに注意
     encoder = (encoder_left + encoder_right) / (float) 2;
 
     #if D_ENCODER_WHILE
@@ -68,7 +80,7 @@ void encoder_set()
 void encoder_init()
 {
     #if D_ENCODER
-    printf("LENGTHPERPULSE = %7.2f\r\n", LENGTHPERPULSE);
+    printf("LENGTHPERPULSE_LEFT = %7.2f, LENGTHPERPULSE_RIGHT = %7.2f\r\n", LENGTHPERPULSE_LEFT, LENGTHPERPULSE_RIGHT);
     #endif
 }
 
@@ -99,8 +111,8 @@ void encoder_stop()
 /* private */
 void encoder_set_middle()
 {
-    TIM1 -> CNT = ENCODER_MIDDLE;
-    TIM3 -> CNT = ENCODER_MIDDLE;
+    TIM1 -> CNT = ENCODER_MIDDLE_LEFT;
+    TIM3 -> CNT = ENCODER_MIDDLE_RIGHT;
     #if D_ENCODER_WHILE
     printf("encoder.c > encoder_set_middle() > ");
     printf("TIM1 -> CNT = %6lu, TIM3 -> CNT = %6lu\r\n", TIM1->CNT, TIM3->CNT);
