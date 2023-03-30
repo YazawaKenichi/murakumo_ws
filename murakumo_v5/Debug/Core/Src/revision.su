@@ -1,5 +1,0 @@
-revision.c:19:6:imu_revision_init	4	static
-revision.c:24:6:imu_revision_start	8	static
-revision.c:31:6:imu_revision_stop	8	static
-revision.c:36:6:imu_revision_print	16	static
-revision.c:48:6:revision_print	4	static
