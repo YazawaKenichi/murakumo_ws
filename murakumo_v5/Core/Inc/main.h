@@ -23,7 +23,7 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#define __VERSION__ 1.5
+#define __VERSION__ 1.6
 
 #ifdef __cplusplus
 extern "C" {
