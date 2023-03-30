@@ -60,10 +60,10 @@ float fixed_speed()
 
     /* この関数は course_state_count がインクリメントされる前に呼び出されていることに注意 */
     course_state_count = course_read_state_count();
-    speed_next = coursedata.speed[course_state_count + 1];
+    speed_next = data_speed[course_state_count + 1];
 #if FIX_LPF
     /* LPF 通してみる */
-    speed_now = coursedata.speed[course_state_count];
+    speed_now = data_speed[course_state_count];
     //! v2 の設定
     speed_next = low_pass_filter(speed_next, speed_now, 0.5f);
 #endif

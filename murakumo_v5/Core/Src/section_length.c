@@ -85,8 +85,6 @@ void section_length_set_buffer()
 {
     section_length_buffer_global_left = length_read_left();
     section_length_buffer_global_right = length_read_right();
-    section_length_left = 0;
-    section_length_right = 0;
 }
 
 void section_length_update()

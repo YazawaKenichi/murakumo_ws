@@ -1,5 +1,6 @@
 #include "course.h"
 
+float data_speed[COURSE_STATE_SIZE];
 uint16_t course_state_count;
 uint16_t course_sampling_count;
 float course_section_degree;
@@ -134,14 +135,18 @@ void course_calclate_radius()
 	float section_degree, section_length;
 	float section_radian;
 
-    //! 現在の区間長を取得する */
+    //! 現在の区間長を取得する
 	section_length = section_length_read();
 	//! 必要な情報をバッファに保存する
 	course_data_saving();
-	//! 現在点を次の区間開始点に設定する
+	//! 現在点を次の区間開始点に設定する。値のリセットは別でやる
 	section_length_set_buffer();
-	//! 角度を取得する
+	//! 角度を取得するだけ、値のアップデートやリセットは別で行われる
 	section_degree = course_read_section_degree();
+	//! 角度を保存する
+	course_imu_data_saving();
+	//! 長さ情報と角度情報をいっぺんにリセットする
+	course_reset();
 
 	/* 極率半径を計算する */
 #if MODE_ENCODER_CALCLATE
@@ -174,9 +179,9 @@ void course_state_function()
 		coursedata.course_state_count_max = course_read_state_count();
 		//! 区間長を計算して現在点を次の区間開始点に設定する。区間の角度を取り出す。これら２つから区間半径を計算する。
 		course_calclate_radius();
-		//! 計算された半径を格納する
+		//! 計算された半径を格納するだけ。アップデートやリセットは別でやる。
 		coursedata.radius[course_state_count] = course_read_curvature_radius();
-		//! マーカを読んだ場所の記録
+		//! マーカを読んだ場所の記録だけする。値のアップデートやリセットは他でやる。
 		coursedata.marker[course_state_count] = length_read();
 	}
 	if(pm == accel)
@@ -185,7 +190,7 @@ void course_state_function()
 		// course_calclate_radius() を呼び出していないのでリセットする必要がある
 		//! 現在地を区間開始点にする
 		section_length_set_buffer();
-		fixed_velocity_target = coursedata.speed[course_state_count];
+		fixed_velocity_target = data_speed[course_state_count];
 		__course_debug_target_speed__ = fixed_velocity_target;
 		velotrace_set_target_direct(fixed_velocity_target);
 	}
@@ -226,7 +231,7 @@ void course_fixing_radius2speed()
 	{
 		uint16_t index;
 		index = imax - course_state_size;
-		coursedata.speed[index] = course_radius2speed(coursedata.radius[index]);
+		data_speed[index] = course_radius2speed(coursedata.radius[index]);
 		#if D_COURSE
 		printf("course_fixing_radius2speed() > rect 矩形グラフ\r\n");
 		#endif
@@ -247,7 +252,7 @@ void course_fixing_radius2speed()
 		float v1, v2, vref;
 		index = imax - course_state_size;
 		v1 = accel_glaph[index];
-		v2 = coursedata.speed[index + 1];
+		v2 = data_speed[index + 1];
 		if(v2 > v1)
 		{
 			if(accel_length >= pow(v2 - v1, 2))
@@ -276,7 +281,7 @@ void course_fixing_radius2speed()
 		float v2, v3, vref;
 		index = course_state_size;
 		v3 = decel_glaph[index];
-		v2 = coursedata.speed[index - 1];
+		v2 = data_speed[index - 1];
 		if(v2 > v3)
 		{
 			if(accel_length >= pow(v3 - v2, 2))
@@ -303,7 +308,7 @@ void course_fixing_radius2speed()
 	{
 		uint16_t index;
 		index = imax - course_state_size;
-		coursedata.speed[index] = (accel_glaph[index] > decel_glaph[index]) ? decel_glaph[index] : accel_glaph[index];
+		data_speed[index] = (accel_glaph[index] > decel_glaph[index]) ? decel_glaph[index] : accel_glaph[index];
 		#if D_COURSE
 		printf("course_fixing_radius2speed() > speed 速度グラフ\r\n");
 		printf("%4d, %7.3f, %7.3f\r\n", index, accel_glaph[index], decel_glaph[index]);
@@ -327,13 +332,13 @@ void course_print_flash()
 			{
 				case 15:
 					//! CourseData
-					print_data_a = coursedata.speed[index];
+					print_data_a = data_speed[index];
 					print_data_b = coursedata.radius[index];
 					break;
 				case 14:
 					//! ImuData
-					print_data_a = 9.999f;
-					print_data_b = 8.888f;
+					print_data_a = imudata.yaw[index];
+					print_data_b = 0.000f;
 					break;
 				case 13:
 					//! EncoderData
@@ -364,7 +369,7 @@ void course_reset_flash()
 	{
 		uint16_t index;
 		index = COURSE_STATE_SIZE - course_state_size;
-		coursedata.speed[index] = COURSE_SPEED_DEFAULT;
+		data_speed[index] = COURSE_SPEED_DEFAULT;
 		coursedata.radius[index] = COURSE_RADIUS_DEFAULT;
 		encoderdata.left[index] = 8.888f;
 		encoderdata.right[index] = 7.777f;
@@ -382,4 +387,11 @@ void course_data_saving()
 	index = course_read_state_count();
 	encoderdata.left[index] = section_length_read_left();
 	encoderdata.right[index] = section_length_read_right();
+}
+
+void course_imu_data_saving()
+{
+	uint16_t index;
+	index = course_read_state_count();
+	imudata.yaw[index] = course_read_section_degree();
 }

@@ -25,7 +25,13 @@
 #define FLASH_SECTOR_10_START_ADDRESS 0x080C0000
 #define FLASH_SECTOR_11_START_ADDRESS 0x080E0000
 
+#define SAVE_RAM 1
+
+#if !SAVE_RAM
 #define COURSE_STATE_SIZE 6000  // 6000 = 60 [ m ] / COURSE_SAMPLING_LENGTH [ m ]
+#else
+#define COURSE_STATE_SIZE 200   //! 2 [ m ] まで計測
+#endif
 
 #ifndef CALIBRATIONSIZE
 #define CALIBRATIONSIZE 16
@@ -40,7 +46,6 @@ typedef struct
 typedef struct
 {
     uint16_t course_state_count_max;
-    float speed[COURSE_STATE_SIZE];
     float radius[COURSE_STATE_SIZE];
     float marker[COURSE_STATE_SIZE];
 } CourseData;
@@ -53,8 +58,11 @@ typedef struct
 
 typedef struct
 {
+    /* 本当はこうしたい
     Vector3 accel;
     Vector3 gyro;
+    */
+    float yaw[COURSE_STATE_SIZE];
 } ImuData;
 
 void flash_erase(uint32_t);
