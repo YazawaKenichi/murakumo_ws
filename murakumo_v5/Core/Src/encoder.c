@@ -36,8 +36,10 @@ float encoder_length_right()
 void encoder_d_print()
 {
     #if D_ENCODER
-    //! printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %f\r\n", encoder_left, encoder_right, encoder);
-    printf("encoder.c > encoder_length_left = %7.3f, encoder_length_right = %7.3f, encoder_length = %7.3f\r\n", encoder_length_left(), encoder_length_right(), encoder_length());
+    //! encoder_read_lr() を標準出力
+    // printf("encoder.c > encoder_length_left = %7.3f, encoder_length_right = %7.3f, encoder_length = %7.3f\r\n", encoder_length_left(), encoder_length_right(), encoder_length());
+    //! encoder_lr つまり中央値からの生の値を標準出力
+    printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %7.3f\r\n", encoder_left, encoder_right, encoder);
     #endif
 }
 
