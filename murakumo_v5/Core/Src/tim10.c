@@ -112,7 +112,7 @@ void tim10_d_print()
 {
 #if D_TIM10
 	// printf("tim10_left = %f, tim10_right = %f\r\n", tim10_left, tim10_right);
-	printf("__debug_tim10_count  __ = %16ld\r\n__debug_tim10_count_2__ = %16ld\r\n", __debug_tim10_count__, __debug_tim10_count_2__);
+	// printf("__debug_tim10_count  __ = %16ld\r\n__debug_tim10_count_2__ = %16ld\r\n", __debug_tim10_count__, __debug_tim10_count_2__);
 #endif
 	length_d_print();
 	course_d_print();

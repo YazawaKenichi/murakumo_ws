@@ -39,15 +39,23 @@ void encoder_d_print()
     //! encoder_read_lr() を標準出力
     // printf("encoder.c > encoder_length_left = %7.3f, encoder_length_right = %7.3f, encoder_length = %7.3f\r\n", encoder_length_left(), encoder_length_right(), encoder_length());
     //! encoder_lr つまり中央値からの生の値を標準出力
-    printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %7.3f\r\n", encoder_left, encoder_right, encoder);
+    // printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %7.3f\r\n", encoder_left, encoder_right, encoder);
+    //! TIM1->CNT と TIM3->CNT を出力
+    printf("encoder.c > TIM1->CNT = %4d, TIM3->CNT %4d\r\n", TIM1->CNT, TIM3->CNT);
     #endif
 }
 
 /* only read tim10_update_values */
 void encoder_set()
 {
-    encoder_left = TIM1 -> CNT - ENCODER_MIDDLE;
-    encoder_right = -(TIM3 -> CNT - ENCODER_MIDDLE);
+    uint16_t el_now, er_now;
+
+    el_now = TIM1->CNT;
+    er_now = TIM3->CNT;
+    encoder_set_middle();
+
+    encoder_left = el_now - ENCODER_MIDDLE;
+    encoder_right = -(er_now - ENCODER_MIDDLE);
     //! 単位 [ cnt / sampling_time_s ]
     encoder = (encoder_left + encoder_right) / (float) 2;
 
@@ -55,8 +63,6 @@ void encoder_set()
     printf("encoder.c > encoder_set() > ");
     printf("encoder_left = %6d, encoder_right = %6d, encoder = %6.1f\r\n", encoder_left, encoder_right, encoder);
     #endif
-
-    encoder_set_middle();
 }
 
 void encoder_init()

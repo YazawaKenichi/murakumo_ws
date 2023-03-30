@@ -22,7 +22,7 @@
 
 #define D_COURSE 0  //! これ入れると stop 処理に printf が入って遅くなる
 #define D_COURSE_WHILE 0
-#define LEFT_MARKER_RADIUS 0
+#define LEFT_MARKER_RADIUS 1
 
 //! フラッシュの角度情報を COURSE_RADIUS_DEFAULT で初期化する
 #define COURSE_RADIUS_DEFAULT 9.99f

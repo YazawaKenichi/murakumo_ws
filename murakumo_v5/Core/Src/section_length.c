@@ -97,6 +97,7 @@ void section_length_update()
 void section_length_d_print()
 {
     #if D_SECTION_LENGTH
-    printf("section_length = %10.2f\r\n", section_length_read());
+    // printf("section_length = %10.2f\r\n", section_length_read());
+    printf("section_length_read_left() = %7.3f, section_length_read_right() = %7.3f, section_length_read() = %7.3f\r\n", section_length_read_left(), section_length_read_right(), section_length_read());
     #endif
 }
