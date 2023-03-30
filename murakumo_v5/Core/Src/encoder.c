@@ -37,7 +37,7 @@ void encoder_d_print()
 {
     #if D_ENCODER
     //! printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %f\r\n", encoder_left, encoder_right, encoder);
-    printf("encoder.c > encoder_length_left = %5d, encoder_length_right = %5d, encoder_length = %f\r\n", encoder_length_left(), encoder_length_right(), encoder_length());
+    printf("encoder.c > encoder_length_left = %7.3f, encoder_length_right = %7.3f, encoder_length = %7.3f\r\n", encoder_length_left(), encoder_length_right(), encoder_length());
     #endif
 }
 

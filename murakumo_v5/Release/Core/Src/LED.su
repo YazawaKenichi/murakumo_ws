@@ -1,9 +1,0 @@
-LED.c:26:9:led_read_current_value	0	static
-LED.c:31:9:led_read_current_rgb_value	0	static
-LED.c:36:6:led_write_led1	16	static
-LED.c:45:6:led_write_led2	16	static
-LED.c:54:6:led_write_rgb	16	static
-LED.c:62:6:led_write_led	16	static
-LED.c:6:6:led_init	8	static
-LED.c:14:6:led_start	8	static
-LED.c:20:6:led_stop	8	static
