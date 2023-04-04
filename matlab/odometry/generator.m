@@ -25,23 +25,23 @@ vr = 2 * length / dt - vl;
 fileID = fopen("ideal_enc", "w");
 for index = 0 : 0 + n1
     if index == 0 + n1
-        fprintf(fileID, "%2d, %10.8f, %10.8f\n", index, 0.0, 0.0);
+        fprintf(fileID, "%3d, %10.8f, %10.8f\n", index, 0.0, 0.0);
     else
-        fprintf(fileID, "%2d, %10.8f, %10.8f\n", index, 0.01, 0.01);
+        fprintf(fileID, "%3d, %10.8f, %10.8f\n", index, 0.01, 0.01);
     end
 end
 for index = n1 : n1 + n
     if index == n1 + n
-        fprintf(fileID, "%2d, %10.8f, %10.8f\n", index, 0, 0);
+        fprintf(fileID, "%3d, %10.8f, %10.8f\n", index, 0, 0);
     else
-        fprintf(fileID, "%2d, %10.8f, %10.8f\n", index, vl / n, vr / n);
+        fprintf(fileID, "%3d, %10.8f, %10.8f\n", index, vl / n, vr / n);
     end
 end
 for index = n1 + n : n1 + n + 10
     if index == n1 + n + 10
-        fprintf(fileID, "%2d, %10.8f, %10.8f\n", index, 0.0, 0.0);
+        fprintf(fileID, "%3d, %10.8f, %10.8f\n", index, 0.0, 0.0);
     else
-        fprintf(fileID, "%2d, %10.8f, %10.8f\n", index, 0.01, 0.01);
+        fprintf(fileID, "%3d, %10.8f, %10.8f\n", index, 0.01, 0.01);
     end
 end
 

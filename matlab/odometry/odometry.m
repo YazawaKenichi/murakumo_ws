@@ -1,8 +1,7 @@
 % エンコーダの回転数だけでオドメトリを取る %
 
-% FILEPATH = "desk_enc";
-FILEPATH = "ideal_enc";
-IMU_FILEPATH = "";
+FILEPATH = "desk_enc";
+IMU_FILEPATH = "desk_imu";
 
 filepath = FILEPATH;
 imu_filepath = IMU_FILEPATH;
@@ -10,16 +9,15 @@ imu_filepath = IMU_FILEPATH;
 [x, y] = main(filepath, imu_filepath);
 
 glaph_plot(x, y);
-legend("x", "y", "nan", "nan");
+% legend("imu", "nan", "nan", "nan"); %
 xlabel("x [ m ]");
 ylabel("y [ m ]");
 hold off;
 
 function [x, y] = main(filename, imu_filename)
 
-    use_imu = 0;
+    use_imu = 1;
     if imu_filename == ""
-    else
         use_imu = 0;
     end
 
@@ -38,7 +36,7 @@ function [x, y] = main(filename, imu_filename)
         omega = 0;
         if use_imu
             imu_datas = readmatrix(imu_filename);
-            omega = imu_datas(index, 2);
+            omega = imu_datas(index, 2) * pi / 180;
         else
             tread = 0.1;    % 単位 [ m ] %
             omega = (vl - vr) / tread;    % 単位 [ rad / s = ( m / s ) / m ] %
@@ -57,15 +55,30 @@ function glaph_plot(x, y)
     hold off;
     plot(x, y)
     hold on;
-    minimum = min([min(x), min(y)]);
-    maximum = max([max(x), max(y)]);
-    cent_grav_x = mean(x);
-    cent_grav_y = mean(y);
-    xrange = (cent_grav_x + max(x)) - (cent_grav_x - min(x));
-    yrange = (cent_grav_x + max(y)) - (cent_grav_y - min(y));
-    range = max([xrange, yrange]);
-    xlim([-0.04 0.2])
-    ylim([-0.04 0.2]);
+
+    % 最大値と最小値の取得 %
+    xmin = min(x);
+    ymin = min(y);
+    xmax = max(x);
+    ymax = max(y);
+
+    % 中央の座標を取得する %
+    xc = (xmin + xmax) / 2;
+    yc = (ymin + ymax) / 2;
+
+    % 縦横の長さを計算する %
+    xrange = xmax - xmin;
+    yrange = ymax - ymin;
+
+    padding = 1.2;
+
+    % 長い方で正方形を作る %
+    half_range = padding * max(xrange, yrange) / 2;
+
+    % プロットの領域を設定する %
+    xlim([xc - half_range, xc + half_range]);
+    ylim([yc - half_range, yc + half_range]);
+
     disp("plot ... OK")
 end
 
