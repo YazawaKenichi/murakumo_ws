@@ -30,7 +30,7 @@
 #if !SAVE_RAM
 #define COURSE_STATE_SIZE 6000  // 6000 = 60 [ m ] / COURSE_SAMPLING_LENGTH [ m ]
 #else
-#define COURSE_STATE_SIZE 200   //! 2 [ m ] まで計測
+#define COURSE_STATE_SIZE 1000   //! 2 [ m ] まで計測
 #endif
 
 #ifndef CALIBRATIONSIZE

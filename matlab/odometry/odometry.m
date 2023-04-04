@@ -1,17 +1,24 @@
-% エンコーダの回転数だけでオドメトリを取る %
+% エンコーダと IMU で自分の位置を記憶する %
 
-FILEPATH = "desk_enc";
-IMU_FILEPATH = "desk_imu";
+FILEPATH = "mini_enc";
+IMU_FILEPATH = "mini_imu";
 
 filepath = FILEPATH;
-imu_filepath = IMU_FILEPATH;
 
+% enc %
+imu_filepath = "";
 [x, y] = main(filepath, imu_filepath);
-
 glaph_plot(x, y);
-% legend("imu", "nan", "nan", "nan"); %
+
+% imu %
+imu_filepath = IMU_FILEPATH;
+[x, y] = main(filepath, imu_filepath);
+glaph_plot(x, y);
+
+legend("enc", "imu", "nan", "nan"); %
 xlabel("x [ m ]");
 ylabel("y [ m ]");
+
 hold off;
 
 function [x, y] = main(filename, imu_filename)
@@ -39,7 +46,11 @@ function [x, y] = main(filename, imu_filename)
             omega = imu_datas(index, 2) * pi / 180;
         else
             tread = 0.1;    % 単位 [ m ] %
-            omega = (vl - vr) / tread;    % 単位 [ rad / s = ( m / s ) / m ] %
+            omega = - (vl - vr) / tread;    % 単位 [ rad / s = ( m / s ) / m ] %
+            for jindex = 1 : length(omega) - 1
+                omega(jindex + 1) = lpf(omega(jindex), omega(jindex + 1), 0.7);
+            end
+            omega
         end
         theta(index + 1) = theta(index) + omega * sampling_time;
         % 現在速度と現在角度から二次元座標上の x-y 速度を出す %
@@ -51,10 +62,14 @@ function [x, y] = main(filename, imu_filename)
     end
 end
 
+function ret = lpf(prev, ref, gamma)
+    ret = prev * (gamma) + ref * (1 - gamma);
+end
+
 function glaph_plot(x, y)
-    hold off;
     plot(x, y)
-    hold on;
+
+    hold on
 
     % 最大値と最小値の取得 %
     xmin = min(x);
