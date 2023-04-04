@@ -11,7 +11,7 @@
 
 /* LENGTH PER PULSE */
 #define TIREDIAMETER 21000  /* [um] */
-#define ERROR - 32000
+#define ERROR -32000
 
 //! 左右のエンコーダの分解能を記入する
 #define PULSEPERROTATE_LEFT (1024 * 5) /* [cnt] */
