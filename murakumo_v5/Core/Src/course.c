@@ -373,6 +373,7 @@ void course_reset_flash()
 		coursedata.radius[index] = COURSE_RADIUS_DEFAULT;
 		encoderdata.left[index] = 8.888f;
 		encoderdata.right[index] = 7.777f;
+		imudata.yaw[index] = 6.666f;
 	}
 }
 

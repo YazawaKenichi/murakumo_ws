@@ -30,7 +30,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 
-#define __VERSION__ 1.22
+#define __VERSION__ 1.24
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
