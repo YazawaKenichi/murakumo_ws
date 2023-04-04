@@ -5,12 +5,12 @@ float section_length_left, section_length_right;
 //! 区間開始点の世界長
 float section_length_buffer_global_left, section_length_buffer_global_right;
 //! update 周期
-float samplingtime_s;
+float section_samplingtime_s;
 
 //! update 周期を設定する
 void section_length_set_sampling_time_ms(unsigned short int samplingtime_ms)
 {
-    samplingtime_s = samplingtime_ms / (float) 1000;
+    section_samplingtime_s = samplingtime_ms / (float) 1000;
 }
 
 void section_length_init(unsigned short int samplingtime_ms)

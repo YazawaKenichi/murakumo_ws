@@ -23,7 +23,7 @@ float encoder_length()
     printf("encoder * (float) LENGTHPERPULSE = %6.1f * %1.5f = %7.5f\r\n", encoder, LENGTHPERPULSE, encoder * (float) LENGTHPERPULSE);
     #endif
     //! 単位は [ um ]
-    return (float) encoder_length_left() * encoder_length_right() / 2;
+    return (float) (encoder_length_left() + encoder_length_right()) / 2;
 }
 
 float encoder_length_left()
@@ -52,7 +52,7 @@ void encoder_d_print()
     //! encoder_lr つまり中央値からの生の値を標準出力
     // printf("encoder.c > encoder_left = %5d, encoder_left = %5d, encoder = %7.3f\r\n", encoder_left, encoder_right, encoder);
     //! TIM1->CNT と TIM3->CNT を出力
-    printf("encoder.c > TIM1->CNT = %4d, TIM3->CNT %4d\r\n", TIM1->CNT, TIM3->CNT);
+    // printf("encoder.c > TIM1->CNT = %4d, TIM3->CNT %4d\r\n", TIM1->CNT, TIM3->CNT);
     #endif
 }
 

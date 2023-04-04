@@ -1,10 +1,8 @@
 #include "tim10.h"
 
 /* lengths is updated only in tim10 file. */
-float length, length_left, length_right;
-float velocity_left, velocity_right, velocity;
 float tim10_left, tim10_right;
-unsigned int samplingtime_ms;
+unsigned int tim10_samplingtime_ms;
 float samplingtime_s;
 uint32_t __debug_tim10_count__, __debug_tim10_count_2__;
 
@@ -12,10 +10,10 @@ uint32_t __debug_tim10_count__, __debug_tim10_count_2__;
 void tim10_init()
 {
 	samplingtime_s = TIM10_TIME_MS / (float) 1000;
-	samplingtime_ms = TIM10_TIME_MS;
-	length_init(samplingtime_ms);
-	section_length_init(samplingtime_ms);
-	course_init(samplingtime_ms);
+	tim10_samplingtime_ms = TIM10_TIME_MS;
+	length_init(tim10_samplingtime_ms);
+	section_length_init(tim10_samplingtime_ms);
+	course_init(tim10_samplingtime_ms);
 	velotrace_init(1);
 	HAL_TIM_Base_Stop_IT(&htim10);
 }

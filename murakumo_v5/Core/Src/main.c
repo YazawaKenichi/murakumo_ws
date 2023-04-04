@@ -709,7 +709,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 4096;
+  htim1.Init.Period = 5210;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -759,7 +759,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 0;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 4096;
+  htim3.Init.Period = 10240;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
@@ -1159,7 +1159,7 @@ void main_init()
   tim7_init();
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
-  /* imu のバイアス補正のための初期�? */
+  /* imu のバイアス補正のための初期?��? */
   // if(rotary_read_playmode() == motor_free)
     // imu_revision_init();
 }

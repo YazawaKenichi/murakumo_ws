@@ -6,15 +6,16 @@
 #include "stm32f4xx_hal_tim.h"
 #include "print.h"
 
-#define D_ENCODER 1
+#define D_ENCODER 0
 #define D_ENCODER_WHILE 0
 
 /* LENGTH PER PULSE */
 #define TIREDIAMETER 21000  /* [um] */
-#define ERROR -7250
+#define ERROR -32000
+
 //! 左右のエンコーダの分解能を記入する
-#define PULSEPERROTATE_LEFT (1024 * 4) /* [cnt] */
-#define PULSEPERROTATE_RIGHT (1024 * 4) /* [cnt] */
+#define PULSEPERROTATE_LEFT (1024 * 5) /* [cnt] */
+#define PULSEPERROTATE_RIGHT (1024 * 10) /* [cnt] */
 
 #define PINION 25
 #define SUPER 64
