@@ -1,0 +1,6 @@
+\dot{x}_e = - (\dot{x}_r - \dot{x}_c)\sin{\theta_c} + (\dot{y}_r - \dot{y}_c)\cos{\theta_c} - (x_r - x_c)\dot{\theta}_c\cos{\theta_c} - (yr - yc)\dot{\theta}_c\sin{\theta_c} \\
+= - x_e \omega_c + \dot{x}_r \sin{\theta_c} - \dot{y}_c \cos{\theta_c} - \dot{x}_r \sin{\theta_c} + \dot{y}_r \cos{\theta_c}\\
+= - x_e \omega_c - \dot{x}_r \sin{\theta_r - \theta_e} + \dot{y}_r \cos{\theta_r - \theta_e}\\
+= - x_e \omega_c - \dot{x}_r (\sin{\theta_r}\cos{\theta_e} - \cos{\theta_r}\sin{\theta_e}) + \dot{y}_r (\cos{\theta_r} \cos{\theta_e} + \sin{\theta_r} \sin{\theta_e})\\
+= - x_e \omega_c + (\dot{x}_r \cos{\theta_r} + \dot{y}_r \sin{\theta_r}) \sin{\theta_e} + (\dot{x}_r \cos{\theta_r} - \dot{y}_r \sin{\theta_r}) \sin{\theta_e}
+= - x_e \omega_c + v_r \sin{\theta_e}

@@ -29,7 +29,7 @@ function omega = enc_yaw(filepath)
     vr = datas(:, 3);
     omega = - (vl - vr) / tread;
     for index = 1 : length(omega) - 1
-        omega(index + 1) = lpf(omega(index), omega(index + 1), 0.7);
+        omega(index + 1) = lpf(omega(index), omega(index + 1), 0.25);
     end
 end
 

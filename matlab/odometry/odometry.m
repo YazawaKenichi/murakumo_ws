@@ -8,7 +8,7 @@ filepath = FILEPATH;
 % enc %
 imu_filepath = "";
 [x, y] = main(filepath, imu_filepath);
-glaph_plot(x, y);
+% glaph_plot(x, y);
 
 % imu %
 imu_filepath = IMU_FILEPATH;
@@ -48,7 +48,7 @@ function [x, y] = main(filename, imu_filename)
             tread = 0.1;    % 単位 [ m ] %
             omega = - (vl - vr) / tread;    % 単位 [ rad / s = ( m / s ) / m ] %
             for jindex = 1 : length(omega) - 1
-                omega(jindex + 1) = lpf(omega(jindex), omega(jindex + 1), 0.7);
+                omega(jindex + 1) = lpf(omega(jindex), omega(jindex + 1), 0.25);
             end
             omega
         end
