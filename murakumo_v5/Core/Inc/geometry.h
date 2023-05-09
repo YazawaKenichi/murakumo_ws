@@ -107,11 +107,24 @@ typedef struct
 {
     /* data */
     /**
+     * @brief This represents an orientation in free space in quaternion from.
+     * 
+     */
+     float x;
+     float y;
+     float z;
+     float w;
+} Quaternion;
+
+typedef struct
+{
+    /* data */
+    /**
      * @brief A representation of pose in free space, composed of position and orientation.
      * 
     */
     Point position;
-    Rpy rpy;
+    Quaternion orientation
 } Pose;
 
 typedef struct
