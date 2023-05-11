@@ -1,7 +1,8 @@
 #include "tim6.h"
 
 #if D_TIM6
-float leftmotor, rightmotor;
+MotorController motor;
+// float motor.left, motor.right;
 #endif
 
 void tim6_init()
@@ -13,8 +14,10 @@ void tim6_init()
 void tim6_start()
 {
 #if D_TIM6
-    leftmotor = 0;
-    rightmotor = 0;
+    motor.left = 0;
+    motor.right = 0;
+    motor.left = 0;
+    motor.right = 0;
 #endif
     //! 速度補正
     fixed_section_start();
@@ -35,43 +38,53 @@ void tim6_main()
 
     playmode = rotary_read_playmode();
 
+    #if LOCOMOTION_TEST
+    odometry_update();
+    #endif
+
     if(motor_read_enable() && playmode != motor_free)
     {
         #if !(TRACER_TUNING || VELOTRACE_TUNING)
+        #if !LOCOMOTION_TEST // 起動追従のテストするときに無効
         switch(playmode)
         {
             case tracer_tuning:
-                leftmotor   = 0 + tim7_read_left();
-                rightmotor  = 0 + tim7_read_right();
+                motor.left   = 0 + tim7_read_left();
+                motor.right  = 0 + tim7_read_right();
                 break;
             case velotrace_tuning:
-                leftmotor   = tim10_read_left() + 0;
-                rightmotor  = tim10_read_right() + 0;
+                motor.left   = tim10_read_left() + 0;
+                motor.right  = tim10_read_right() + 0;
                 break;
             default:
-                leftmotor   = tim10_read_left() + tim7_read_left();
-                rightmotor  = tim10_read_right() + tim7_read_right();
+                motor.left   = tim10_read_left() + tim7_read_left();
+                motor.right  = tim10_read_right() + tim7_read_right();
                 break;
         }
+        #else // LOCOMOTION_TEST    // 起動追従のテストするときに有効になる
+        //! 現在の速度と角速度を取得
+        q_n = get_twist();
+        kcm_sample(q_n, &motor);
+        #endif
         #else
         #if TRACER_TUNING
-        leftmotor  =  tim7_read_left();
-        rightmotor = tim7_read_right();
+        motor.left  =  tim7_read_left();
+        motor.right = tim7_read_right();
         #endif
         #if VELOTRACE_TUNING
-        leftmotor  =  tim10_read_left();
-        rightmotor = tim10_read_right();
+        motor.left  =  tim10_read_left();
+        motor.right = tim10_read_right();
         #endif
         #if VELOTRACE_TUNING && TRACER_TUNING
-        leftmotor  =  tim10_read_left() +  tim7_read_left();
-        rightmotor = tim10_read_right() + tim7_read_right();
+        motor.left  =  tim10_read_left() +  tim7_read_left();
+        motor.right = tim10_read_right() + tim7_read_right();
         #endif
 		#endif	/* !(TRACER_TUNING || VELOTRACE_TUNING) */
     }
     else
     {
-        leftmotor = 0;
-        rightmotor = 0;
+        motor.left = 0;
+        motor.right = 0;
     }
 }
 
@@ -79,6 +92,6 @@ void tim6_d_print()
 {
     #if D_TIM6
     printf("\r\n");
-    printf("tim6.c > tim6_d_print() > motor_enable = %1d, leftmotor = %5.3f, rightmotor = %5.3f\r\n", motor_read_enable(), leftmotor, rightmotor); 
+    printf("tim6.c > tim6_d_print() > motor_enable = %1d, motor.left = %5.3f, motor.right = %5.3f\r\n", motor_read_enable(), motor.left, motor.right); 
     #endif
 }

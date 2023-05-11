@@ -9,6 +9,12 @@
 
 #define PWMMAX 1000
 
+typedef struct
+{
+    float left;
+    float right;
+} MotorController;
+
 void motor_start();
 void motor_stop();
 void motor_init();

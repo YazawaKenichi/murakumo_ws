@@ -277,7 +277,7 @@ float inertial_angular_z_buffer;
  * @brief 
  * 
  * @return float 
- * @attention [ degree ]
+ * @attention [ degree / second]
  * 
  */
 float imu_read_yaw()
