@@ -10,6 +10,7 @@
  */
 
 #include "geometry.h"
+#include "flash.h"
 
 void generate_twistlist();
 Twist get_twistlist(uint16_t);

@@ -15,7 +15,7 @@ Twist twistlist[COURSE_STATE_SIZE];
 
 void generate_twistlist()
 {
-    for(index = 0; index < COURSE_STATE_SIZE; index++)
+    for(int index = 0; index < COURSE_STATE_SIZE; index++)
     {
         //! 単位 [ m / s ]
         float v = 1;

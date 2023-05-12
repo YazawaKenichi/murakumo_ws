@@ -20,6 +20,7 @@
 #include "tim10.h"
 #include "course.h"
 #include "fixed_section.h"
+#include "flash.h"
 
 #define D_TIM6 0
 

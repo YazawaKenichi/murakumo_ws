@@ -20,6 +20,8 @@
 #define K_theta 1
 #define LOCOMOTION_SAMPLING_TIME 0.001f // [ ms ]
 
+#define LOCOMOTION_TEST 1
+
 void kcm_sample(Twist, MotorController*);
 Twist kcm_main_function(Pose, Twist);
 Pose pose_error(Pose, Pose);

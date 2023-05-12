@@ -88,7 +88,16 @@ void tim6_main()
         motor.right = 0;
     }
 
-    motor_set(motor.left, motor.right);
+    if(course_read_state_count() + 1 == COURSE_STATE_SIZE)
+    {
+        switch_reset_enter();
+        tim6_stop();
+        motor_set(0, 0);
+    }
+    else
+    {
+        motor_set(motor.left, motor.right);
+    }
 }
 
 void tim6_d_print()
