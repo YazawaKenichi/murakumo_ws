@@ -9,6 +9,8 @@
  * 
  */
 
+#include "locomotion.h"
+
 /**
  * @brief 実際に使ってみるときの関数
  * 
@@ -21,6 +23,8 @@ void kcm_sample(Twist q_n, MotorController *motor)
     Pose p_r;
     //! 目標速度角速度
     Twist q_r;
+    //! 出力速度角速度
+    Twist q;
 
     //! 現在位置姿勢
     Pose p_c;
@@ -33,10 +37,12 @@ void kcm_sample(Twist q_n, MotorController *motor)
     //! 実際に出してほしい速度と角速度
 
     //! 現在の位置を取得
-    p_c = get_pose();
+    p_c = localization_get_pose();
+
+    p_n = pose_list[course_read_state_count()];
 
     p_e = pose_error(p_r, p_c);
-    q = kcm_main_function(Pose p_e, Twist q_r);
+    q = kcm_main_function(p_e, q_r);
     velocity_to_compare(motor, q);
 }
 
@@ -79,9 +85,9 @@ Twist kcm_main_function(Pose p_e, Twist q_r)
 Pose pose_error(Pose p_r, Pose p_c)
 {
     Pose p_e;
-    p_e = p_r.linear.x - p_c.linear.x;
-    p_e = p_r.linear.y - p_c.linear.y;
-    p_e = p_r.angular.z - p_c.angular.z;
+    p_e.position.x = p_r.position.x - p_c.position.x;
+    p_e.position.y = p_r.position.y - p_c.position.y;
+    p_e.orientation.z = p_r.orientation.z - p_c.orientation.z;
     return p_e;
 }
 
@@ -101,19 +107,19 @@ void pose_adder(Pose *p_n, float v_c, float w_c)
     float theta_n;
 
     //! 前回計算したときのグローバル位置
-    x_n = *p_n -> position.x;
-    y_n = *p_n -> position.y;
+    x_n = p_n -> position.x;
+    y_n = p_n -> position.y;
     //! 現在のグローバル姿勢
-    *p_n -> orientation.z += w_c * dt;
-    theta_n = *p_n -> orientation.z;
+    p_n -> orientation.z += w_c * dt;
+    theta_n = p_n -> orientation.z;
 
     //! (x_n, y_n) はグローバル座標であることに注意
     x_n += v_c * cos(theta_n) * dt;
     y_n += v_c * sin(theta_n) * dt;
 
     //! 現在位置の更新
-    *p_n -> position.x = x_n;
-    *p_n -> position.y = y_n;
+    p_n -> position.x = x_n;
+    p_n -> position.y = y_n;
 }
 
 /**

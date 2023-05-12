@@ -124,7 +124,7 @@ typedef struct
      * 
     */
     Point position;
-    Quaternion orientation
+    Quaternion orientation;
 } Pose;
 
 typedef struct

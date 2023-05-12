@@ -9,10 +9,14 @@
  * 
  */
 
+#include "localization.h"
+
 //! 現在位置姿勢
 Pose pose_now;
 //! 現在速度角速度
 Twist twist_now;
+//! サンプリング周期
+float dt;
 
 Pose localization_get_pose()
 {
@@ -39,27 +43,29 @@ void localization_init()
     twist_now.angular.x = 0;
     twist_now.angular.x = 0;
     twist_now.angular.x = 0;
-    theta = 0;
+    dt = 1;
 }
 
 void odometry_update()
 {
+	float vx, vy;
+
     float vl = length_read_left();
     float vr = length_read_right();
     float v = (vl + vr) / 2;
-    float w = imu_read_yaw() * PI / 180;
+    float w = imu_read_yaw() * M_PI / 180;
 
     float x = pose_now.position.x;
     float y = pose_now.position.y;
     float theta = pose_now.orientation.z;
 
-    if(theta + w * dt > 2 * PI)
+    if(theta + w * dt > 2 * M_PI)
     {
-        theta = theta - 2 * PI;
+        theta = theta - 2 * M_PI;
     }
-    else if(theta + w * dt < - 2 * PI)
+    else if(theta + w * dt < - 2 * M_PI)
     {
-        theta = theta + 2 * PI;
+        theta = theta + 2 * M_PI;
     }
     theta += theta + w * dt;
     vx = v * cos(theta);
@@ -74,4 +80,3 @@ void odometry_update()
     pose_now.position.y = y;
     pose_now.orientation.z = theta;
 }
-

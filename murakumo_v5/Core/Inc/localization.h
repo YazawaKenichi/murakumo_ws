@@ -9,6 +9,7 @@
  * 
  */
 
+#include "math.h"
 #include "length.h"
 #include "imu.h"
 #include "geometry.h"

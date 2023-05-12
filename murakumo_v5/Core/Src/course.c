@@ -31,8 +31,6 @@ void course_start() {
     flash_read(FLASH_SECTOR_11);
     //! 走る前に速度を計算して書き込んでからスタートする ( 使うのは coursedataのみ )
     // course_fixing_radius2speed();
-    //! 一旦速度一定で KCM
-    kcm();
     //! FLASH_SECTOR_11 is CourseData
     flash_write(FLASH_SECTOR_11);
   }

@@ -12,5 +12,3 @@
 #include "motor.h"
 #include "geometry.h"
 #include "PID.h"
-
-#include "twist2compare.h"

@@ -10,7 +10,9 @@
  */
 
 // 使ってない
+/*
 void twist2compare(Twist *q, MotorController *motor_)
 {
     //! Twist から Compare を計算する
 }
+*/

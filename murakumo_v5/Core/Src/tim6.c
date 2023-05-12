@@ -35,6 +35,7 @@ void tim6_stop()
 void tim6_main()
 {
     PlayMode playmode;
+    MotorController motor;
 
     playmode = rotary_read_playmode();
 
