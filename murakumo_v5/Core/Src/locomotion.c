@@ -11,6 +11,9 @@
 
 #include "locomotion.h"
 
+//! 目標位置姿勢
+Pose p_reference;
+
 /**
  * @brief 実際に使ってみるときの関数
  * 
@@ -19,8 +22,6 @@
  */
 void kcm_sample(Twist q_n, MotorController *motor)
 {
-    //! 目標位置姿勢
-    Pose p_r;
     //! 目標速度角速度
     Twist q_r;
     //! 出力速度角速度
@@ -39,9 +40,13 @@ void kcm_sample(Twist q_n, MotorController *motor)
     //! 現在の位置を取得
     p_c = localization_get_pose();
 
-    p_n = pose_list[course_read_state_count()];
+    //! 現在出すべき速度角速度
+    q_r = get_twistlist(course_read_state_count());
+    //! 速度角速度から座標の取得
+    twist_add_to_pose(q_r, &p_reference, 0.001f);
 
-    p_e = pose_error(p_r, p_c);
+    //! p_r には現在いるべき目標座標が入る
+    p_e = pose_error(p_reference, p_c);
     q = kcm_main_function(p_e, q_r);
     velocity_to_compare(motor, q);
 }
@@ -134,8 +139,8 @@ void velocity_to_compare(MotorController *motor, Twist q)
     float v = q.linear.x;
     //! 左旋回が正
     float w = q.angular.z;
-    float dt = LOCOMOTION_SAMPLING_TIME;
-    float half_tread = TREAD / 2;
+    float dt = LOCOMOTION_SAMPLING_TIME;    //! 単位 [ s ]
+    float half_tread = TREAD / 1000 / 2;    //! 単位 [ m ]
 
     motor->left = v - tan(w * dt) * half_tread / dt;
     motor->right = tan(w * dt) * half_tread / dt + v;

@@ -67,8 +67,7 @@ void course_update_section_degree() {
          imu_read_yaw(), course_section_degree);
 #endif
   course_sampling_count = course_sampling_count + 1;
-  tmp = course_section_degree +
-        imu_read_yaw() * course_update_section_sampling_time_s;
+  tmp = course_section_degree + imu_read_yaw() * course_update_section_sampling_time_s;
   course_section_degree = low_pass_filter(tmp, course_section_degree, 0);
 }
 
@@ -94,7 +93,10 @@ uint16_t course_read_state_count() { return course_state_count; }
 
 uint16_t course_read_sampling_count() { return course_sampling_count; }
 
-void course_increment_state_count() { course_state_count++; }
+void course_increment_state_count()
+{
+  course_state_count++;
+}
 
 /**
  * @fn course_calclate_radius()
@@ -136,7 +138,7 @@ void course_calclate_radius() {
   course_section_length = // course_section_length_from_imu
 #endif
 
-      section_radian = section_degree * M_PI / (float)180;
+  section_radian = section_degree * M_PI / (float)180;
   curvature_radius = section_length / (float)section_radian;
   course_section_radius = curvature_radius;
 }
@@ -355,14 +357,16 @@ float accel_max_calc(uint8_t i) {
                              (float)(ACCEL_STEP_SIZE - 1);
 }
 
-void course_data_saving() {
+void course_data_saving()
+{
   uint16_t index;
   index = course_read_state_count();
   encoderdata.left[index] = section_length_read_left();
   encoderdata.right[index] = section_length_read_right();
 }
 
-void course_imu_data_saving() {
+void course_imu_data_saving()
+{
   uint16_t index;
   index = course_read_state_count();
   imudata.yaw[index] = course_read_section_degree();

@@ -15,8 +15,6 @@
 Pose pose_now;
 //! 現在速度角速度
 Twist twist_now;
-//! サンプリング周期
-float dt;
 
 Pose localization_get_pose()
 {
@@ -43,21 +41,42 @@ void localization_init()
     twist_now.angular.x = 0;
     twist_now.angular.x = 0;
     twist_now.angular.x = 0;
-    dt = 1;
 }
 
 void odometry_update()
 {
-	float vx, vy;
-
     float vl = length_read_left();
     float vr = length_read_right();
     float v = (vl + vr) / 2;
     float w = imu_read_yaw() * M_PI / 180;
 
-    float x = pose_now.position.x;
-    float y = pose_now.position.y;
-    float theta = pose_now.orientation.z;
+    //! twist の更新
+    twist_now.linear.x = v;
+    twist_now.angular.z = w;
+
+    //! pose の更新
+    twist_add_to_pose(twist_now, &pose_now, 0.001f);
+}
+
+/**
+ * @brief 位置に速度角速度を与えて新しい位置にする
+ * 
+ * @param q_n 
+ * @param p_n 
+ */
+void twist_add_to_pose(Twist q_n, Pose *p_n, float dt)
+{
+	float vx, vy;
+
+    float x = p_n->position.x;
+    float y = p_n->position.y;
+    float theta = p_n->orientation.z;
+
+    float v = q_n.linear.x;
+    float w = q_n.angular.z;
+
+    //! サンプリング周期 [ s ]
+    // dt = 0.001f;
 
     if(theta + w * dt > 2 * M_PI)
     {
@@ -67,16 +86,14 @@ void odometry_update()
     {
         theta = theta + 2 * M_PI;
     }
-    theta += theta + w * dt;
+
+    theta += w * dt;
     vx = v * cos(theta);
     vy = v * sin(theta);
-    x = x + vx * dt;
-    y = y + vy * dt;
+    x += vx * dt;
+    y += vy * dt;
 
-    twist_now.linear.x = v;
-    twist_now.angular.z = w;
-
-    pose_now.position.x = x;
-    pose_now.position.y = y;
-    pose_now.orientation.z = theta;
+    p_n->position.x = x;
+    p_n->position.y = y;
+    p_n->orientation.z = theta;
 }

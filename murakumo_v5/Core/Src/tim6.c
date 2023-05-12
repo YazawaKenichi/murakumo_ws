@@ -64,7 +64,7 @@ void tim6_main()
         }
         #else // LOCOMOTION_TEST    // 起動追従のテストするときに有効になる
         //! 現在の速度と角速度を取得
-        q_n = get_twist();
+        q_n = localization_get_twist();
         kcm_sample(q_n, &motor);
         #endif
         #else
@@ -87,6 +87,8 @@ void tim6_main()
         motor.left = 0;
         motor.right = 0;
     }
+
+    motor_set(motor.left, motor.right);
 }
 
 void tim6_d_print()
