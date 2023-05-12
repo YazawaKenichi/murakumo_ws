@@ -12,13 +12,12 @@
 #include "motor.h"
 #include "geometry.h"
 #include "localization.h"
+#include "twistlist.h"
 
 #define K_x 1
 #define K_y 1
 #define K_theta 1
 #define LOCOMOTION_SAMPLING_TIME 1
-
-Twist pose_list[
 
 void kcm_sample(Twist, MotorController*);
 Twist kcm_main_function(Pose, Twist);
