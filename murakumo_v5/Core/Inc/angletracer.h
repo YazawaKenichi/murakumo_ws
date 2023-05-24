@@ -5,18 +5,18 @@
 #include "print.h"
 #include "Rotary.h"
 
-#define D_ANGLETRACER 0
+#define D_ANGLETRACER 1
 #define D_ANGLETRACER_WHILE 0
 
 #define ANGLETRACER_STEP_SIZE 16
 
-#define ANGLETRACER_KP_MAX 1
+#define ANGLETRACER_KP_MAX 10
 #define ANGLETRACER_KI_MAX 0
-#define ANGLETRACER_KD_MAX 0.014f
+#define ANGLETRACER_KD_MAX 0
 
-#define ANGLETRACER_KP_MIN 1
+#define ANGLETRACER_KP_MIN 0
 #define ANGLETRACER_KI_MIN 0
-#define ANGLETRACER_KD_MIN 0.014f
+#define ANGLETRACER_KD_MIN 0
 
 /* pre setting */
 void angletracer_init(float);
@@ -55,7 +55,7 @@ void angletracer_set_values(PID *_pid);
 PID* angletracer_read_values();
 
 /* calclate pid solving */
-float angletracer_solve(int);
+float angletracer_solve(float);
 void angletracer_print_values();
 
 /* usuage */

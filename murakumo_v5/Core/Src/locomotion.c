@@ -29,7 +29,7 @@ void kcm_sample(Twist q_n, MotorController *motor)
 
     //! 現在位置姿勢
     Pose p_c;
-    //! 現在速度と角速度
+    //! unused 現在速度と角速度
     float v = q_n.linear.x;
     float w = q_n.angular.z;
 
@@ -106,10 +106,11 @@ Pose pose_error(Pose p_r, Pose p_c)
  */
 void pose_adder(Pose *p_n, float v_c, float w_c)
 {
-    float v_cx, v_cy, w_cz;
     float dt;
     float x_n, y_n;
     float theta_n;
+
+    dt = 1 / (float) 1000;	// [ s ]
 
     //! 前回計算したときのグローバル位置
     x_n = p_n -> position.x;

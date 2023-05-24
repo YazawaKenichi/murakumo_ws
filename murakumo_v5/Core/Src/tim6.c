@@ -7,6 +7,7 @@ MotorController motor;
 
 void tim6_init()
 {
+    angletracer_init(1);    // [ ms ]
     motor_init();
     HAL_TIM_Base_Stop_IT(&htim6);
 }
@@ -19,6 +20,8 @@ void tim6_start()
     motor.left = 0;
     motor.right = 0;
 #endif
+    //! 角度 PID
+    angletracer_start();
     //! 速度補正
     fixed_section_start();
     motor_start();
@@ -30,12 +33,15 @@ void tim6_stop()
     motor_stop();
 	HAL_TIM_Base_Stop_IT(&htim6);
     course_stop();
+    angletracer_stop();
 }
 
 void tim6_main()
 {
     PlayMode playmode;
     MotorController motor;
+    float angle_reference;
+    angle_reference = imu_read_yaw();   // [ degree / second ]
 
     playmode = rotary_read_playmode();
 
@@ -57,9 +63,13 @@ void tim6_main()
                 motor.left   = tim10_read_left() + 0;
                 motor.right  = tim10_read_right() + 0;
                 break;
+            case angletrace_tuning:
+                motor.left  = - angletracer_solve(angle_reference);
+                motor.right = + angletracer_solve(angle_reference);
+                break;
             default:
-                motor.left   = tim10_read_left() + tim7_read_left();
-                motor.right  = tim10_read_right() + tim7_read_right();
+                motor.left   = tim10_read_left()  + tim7_read_left()  - angletracer_solve(angle_reference);
+                motor.right  = tim10_read_right() + tim7_read_right() + angletracer_solve(angle_reference);
                 break;
         }
         #else // LOCOMOTION_TEST    // 起動追従のテストするときに有効になる
@@ -106,4 +116,5 @@ void tim6_d_print()
     printf("\r\n");
     printf("tim6.c > tim6_d_print() > motor_enable = %1d, motor.left = %5.3f, motor.right = %5.3f\r\n", motor_read_enable(), motor.left, motor.right); 
     #endif
+    angletracer_print_values();
 }

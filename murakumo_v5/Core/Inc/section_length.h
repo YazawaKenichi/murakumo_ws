@@ -14,7 +14,7 @@
 
 #include "length.h"
 
-#define D_SECTION_LENGTH 1
+#define D_SECTION_LENGTH 0
 
 void section_length_set_sampling_time_ms(unsigned short int);
 

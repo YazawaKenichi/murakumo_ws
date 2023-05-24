@@ -1,4 +1,4 @@
-#include "tracer.h"
+#include "angletracer.h"
 
 float angletracer_s_error;
 int angletracer_before_error;
@@ -26,7 +26,7 @@ void angletracer_start()
         angletracer_set_default_now_gain(kp, ki, kd);
         angletracer_set_target_zero();
         angletracer_set_gain_direct(kp, ki, kd);
-    #if D_TRACER
+    #if D_ANGLETRACER
         printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", kp, ki, kd);
         print_pid(&angletracer_pid);
     #endif
@@ -59,17 +59,17 @@ float angletracer_read_gain_kd()
 /* target setting */
 void angletracer_set_gain_kp_index(unsigned short int i)
 {
-    angletracer_set_gain_kp_direct(tracer_calc_gain_kp(i));
+    angletracer_set_gain_kp_direct(angletracer_calc_gain_kp(i));
 }
 
 void angletracer_set_gain_ki_index(unsigned short int i)
 {
-    angletracer_set_gain_ki_direct(tracer_calc_gain_ki(i));
+    angletracer_set_gain_ki_direct(angletracer_calc_gain_ki(i));
 }
 
 void angletracer_set_gain_kd_index(unsigned short int i)
 {
-    angletracer_set_gain_kd_direct(tracer_calc_gain_kd(i));
+    angletracer_set_gain_kd_direct(angletracer_calc_gain_kd(i));
 }
 
 void angletracer_set_gain_kp_direct(float kp)
@@ -110,17 +110,17 @@ void angletracer_set_gain_zero()
 /* calclate pid values from rotary value */
 float angletracer_calc_gain_kp(unsigned short int i)
 {
-    return TRACER_KP_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KP_MAX - TRACER_KP_MIN) / (float) (TRACER_STEP_SIZE - 1);
+    return ANGLETRACER_KP_MAX - ((ANGLETRACER_STEP_SIZE - 1) - i) * (float) (ANGLETRACER_KP_MAX - ANGLETRACER_KP_MIN) / (float) (ANGLETRACER_STEP_SIZE - 1);
 }
 
 float angletracer_calc_gain_ki(unsigned short int i)
 {
-    return TRACER_KI_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KI_MAX - TRACER_KI_MIN) / (float) (TRACER_STEP_SIZE - 1);
+    return ANGLETRACER_KI_MAX - ((ANGLETRACER_STEP_SIZE - 1) - i) * (float) (ANGLETRACER_KI_MAX - ANGLETRACER_KI_MIN) / (float) (ANGLETRACER_STEP_SIZE - 1);
 }
 
 float angletracer_calc_gain_kd(unsigned short int i)
 {
-    return TRACER_KD_MAX - ((TRACER_STEP_SIZE - 1) - i) * (float) (TRACER_KD_MAX - TRACER_KD_MIN) / (float) (TRACER_STEP_SIZE - 1);
+    return ANGLETRACER_KD_MAX - ((ANGLETRACER_STEP_SIZE - 1) - i) * (float) (ANGLETRACER_KD_MAX - ANGLETRACER_KD_MIN) / (float) (ANGLETRACER_STEP_SIZE - 1);
 }
 
 /* set default */
@@ -151,14 +151,14 @@ PID* angletracer_read_values()
     return &angletracer_pid;
 }
 
-float angletracer_solve(int reference_)
+float angletracer_solve(float reference_)
 {
-    int error;
+    float error;
     float d_error;
     float result;
 
-    #if D_TRACER_WHILE
-    printf("tracer.c > tracer_solve() > ");
+    #if D_ANGLETRACER_WHILE
+    printf("angletracer.c > angletracer_solve() > ");
     printf("reference_ = %5d\r\n", reference_);
     #endif
 
@@ -169,7 +169,7 @@ float angletracer_solve(int reference_)
 
     result = angletracer_pid.kp * error + angletracer_pid.ki * angletracer_s_error + angletracer_pid.kd * d_error;
 
-    #if D_TRACER_WHILE
+    #if D_ANGLETRACER_WHILE
     printf("angletracer.c > angletracer_solve() > ");
     printf("%7.2f = %7.2f * %5d + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, angletracer_pid.kp, error, angletracer_pid.ki, angletracer_s_error, angletracer_pid.kd, d_error);
     #endif
@@ -181,8 +181,8 @@ float angletracer_solve(int reference_)
 
 void angletracer_print_values()
 {
-#if D_TRACER
-    printf("trac > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", angletracer_pid.kp, angletracer_pid.ki, angletracer_pid.kd);
+#if D_ANGLETRACER
+    printf("angl > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", angletracer_pid.kp, angletracer_pid.ki, angletracer_pid.kd);
 #endif
 }
 

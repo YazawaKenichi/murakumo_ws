@@ -21,8 +21,9 @@
 #include "course.h"
 #include "fixed_section.h"
 #include "flash.h"
+#include "angletracer.h"
 
-#define D_TIM6 0
+#define D_TIM6 1
 
 #define D_TIM6_WHILE (0 + D_MOTOR_WHILE + D_TIM7_WHILE + D_TIM10_WHILE + D_COURSE_WHILE)
 #define D_TIM6_EXCLUSION 1
