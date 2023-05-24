@@ -1,194 +1,198 @@
-#include "angletracer.h"
+#include "angletrace.h"
 
-float angletracer_s_error;
-int angletracer_before_error;
-uint16_t angletracer_sampling_time_ms;
-PID angletracer_pid;
-PID angletracer_default;
-uint8_t angletracer_started;
+float angletrace_s_error;
+int angletrace_before_error;
+uint16_t angletrace_sampling_time_ms;
+uint16_t angletrace_gain_tuning_time_ms;
+PID angletrace_pid;
+uint8_t angletrace_started;
 
-void angletracer_init(float samplingtime_ms)
+void angletrace_init(uint16_t samplingtime_ms)
 {
-    angletracer_started = 0;
-    angletracer_sampling_time_ms = samplingtime_ms;
+    angletrace_sampling_time_ms = samplingtime_ms;
 }
 
-void angletracer_start()
+void angletrace_start()
 {
-    if(angletracer_started <= 0)
-    {
-        float kp, ki, kd;
-        angletracer_s_error = 0;
-        angletracer_before_error = 0;
-        kp = angletracer_calc_gain_kp(rotary_read_value());
-        ki = angletracer_calc_gain_ki(rotary_read_value());
-        kd = angletracer_calc_gain_kd(rotary_read_value());
-        angletracer_set_default_now_gain(kp, ki, kd);
-        angletracer_set_target_zero();
-        angletracer_set_gain_direct(kp, ki, kd);
-    #if D_ANGLETRACER
-        printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", kp, ki, kd);
-        print_pid(&angletracer_pid);
+    float target, kp, ki, kd;
+    angletrace_s_error = 0;
+    angletrace_before_error = 0;
+    target = 0;
+    kp = angletrace_calc_gain_kp(rotary_read_value());
+    ki = angletrace_calc_gain_ki(rotary_read_value());
+    kd = angletrace_calc_gain_kd(rotary_read_value());
+    angletrace_set_target_direct(target);
+    angletrace_set_gain_direct(kp, ki, kd);
+    #if D_ANALOGTRACE
+    printf("kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", kp, ki, kd);
+    print_pid(&angletrace_pid);
     #endif
-    }
-    angletracer_started = 1;
 }
 
-void angletracer_stop()
+void angletrace_stop()
 {
-    angletracer_set_gain_zero();
-    angletracer_started = 0;
+    angletrace_set_target_zero();
+    angletrace_set_gain_zero();
 }
 
 /* reading */
-float angletracer_read_gain_kp()
+float angletrace_read_target()
 {
-    return angletracer_pid.kp;
+    return angletrace_pid.target;
 }
 
-float angletracer_read_gain_ki()
+float angletrace_read_gain_kp()
 {
-    return angletracer_pid.ki;
+    return angletrace_pid.kp;
 }
 
-float angletracer_read_gain_kd()
+float angletrace_read_gain_ki()
 {
-    return angletracer_pid.kd;
+    return angletrace_pid.ki;
+}
+
+float angletrace_read_gain_kd()
+{
+    return angletrace_pid.kd;
 }
 
 /* target setting */
-void angletracer_set_gain_kp_index(unsigned short int i)
+void angletrace_set_target_index(unsigned short int i)
 {
-    angletracer_set_gain_kp_direct(angletracer_calc_gain_kp(i));
+    angletrace_pid.target = angletrace_calc_target(i);
 }
 
-void angletracer_set_gain_ki_index(unsigned short int i)
+void angletrace_set_target_direct(float target)
 {
-    angletracer_set_gain_ki_direct(angletracer_calc_gain_ki(i));
+    angletrace_pid.target = target;
 }
 
-void angletracer_set_gain_kd_index(unsigned short int i)
+/* gain setting */
+void angletrace_set_gain_kp_index(unsigned short int i)
 {
-    angletracer_set_gain_kd_direct(angletracer_calc_gain_kd(i));
+    angletrace_set_gain_kp_direct(angletrace_calc_gain_kp(i));
 }
 
-void angletracer_set_gain_kp_direct(float kp)
+void angletrace_set_gain_ki_index(unsigned short int i)
 {
-    angletracer_pid.kp = kp;
+    angletrace_set_gain_ki_direct(angletrace_calc_gain_ki(i));
 }
 
-void angletracer_set_gain_ki_direct(float ki)
+void angletrace_set_gain_kd_index(unsigned short int i)
 {
-    angletracer_pid.ki = ki;
+    angletrace_set_gain_kd_direct(angletrace_calc_gain_kd(i));
 }
 
-void angletracer_set_gain_kd_direct(float kd)
+void angletrace_set_gain_kp_direct(float kp)
 {
-    angletracer_pid.kd = kd;
+    angletrace_pid.kp = kp;
 }
 
-void angletracer_set_gain_direct(float kp, float ki, float kd)
+void angletrace_set_gain_ki_direct(float ki)
 {
-    angletracer_set_gain_kp_direct(kp);
-    angletracer_set_gain_ki_direct(ki);
-    angletracer_set_gain_kd_direct(kd);
+    angletrace_pid.ki = ki;
 }
 
-/* kp ki kd set zero */
-void angletracer_set_target_zero()
+void angletrace_set_gain_kd_direct(float kd)
 {
-    angletracer_pid.target = 0;
+    angletrace_pid.kd = kd;
 }
 
-void angletracer_set_gain_zero()
+void angletrace_set_gain_direct(float kp, float ki, float kd)
 {
-    angletracer_pid.kp = 0;
-    angletracer_pid.ki = 0;
-    angletracer_pid.kd = 0;
+    angletrace_set_gain_kp_direct(kp);
+    angletrace_set_gain_ki_direct(ki);
+    angletrace_set_gain_kd_direct(kd);
+}
+
+/* target kp ki kd set zero */
+void angletrace_set_target_zero()
+{
+    angletrace_set_target_direct(0);
+}
+
+void angletrace_set_gain_zero()
+{
+    angletrace_set_gain_kp_direct(0);
+    angletrace_set_gain_ki_direct(0);
+    angletrace_set_gain_kd_direct(0);
 }
 
 /* calclate pid values from rotary value */
-float angletracer_calc_gain_kp(unsigned short int i)
+float angletrace_calc_target(unsigned short int i)
 {
-    return ANGLETRACER_KP_MAX - ((ANGLETRACER_STEP_SIZE - 1) - i) * (float) (ANGLETRACER_KP_MAX - ANGLETRACER_KP_MIN) / (float) (ANGLETRACER_STEP_SIZE - 1);
+    return ANGLE_TARGET_MAX - ((ANGLETRACE_STEP_SIZE - 1) - i) * (float) (ANGLE_TARGET_MAX - ANGLE_TARGET_MIN) / (float) (ANGLETRACE_STEP_SIZE - 1);
 }
 
-float angletracer_calc_gain_ki(unsigned short int i)
+float angletrace_calc_gain_kp(unsigned short int i)
 {
-    return ANGLETRACER_KI_MAX - ((ANGLETRACER_STEP_SIZE - 1) - i) * (float) (ANGLETRACER_KI_MAX - ANGLETRACER_KI_MIN) / (float) (ANGLETRACER_STEP_SIZE - 1);
+    return ANGLE_KP_MAX - ((ANGLETRACE_STEP_SIZE - 1) - i) * (float) (ANGLE_KP_MAX - ANGLE_KP_MIN) / (float) (ANGLETRACE_STEP_SIZE - 1);
 }
 
-float angletracer_calc_gain_kd(unsigned short int i)
+float angletrace_calc_gain_ki(unsigned short int i)
 {
-    return ANGLETRACER_KD_MAX - ((ANGLETRACER_STEP_SIZE - 1) - i) * (float) (ANGLETRACER_KD_MAX - ANGLETRACER_KD_MIN) / (float) (ANGLETRACER_STEP_SIZE - 1);
+    return ANGLE_KI_MAX - ((ANGLETRACE_STEP_SIZE - 1) - i) * (float) (ANGLE_KI_MAX - ANGLE_KI_MIN) / (float) (ANGLETRACE_STEP_SIZE - 1);
 }
 
-/* set default */
-void angletracer_set_gain_default()
+float angletrace_calc_gain_kd(unsigned short int i)
 {
-    angletracer_pid = angletracer_default;
-}
-
-void angletracer_set_default_now_gain(float kp, float ki, float kd)
-{
-    angletracer_default.target = 0;
-    angletracer_default.kp = kp;
-    angletracer_default.ki = ki;
-    angletracer_default.kd = kd;
+    return ANGLE_KD_MAX - ((ANGLETRACE_STEP_SIZE - 1) - i) * (float) (ANGLE_KD_MAX - ANGLE_KD_MIN) / (float) (ANGLETRACE_STEP_SIZE - 1);
 }
 
 /* all parameter */
-void angletracer_set_values(PID *_pid)
+void angletrace_set_values(PID *_pid)
 {
-    angletracer_set_target_zero();
-    angletracer_pid.kp = _pid->kp;
-    angletracer_pid.ki = _pid->ki;
-    angletracer_pid.kd = _pid->kd;
+    angletrace_pid.target = _pid->target;
+    angletrace_pid.kp = _pid->kp;
+    angletrace_pid.ki = _pid->ki;
+    angletrace_pid.kd = _pid->kd;
 }
 
-PID* angletracer_read_values()
+PID* angletrace_read_values()
 {
-    return &angletracer_pid;
+    return &angletrace_pid;
 }
 
-float angletracer_solve(float reference_)
+float angletrace_solve(float reference_)
 {
     float error;
     float d_error;
     float result;
 
-    #if D_ANGLETRACER_WHILE
-    printf("angletracer.c > angletracer_solve() > ");
-    printf("reference_ = %5d\r\n", reference_);
+    error = reference_ - angletrace_pid.target;
+
+    d_error = (error - angletrace_before_error) / (float) (angletrace_sampling_time_ms / (float) 1000);
+    angletrace_s_error += error * (float) (angletrace_sampling_time_ms / (float) 1000);
+
+    result = - (angletrace_pid.kp * error + angletrace_pid.ki * angletrace_s_error + angletrace_pid.kd * d_error);
+
+    #if D_ANALOGTRACE_WHILE
+    printf("angletrace_solve()\r\n");
+    printf("reference_ - angletrace_pid.target = %7.2f - %7.2f = %7.2f\r\n", reference_, angletrace_pid.target, reference_ - angletrace_pid.target);
+    printf("%7.2f = %7.2f * %7.2f + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, angletrace_pid.kp, error, angletrace_pid.ki, angletrace_s_error, angletrace_pid.kd, d_error);
     #endif
 
-    error = reference_ - angletracer_pid.target;
-
-    d_error = (error - angletracer_before_error) / (float) (angletracer_sampling_time_ms / (float) 1000);
-    angletracer_s_error += error * (float) (angletracer_sampling_time_ms / (float) 1000);
-
-    result = angletracer_pid.kp * error + angletracer_pid.ki * angletracer_s_error + angletracer_pid.kd * d_error;
-
-    #if D_ANGLETRACER_WHILE
-    printf("angletracer.c > angletracer_solve() > ");
-    printf("%7.2f = %7.2f * %5d + %7.2f * %7.2f + %7.2f * %7.2f\r\n", result, angletracer_pid.kp, error, angletracer_pid.ki, angletracer_s_error, angletracer_pid.kd, d_error);
-    #endif
-
-    angletracer_before_error = error;
+    angletrace_before_error = error;
 
     return result;
 }
 
-void angletracer_print_values()
+void angletrace_print_values()
 {
-#if D_ANGLETRACER
-    printf("angl > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", angletracer_pid.kp, angletracer_pid.ki, angletracer_pid.kd);
+#if D_ANALOGTRACE
+	printf("velo > target = %5.3f\r\n", angletrace_read_target());
+	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", angletrace_calc_gain_kp(rotary_read_value()), angletrace_calc_gain_ki(rotary_read_value()), angletrace_calc_gain_kd(rotary_read_value()));
 #endif
 }
 
-void angletracer_gain_tuning()
+void angletrace_gain_tuning()
 {
-    /* angletracer_gain_tuning */
+    //! 右センサを読んでからの時間を格納する
+    angletrace_gain_tuning_time_ms += angletrace_sampling_time_ms;
+    //! 停止時間になったら
+    if(angletrace_gain_tuning_time_ms >= ANGLETRACE_GAIN_TUNING_STOP_TIME_MS)
+    {
+        //! 速度の目標値をゼロにする
+        angletrace_pid.target = 0;
+    }
 }
-
-
