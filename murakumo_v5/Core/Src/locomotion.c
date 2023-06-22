@@ -18,37 +18,24 @@ Pose p_reference;
  * @brief 実際に使ってみるときの関数
  * 
  * @param q_n 現在の速度・角速度
- * @param motor モータの出力変数
+ * @param p_c 現在の位置・姿勢
+ * @return Twist 出力すべき速度と加速度
  */
-void kcm_sample(Twist q_n, MotorController *motor)
+Twist kcm_sample(Twist q_n, Pose p_c)
 {
     //! 目標速度角速度
     Twist q_r;
-    //! 出力速度角速度
-    Twist q;
-
-    //! 現在位置姿勢
-    Pose p_c;
-    //! unused 現在速度と角速度
-    float v = q_n.linear.x;
-    float w = q_n.angular.z;
-
     //! 現在位置姿勢と目標位置姿勢とのギャップ
     Pose p_e;
-    //! 実際に出してほしい速度と角速度
-
-    //! 現在の位置を取得
-    p_c = localization_get_pose();
 
     //! 現在出すべき速度角速度
-    q_r = get_twistlist(course_read_state_count());
+    q_r = get_twistlist();
     //! 速度角速度から座標の取得
     twist_add_to_pose(q_r, &p_reference, 0.001f);
 
     //! p_r には現在いるべき目標座標が入る
     p_e = pose_error(p_reference, p_c);
-    q = kcm_main_function(p_e, q_r);
-    velocity_to_compare(motor, q);
+    return kcm_main_function(p_e, q_r);
 }
 
 /* Private */
@@ -128,21 +115,3 @@ void pose_adder(Pose *p_n, float v_c, float w_c)
     p_n -> position.y = y_n;
 }
 
-/**
- * @brief 
- * 
- * @param motor 実際に hal_tim_set_compare() に入れる値
- * @param q 出力したい速度と角速度
- */
-void velocity_to_compare(MotorController *motor, Twist q)
-{
-    //! 前進速度
-    float v = q.linear.x;
-    //! 左旋回が正
-    float w = q.angular.z;
-    float dt = LOCOMOTION_SAMPLING_TIME;    //! 単位 [ s ]
-    float half_tread = TREAD / 1000 / 2;    //! 単位 [ m ]
-
-    motor->left = v - tan(w * dt) * half_tread / dt;
-    motor->right = tan(w * dt) * half_tread / dt + v;
-}

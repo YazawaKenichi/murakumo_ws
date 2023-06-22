@@ -83,6 +83,7 @@ void tim10_main()
 
 //! tim10_main でのみ呼び出されるべき関数
 //! 速度制御の指令値を更新する
+//! 頻度は tim10_main と同じ頻度
 void tim10_update_values()
 {
 #if USE_SLOWSTART

@@ -18,4 +18,3 @@ Pose localization_get_pose();
 Twist localization_get_twist();
 void localization_init();
 void odometry_update();
-void twist_add_to_pose(Twist, Pose *, float);

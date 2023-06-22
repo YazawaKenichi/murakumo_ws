@@ -9,21 +9,23 @@
  * 
  */
 
-#include "motor.h"
+
+#ifndef __LOCOMOTION_H__
+#define __LOCOMOTION_H__
+
 #include "geometry.h"
-#include "localization.h"
 #include "twistlist.h"
-#include "course.h"
+#include "localization.h"
 
 #define K_x 1
 #define K_y 1
 #define K_theta 1
-#define LOCOMOTION_SAMPLING_TIME 0.001f // [ ms ]
 
 #define LOCOMOTION_TEST 1
 
-void kcm_sample(Twist, MotorController*);
+Twist kcm_sample(Twist, Pose);
 Twist kcm_main_function(Pose, Twist);
 Pose pose_error(Pose, Pose);
 void pose_adder(Pose *, float, float);
-void velocity_to_compare(MotorController *, Twist);
+
+#endif

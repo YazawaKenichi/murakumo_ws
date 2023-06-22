@@ -56,3 +56,43 @@ Rpy rpy_creation(float rall, float pitch, float yaw)
     new.yaw = yaw;
     return new;
 }
+
+/**
+ * @brief 位置に速度角速度を与えて新しい位置にする
+ * 
+ * @param q_n 
+ * @param p_n 
+ */
+void twist_add_to_pose(Twist q_n, Pose *p_n, float dt)
+{
+	float vx, vy;
+
+    float x = p_n->position.x;
+    float y = p_n->position.y;
+    float theta = p_n->orientation.z;
+
+    float v = q_n.linear.x;
+    float w = q_n.angular.z;
+
+    //! サンプリング周期 [ s ]
+    // dt = 0.001f;
+
+    if(theta + w * dt > 2 * M_PI)
+    {
+        theta = theta - 2 * M_PI;
+    }
+    else if(theta + w * dt < - 2 * M_PI)
+    {
+        theta = theta + 2 * M_PI;
+    }
+
+    theta += w * dt;
+    vx = v * cos(theta);
+    vy = v * sin(theta);
+    x += vx * dt;
+    y += vy * dt;
+
+    p_n->position.x = x;
+    p_n->position.y = y;
+    p_n->orientation.z = theta;
+}

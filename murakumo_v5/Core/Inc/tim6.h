@@ -50,6 +50,11 @@ void tim6_start();
 void tim6_stop();
 void tim6_main();
 
+void tim6_update_angle();
+float tim6_read_angle();
+
+void velocity_to_compare(MotorController *, Twist);
+
 void tim6_d_print();
 
 #endif

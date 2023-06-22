@@ -5,6 +5,8 @@ MotorController motor;
 // float motor.left, motor.right;
 #endif
 
+float tim6_angle;
+
 void tim6_init()
 {
     angletrace_init(1);    // [ ms ]
@@ -40,8 +42,8 @@ void tim6_main()
 {
     PlayMode playmode;
     MotorController motor;
-    float angle_reference;
-    angle_reference = imu_read_yaw();   // [ degree / second ]
+
+    tim6_update_angle();
 
     playmode = rotary_read_playmode();
 
@@ -64,18 +66,24 @@ void tim6_main()
                 motor.right  = tim10_read_right() + 0;
                 break;
             case angletrace_tuning:
-                motor.left  = - angletrace_solve(angle_reference);
-                motor.right = + angletrace_solve(angle_reference);
+                motor.left  = - tim6_read_angle();
+                motor.right = + tim6_read_angle();
+                break;
+            case kcm_tester:
                 break;
             default:
-                motor.left   = tim10_read_left()  + tim7_read_left()  - angletrace_solve(angle_reference);
-                motor.right  = tim10_read_right() + tim7_read_right() + angletrace_solve(angle_reference);
+                motor.left   = tim10_read_left()  + tim7_read_left()  - tim6_read_angle();
+                motor.right  = tim10_read_right() + tim7_read_right() + tim6_read_angle();
                 break;
         }
         #else // LOCOMOTION_TEST    // 起動追従のテストするときに有効になる
         //! 現在の速度と角速度を取得
         q_n = localization_get_twist();
-        kcm_sample(q_n, &motor);
+        p_c = localization_get_pose();
+        //! 出すべき（角）速度を取得
+        q = kcm_sample(q_n, p_c);
+        //! （角）速度からモータ出力に変換する（ここで（角）速度制御する）
+        velocity_to_compare(&motor, q);
         #endif
         #else
         #if TRACER_TUNING
@@ -98,7 +106,7 @@ void tim6_main()
         motor.right = 0;
     }
 
-    if(course_read_state_count() + 1 == COURSE_STATE_SIZE)
+    if(course_read_state_count() + 1 >= COURSE_STATE_SIZE)
     {
         switch_reset_enter();
         tim6_stop();
@@ -117,4 +125,41 @@ void tim6_d_print()
     printf("tim6.c > tim6_d_print() > motor_enable = %1d, motor.left = %5.3f, motor.right = %5.3f\r\n", motor_read_enable(), motor.left, motor.right); 
     #endif
     angletrace_print_values();
+}
+
+/**
+ * @brief 出力すべきあ値からモータの PWM 値に変換する
+ * この中で（角）速度の PID 制御を行う
+ * 
+ * @param motor モータの PWM 値
+ * @param q 出力すべき（角）速度
+ */
+void velocity_to_compare(MotorController *motor, Twist q)
+{
+    //! 出すべき前進速度（ degree で角速度の PID できるようにしちゃったので degree に直す ）
+    float v = q.linear.x * 180 / M_PI;
+    //! 出すべき左旋回速度
+    float w = q.angular.z;
+
+    //! （角）速度の目標値を教える
+    //! 本来ここで（角）加速度を考慮する必要が出てくる
+    velotrace_set_target_direct(v);
+    angletrace_set_target_direct(w);
+
+    //! 本当はここで一回 PID 指令値を計算しなくてはならない
+    //! tim*_read_***() は tim*_update() で計算された指令値を読んでいるので最後に update されたタイミングの指令値を使って compare してしまう
+
+    //! PID 制御する
+    motor->left = tim10_read_left() - tim6_read_angle();
+    motor->right = tim10_read_right() + tim6_read_angle();
+}
+
+void tim6_update_angle()
+{
+    tim6_angle = angletrace_solve(imu_read_yaw());
+}
+
+float tim6_read_angle()
+{
+    return tim6_angle;
 }

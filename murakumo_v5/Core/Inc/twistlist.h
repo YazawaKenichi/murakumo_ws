@@ -9,9 +9,15 @@
  * 
  */
 
+#ifndef __TWIST_LIST_H__
+#define __TWIST_LLIST_H__
+
 #include "geometry.h"
 #include "flash.h"
+#include "course.h"
 
 void generate_twistlist();
-Twist get_twistlist(uint16_t);
+Twist get_twistlist();
+
+#endif
 
