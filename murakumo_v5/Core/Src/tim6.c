@@ -136,10 +136,10 @@ void tim6_d_print()
  */
 void velocity_to_compare(MotorController *motor, Twist q)
 {
-    //! 出すべき前進速度（ degree で角速度の PID できるようにしちゃったので degree に直す ）
-    float v = q.linear.x * 180 / M_PI;
-    //! 出すべき左旋回速度
-    float w = q.angular.z;
+    //! 出すべき前進速度
+    float v = q.linear.x;
+    //! 出すべき左旋回速度（ degree で角速度の PID できるようにしちゃったので degree に直す ）
+    float w = q.angular.z * 180 / M_PI;
 
     //! （角）速度の目標値を教える
     //! 本来ここで（角）加速度を考慮する必要が出てくる
