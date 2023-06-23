@@ -166,7 +166,7 @@ int main(void)
 	printf(ESC_DEF);
 
 	printf("\r\n\r\n\r\nStarting Program...\r\n\r\n");
-	printf("murakumo_odom version.%4.2lf\r\n", __VERSION__);
+	printf("Murakumo locomotion v%4.2lf\r\n", __VERSION__);
 
   main_init();
 

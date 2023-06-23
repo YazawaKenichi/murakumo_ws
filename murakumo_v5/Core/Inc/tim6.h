@@ -22,6 +22,9 @@
 #include "fixed_section.h"
 #include "flash.h"
 #include "angletrace.h"
+#include "localization.h"
+#include "locomotion.h"
+#include "geometry.h"
 
 #define ANGLEPID_BRANCH 0
 

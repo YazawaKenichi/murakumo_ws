@@ -26,19 +26,14 @@ void generate_twistlist()
         //! 単位 [ rad / s ]
         float w = 0;
         Twist q;
+        //! 10 秒で完走
         static const uint8_t desk_sec = 10;
-        static const float desk_course_length = 2 * 60 / (float) 5 * M_PI * 1 / (float) 4 * 2;
+        //! 1 メートルの直線
+        static const float desk_course_length = 1;
+        //! m / s
         v = desk_course_length / (float) desk_sec;
-        w = 2 * M_PI * 3 / 4 / (float) desk_sec;
-        if(desk_course_length / 2 <= COURSE_SAMPLING_LENGTH * index)
-        {
-            w *= -1;
-        }
-        else if(desk_course_length < COURSE_SAMPLING_LENGTH * index)
-        {
-            v = 0;
-            w = 0;
-        }
+        //! rad / s
+        w = 0;
         q.linear.x = v;
         q.linear.y = 0;
         q.linear.z = 0;

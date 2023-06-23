@@ -15,6 +15,7 @@
 #include "print.h"
 #include "velotrace.h"
 #include "fixed_section.h"
+#include "locomotion.h"
 
 #ifndef TREAD
 #define TREAD 103
