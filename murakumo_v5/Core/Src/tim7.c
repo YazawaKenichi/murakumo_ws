@@ -9,10 +9,10 @@ unsigned char i_count, i_start;
 
 void tim7_init()
 {
-    /* init */
-    #if D_TIM7
+/* init */
+#if D_TIM7
     printf("tim7.c > tim7_init() > ");
-    #endif
+#endif
     analog_init();
     tracer_init(TIM7_TIME_MS);
     HAL_TIM_Base_Stop_IT(&htim7);
@@ -20,10 +20,10 @@ void tim7_init()
 
 void tim7_start()
 {
-    /* start */
-    #if D_TIM7
+/* start */
+#if D_TIM7
     printf("tim7.c > tim7_start() > ");
-    #endif
+#endif
     tim7_set_emergency(0);
     tim7_left = 0;
     tim7_right = 0;
@@ -37,10 +37,10 @@ void tim7_start()
 
 void tim7_stop()
 {
-    /* stop */
-    #if D_TIM7
+/* stop */
+#if D_TIM7
     printf("tim7.c > tim7_stop() > ");
-    #endif
+#endif
     HAL_TIM_Base_Stop_IT(&htim7);
     tracer_stop();
     analog_stop();
@@ -53,18 +53,18 @@ void tim7_main()
 
     direction = tim7_read_direction();
 
-    #if D_TIM7_WHILE
+#if D_TIM7_WHILE
     printf("tim7.c > tim7_main() > ");
     printf("direction = %5d\r\n", direction);
-    #endif
+#endif
 
-    tim7_left   =   tracer_solve(direction);
-    tim7_right  = - tim7_left;
+    tim7_left = tracer_solve(direction);
+    tim7_right = -tim7_left;
 
-    #if D_TIM7_WHILE
+#if D_TIM7_WHILE
     printf("tim7.c > tim7_main() > ");
     printf("tim7_left = %7.2f, tim7_right = %7.2f\r\n", tim7_left, tim7_right);
-    #endif
+#endif
 }
 
 /* this method is private */
@@ -72,67 +72,67 @@ int tim7_read_direction()
 {
     uint16_t analogl, analogr;
     uint16_t short_middle;
-	#if !D_TIM7
+#if !D_TIM7
     unsigned char i_count, i_start;
-	#endif
+#endif
 
     analogl = 0;
     analogr = 0;
 
-    switch(analog_read_analogmode())
+    switch (analog_read_analogmode())
     {
-        case analogmode_calibrating:
-            break;
-        case analogmode_short:
-            i_count = 12;
-            i_start = 0;
-            break;
-        case analogmode_long:
-            i_count = 4;
-            i_start = 12;
-            break;
-        case analogmode_all:
-            i_count = 16;
-            i_start = 0;
-            break;
-        default:
-            /* unknown analogmode ... x_x */
-            break;
+    case analogmode_calibrating:
+        break;
+    case analogmode_short:
+        i_count = 12;
+        i_start = 0;
+        break;
+    case analogmode_long:
+        i_count = 4;
+        i_start = 12;
+        break;
+    case analogmode_all:
+        i_count = 16;
+        i_start = 0;
+        break;
+    default:
+        /* unknown analogmode ... x_x */
+        break;
     }
 
-    for(unsigned char i = i_start; i < (i_count + i_start); i++)
+    for (unsigned char i = i_start; i < (i_count + i_start); i++)
     {
-        #if D_TIM7_WHILE
+#if D_TIM7_WHILE
         printf("tim7.c > tim7_main() > for() > ");
         printf("i = %2d", i);
-        #endif
-        if(i % 2 == 0)
+#endif
+        if (i % 2 == 0)
         {
-            #if D_TIM7_WHILE
+#if D_TIM7_WHILE
             printf("  odd\r\n");
-            #endif
+#endif
             analogl += analog_sensor_get(i);
         }
         else
         {
-            #if D_TIM7_WHILE
+#if D_TIM7_WHILE
             printf(" even\r\n");
-            #endif
+#endif
             analogr += analog_sensor_get(i);
         }
-        if(i < SHORT_MIDDLE_SENSOR)
+        if (i < SHORT_MIDDLE_SENSOR)
         {
             short_middle = analogl + analogr;
         }
     }
 
-    if(analogl + analogr >= TIM7_EMERGENCY_THRESHOLD * i_count)
+    if (analogl + analogr >= TIM7_EMERGENCY_THRESHOLD * i_count)
     {
-    	// tim7_main_emergency();
+        // tim7_main_emergency();
     }
 
-    //if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR && virtual_marker_read_markerstate() == cross)
-    if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR)
+    // if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR && virtual_marker_read_markerstate() == cross)
+    if (short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR)
     {
         /* 交差判定 */
         analogl = 3 * (analog_sensor_get(12) + analog_sensor_get(14));
@@ -150,8 +150,8 @@ int tim7_read_direction()
     }
 
 #if D_TIM7_WHILE
-	printf("tim7.c > tim7_main() > ");
-	printf("analogl = %5d, analogr = %5d\r\n", analogl, analogr);
+    printf("tim7.c > tim7_main() > ");
+    printf("analogl = %5d, analogr = %5d\r\n", analogl, analogr);
 #endif
 
     return analogl - analogr;
@@ -159,7 +159,7 @@ int tim7_read_direction()
 
 void tim7_main_emergency()
 {
-	switch_reset_enter();
+    switch_reset_enter();
 }
 
 void tim7_set_emergency(char emergency_)
@@ -174,17 +174,17 @@ char tim7_read_emergency()
 
 float tim7_read_left()
 {
-    #if D_TIM7_WHILE
+#if D_TIM7_WHILE
     printf("tim7.c >  tim7_read_left() >  tim7_left = %7.2f\r\n", tim7_left);
-    #endif
+#endif
     return tim7_left;
 }
 
 float tim7_read_right()
 {
-    #if D_TIM7_WHILE
+#if D_TIM7_WHILE
     printf("tim7.c > tim7_read_right() > tim7_right = %7.2f\r\n", tim7_right);
-    #endif
+#endif
     return tim7_right;
 }
 

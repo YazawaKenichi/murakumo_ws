@@ -1,41 +1,50 @@
 #include "tim6.h"
 
-#if D_TIM6
-MotorController motor;
-// float motor.left, motor.right;
-#endif
-
 float tim6_angle;
 
 void tim6_init()
 {
+    //! 速度 PID プログラムの初期化
+    velotrace_init(1);  // [ms]
+    //! 姿勢 PID プログラムの初期化
     angletrace_init(1);    // [ ms ]
+    //! 世界長管理プログラムの初期化
+    length_init(1)  // [ms]
+    //! 区間長の管理プログラムの初期化
+    section_length_init(1)  // [ms]
+    //! モータドライバの初期化
     motor_init();
     HAL_TIM_Base_Stop_IT(&htim6);
 }
 
 void tim6_start()
 {
-#if D_TIM6
-    motor.left = 0;
-    motor.right = 0;
-    motor.left = 0;
-    motor.right = 0;
-#endif
+    //! 速度 PID
+    velotrace_start();
     //! 角度 PID
     angletrace_start();
-    //! 速度補正
-    fixed_section_start();
+    //! 世界長管理プログラムのスタート
+    length_start();
+    //! 区間長管理プログラムのスタート
+    section_length_start();
+    //! モータドライバのスタート
     motor_start();
-	HAL_TIM_Base_Start_IT(&htim6);	// PID
+	HAL_TIM_Base_Start_IT(&htim6);
 }
 
 void tim6_stop()
 {
-    motor_stop();
 	HAL_TIM_Base_Stop_IT(&htim6);
-    course_stop();
+    //! モータのストップ
+    motor_stop();
+    //! 速度 PID のストップ
+	velotrace_stop();
+    //! 姿勢 PID のストップ
     angletrace_stop();
+    //! 世界長管理プログラムのストップ
+    length_stop();
+    //! 区間長管理プログラムのストップ
+	section_length_stop();
 }
 
 void tim6_main()
@@ -43,7 +52,6 @@ void tim6_main()
     PlayMode playmode;
     MotorController motor;
 
-    tim6_update_angle();
     playmode = rotary_read_playmode();
     odometry_update();
 
