@@ -32,6 +32,7 @@ void rotary_update();
 uint8_t rotary_read();
 PlayMode rotary_read_playmode();
 
+void rotary_set_value();
 void rotary_set_playmode();
 
 void rotary_print_playmode();

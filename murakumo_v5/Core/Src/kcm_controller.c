@@ -9,7 +9,7 @@
  * 
  */
 
-#include "locomotion.h"
+#include "kcm_controller.h"
 
 //! 目標位置姿勢
 Pose p_reference;
@@ -33,7 +33,7 @@ void kcm_stop()
  * 
  * @param q_n 現在の速度・角速度
  */
-Twist kcm_sample(Twist q_n)
+Twist kcm_sample()
 {
     //! 目標速度角速度
     Twist q_r;
@@ -42,9 +42,6 @@ Twist kcm_sample(Twist q_n)
 
     //! 現在位置姿勢
     Pose p_c;
-    //! unused 現在速度と角速度
-    float v = q_n.linear.x;
-    float w = q_n.angular.z;
 
     //! 現在位置姿勢と目標位置姿勢とのギャップ
     Pose p_e;
@@ -55,12 +52,8 @@ Twist kcm_sample(Twist q_n)
 
     //! 現在出すべき速度角速度
     /* 出すべき（角）速度をどうにかして与える */
-    q_r =
-    {
-        .linear = {.x = 1, .y = 0, .z = 0},
-        .anguler = {.x = 0, .y = 0, .z = 0}
-    };
-    //! 速度角速度から座標の取得
+    q_r = {1, 0, 0, 0, 0, 0};
+    //! 速度角速度から現在いるべき座標の取得
     twist_add_to_pose(q_r, &p_reference, 0.001f);
 
     //! p_r には現在いるべき目標座標が入る

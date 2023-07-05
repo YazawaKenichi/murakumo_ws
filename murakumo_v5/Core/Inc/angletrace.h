@@ -3,7 +3,7 @@
 
 #include "pid.h"
 #include "print.h"
-#include "Rotary.h"
+#include "rotary.h"
 #include "math.h"
 
 #define D_ANGLETRACE 1

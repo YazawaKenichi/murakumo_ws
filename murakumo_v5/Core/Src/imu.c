@@ -7,7 +7,7 @@
  * @details 先輩方の IMU のライブラリ ICM20648.c に YazawaKenichi が手を加えた物
 */
 
-#include "IMU.h"
+#include "imu.h"
 
 uint8_t initialized = 0;
 Inertial inertial;

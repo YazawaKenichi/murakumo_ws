@@ -3,7 +3,7 @@
 
 #include "print.h"
 #include "Switch.h"
-#include "Rotary.h"
+#include "rotary.h"
 #include "defines.h"
 #include "time.h"
 

@@ -49,7 +49,7 @@ void encoder_fin()
 float encoder_read()
 {
     //! 単位は [ um ]
-    return (float) (encoder_length_left() + encoder_length_right()) / 2;
+    return (float) (encoder_read_left() + encoder_read_right()) / 2;
 }
 
 float encoder_read_left()

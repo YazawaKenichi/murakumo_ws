@@ -32,8 +32,8 @@ void localization_stop()
 
 void odometry_update()
 {
-    float vl = length_read_left();
-    float vr = length_read_right();
+    float vl = encoder_read_left();
+    float vr = encoder_read_right();
     float v = (vl + vr) / 2;
     float w = imu_read_yaw() * M_PI / 180;
 

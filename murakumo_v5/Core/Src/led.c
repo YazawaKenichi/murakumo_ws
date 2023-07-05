@@ -1,4 +1,4 @@
-#include "LED.h"
+#include "led.h"
 
 uint8_t current_value;
 uint8_t current_rgb_value;

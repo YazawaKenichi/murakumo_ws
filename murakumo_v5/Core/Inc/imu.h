@@ -1,5 +1,5 @@
 /**
- * @file IMU.h
+ * @file imu.h
  * @author IGC8810 / shimotoriharuki / YazawaKenichi (s21c1036hn@gmail.com)
  * @brief ICM-20648 から加速度と角速度の値を取得することができる
  * @version 1.3

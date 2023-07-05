@@ -3,7 +3,7 @@
 
 #include "pid.h"
 #include "print.h"
-#include "Rotary.h"
+#include "rotary.h"
 
 #define D_TRACER 0
 #define D_TRACER_WHILE 0

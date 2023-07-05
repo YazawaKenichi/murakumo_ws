@@ -8,7 +8,7 @@ PUTCHAR_PROTOTYPE
 
 void print_rotary_value()
 {
-	printf("rotary_value = %2d\r\n", rotary_read_value());
+	printf("rotary_value = %2d\r\n", rotary_read());
 }
 
 void print_analog_rate()

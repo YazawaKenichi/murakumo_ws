@@ -13,7 +13,6 @@
 #define __VIRTUAL_MARKER_H__
 
 #include "sidesensor.h"
-#include "course.h"
 
 #define THRESHOLD_YAW_CURVE_OR_STRAIGHT 1.5f
 

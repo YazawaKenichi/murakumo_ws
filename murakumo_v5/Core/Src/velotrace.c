@@ -30,10 +30,10 @@ void velotrace_start()
             case search:
             case accel:
                 /* velotrace をロータリスイッチから切り替える時
-                target = velotrace_calc_target(rotary_read_value());
-                kp = velotrace_calc_gain_kp(rotary_read_value());
-                ki = velotrace_calc_gain_ki(rotary_read_value());
-                kd = velotrace_calc_gain_kd(rotary_read_value());
+                target = velotrace_calc_target(rotary_read());
+                kp = velotrace_calc_gain_kp(rotary_read());
+                ki = velotrace_calc_gain_ki(rotary_read());
+                kd = velotrace_calc_gain_kd(rotary_read());
                 */
                 target = 1;
                 kp = 1000;
@@ -42,15 +42,15 @@ void velotrace_start()
                 break;
             case velotrace_tuning:
                 target = 0;
-                kp = velotrace_calc_gain_kp(rotary_read_value());
-                ki = velotrace_calc_gain_ki(rotary_read_value());
-                kd = velotrace_calc_gain_kd(rotary_read_value());
+                kp = velotrace_calc_gain_kp(rotary_read());
+                ki = velotrace_calc_gain_ki(rotary_read());
+                kd = velotrace_calc_gain_kd(rotary_read());
                 break;
             case velotrace_tuning_2:
-                target = velotrace_calc_target(rotary_read_value());
-                kp = velotrace_calc_gain_kp(rotary_read_value());
-                ki = velotrace_calc_gain_ki(rotary_read_value());
-                kd = velotrace_calc_gain_kd(rotary_read_value());
+                target = velotrace_calc_target(rotary_read());
+                kp = velotrace_calc_gain_kp(rotary_read());
+                ki = velotrace_calc_gain_ki(rotary_read());
+                kd = velotrace_calc_gain_kd(rotary_read());
                 break;
             case tracer_tuning:
             default:
@@ -219,7 +219,7 @@ void velotrace_print_values()
 {
 #if D_VELOTRACE
 	printf("velo > target = %5.3f\r\n", velotrace_read_target());
-	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", velotrace_calc_gain_kp(rotary_read_value()), velotrace_calc_gain_ki(rotary_read_value()), velotrace_calc_gain_kd(rotary_read_value()));
+	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", velotrace_calc_gain_kp(rotary_read()), velotrace_calc_gain_ki(rotary_read()), velotrace_calc_gain_kd(rotary_read()));
 #endif
 }
 

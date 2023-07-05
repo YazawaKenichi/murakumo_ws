@@ -1,4 +1,4 @@
-#include "Rotary.h"
+#include "rotary.h"
 
 PlayMode playmode;
 uint8_t value;

@@ -18,9 +18,9 @@ void angletrace_start()
     angletrace_s_error = 0;
     angletrace_before_error = 0;
     target = 0;
-    kp = angletrace_calc_gain_kp(rotary_read_value());
-    ki = angletrace_calc_gain_ki(rotary_read_value());
-    kd = angletrace_calc_gain_kd(rotary_read_value());
+    kp = angletrace_calc_gain_kp(rotary_read());
+    ki = angletrace_calc_gain_ki(rotary_read());
+    kd = angletrace_calc_gain_kd(rotary_read());
     angletrace_set_target_direct(target);
     angletrace_set_gain_direct(kp, ki, kd);
     #if D_ANALOGTRACE
@@ -181,7 +181,7 @@ void angletrace_print_values()
 {
 #if D_ANALOGTRACE
 	printf("velo > target = %5.3f\r\n", angletrace_read_target());
-	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", angletrace_calc_gain_kp(rotary_read_value()), angletrace_calc_gain_ki(rotary_read_value()), angletrace_calc_gain_kd(rotary_read_value()));
+	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", angletrace_calc_gain_kp(rotary_read()), angletrace_calc_gain_ki(rotary_read()), angletrace_calc_gain_kd(rotary_read()));
 #endif
 }
 

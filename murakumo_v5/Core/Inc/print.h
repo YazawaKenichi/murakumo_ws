@@ -3,7 +3,7 @@
 
 #include "stdio.h"
 #include "defines.h"
-#include "Rotary.h"
+#include "rotary.h"
 #include "analog.h"
 #include "pid.h"
 

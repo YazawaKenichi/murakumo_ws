@@ -10,8 +10,8 @@
  */
 
 #include "math.h"
-#include "length.h"
 #include "imu.h"
+#include "encoder.h"
 #include "geometry.h"
 
 void localization_init();
@@ -22,5 +22,7 @@ void odometry_update();
 
 Pose localization_read_pose();
 Twist localization_read_twist();
+
+void localization_reset();
 
 void twist_add_to_pose(Twist, Pose *, float);

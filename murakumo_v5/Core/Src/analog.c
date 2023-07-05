@@ -27,7 +27,7 @@ void analog_start()
     analog_dma_start();
 }
 
-void analog_stop();
+void analog_stop()
 {
     analog_dma_stop();
 }
@@ -78,7 +78,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef * AdcHandle)
 	analog_get_and_sort();
 }
 
-uint16_t analog_read(unsigned char i);
+uint16_t analog_read(unsigned char i)
 {
 	uint16_t analog_before;
 	//! 前の値を保存しておく

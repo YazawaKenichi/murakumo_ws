@@ -20,9 +20,9 @@ void tracer_start()
         float kp, ki, kd;
         tracer_s_error = 0;
         tracer_before_error = 0;
-        kp = tracer_calc_gain_kp(rotary_read_value());
-        ki = tracer_calc_gain_ki(rotary_read_value());
-        kd = tracer_calc_gain_kd(rotary_read_value());
+        kp = tracer_calc_gain_kp(rotary_read());
+        ki = tracer_calc_gain_ki(rotary_read());
+        kd = tracer_calc_gain_kd(rotary_read());
         tracer_set_default_now_gain(kp, ki, kd);
         tracer_set_target_zero();
         tracer_set_gain_direct(kp, ki, kd);
