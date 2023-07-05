@@ -14,12 +14,11 @@
  * License. You may obtain a copy of the License at:
  *                        opensource.org/licenses/BSD-3-Clause
  *
- *
- * 8b    d8 88   88 88""Yb    db    88  dP 88   88 8b    d8  dP"Yb Yb    dP
- *888888 * 88b  d88 88   88 88__dP   dPYb   88odP  88   88 88b  d88 dP   Yb Yb
- *dP  88oo." * 88YbdP88 Y8   8P 88"Yb   dP__Yb  88"Yb  Y8   8P 88YbdP88 Yb   dP
- *YbdP      `8b * 88 YY 88 `YbodP' 88  Yb dP""""Yb 88  Yb `YbodP' 88 YY 88 YbodP
- *oooooooooo    YP    8888P' *
+ * 
+ * 8b    d8 88   88 88""Yb    db    88  dP 88   88 8b    d8  dP"Yb             Yb    dP 888888 *
+ * 88b  d88 88   88 88__dP   dPYb   88odP  88   88 88b  d88 dP   Yb             Yb  dP  88oo." *
+ * 88YbdP88 Y8   8P 88"Yb   dP__Yb  88"Yb  Y8   8P 88YbdP88 Yb   dP              YbdP      `8b *
+ * 88 YY 88 `YbodP' 88  Yb dP""""Yb 88  Yb `YbodP' 88 YY 88  YbodP  oooooooooo    YP    8888P' *
  *
  ********************************************dsd**********************************
  */
@@ -65,7 +64,7 @@ TIM_HandleTypeDef htim14;
 UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
-#endif /* __DEFINES_H__ */
+#endif	/* __DEFINES_H__ */
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,24 +87,31 @@ static void MX_TIM7_Init(void);
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  if (htim->Instance == TIM6)
-  {
-    tim6_main();
-  }
-  if (htim->Instance == TIM10)
-  {
-    tim7_main();
-  }
+	if(htim->Instance == TIM6)
+	{
+		#if !D_TIM6_WHILE
+		tim6_main();
+		#endif
+	}
 
-  if (htim->Instance == TIM10) // TIM10 // 1ms
-  {
-    tim10_main();
-  }
+	if(htim->Instance == TIM10)
+	{
+		#if !D_TIM7_WHILE
+		tim7_main();
+		#endif
+	}
 
-  if (htim->Instance == TIM11) // TIM11 // 1ms
-  {
-    tim11_main();
-  }
+	if(htim->Instance == TIM10)	// TIM10 // 1ms
+	{
+    #if !D_TIM10_WHILE
+		tim10_main();
+    #endif
+	}
+
+	if (htim->Instance == TIM11)	// TIM11 // 1ms
+	{
+		tim11_main();
+	}
 }
 
 /* USER CODE END PFP */
@@ -116,20 +122,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
 
-  /* MCU
-   * Configuration--------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the
-   * Systick. */
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* USER CODE BEGIN Init */
@@ -159,10 +163,10 @@ int main(void)
   MX_TIM14_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-  printf(ESC_DEF);
+	printf(ESC_DEF);
 
-  printf("\r\n\r\n\r\nStarting Program...\r\n\r\n");
-  printf("Murakumo locomotion v%4.2lf\r\n", __VERSION__);
+	printf("\r\n\r\n\r\nStarting Program...\r\n\r\n");
+	printf("murakumo_odom version.%4.2lf\r\n", __VERSION__);
 
   main_init();
 
@@ -170,42 +174,251 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+#if !D_LED
+	while (1)
+	{
     main_print_while();
-    if (switch_read_enter())
-    {
-      running_start();
-      while (switch_read_enter())
+
+		if(switch_read_enter())
+		{
+			switch(rotary_read())
       {
-        main_main();
-      }
-      running_stop();
-    } // if(switch_read_enter())
+        case 0x00:
+          if(rotary_read_playmode() == calibration)
+          {
+            /* min = 4096, max = 0, sensgettime = 0, HAL_ADC_Start_DMA() */
+            analog_calibration_start();
+
+            while(switch_read_enter())
+            {
+              #if ANALOG_CALIBRATION_IN_WHILE
+              analog_get_and_sort();
+              #endif
+              main_main();
+            }
+
+            /* analogmode = all, */
+            analog_calibration_stop();
+          }
+          else    // if(!(rotary_read_playmode()== calibration))
+          {
+            running_start();
+
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
+          break;	// case 0x00:
+        case 0x01:	// 1
+          running_start();
+
+          while (switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x02:	// 2
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x03:	// 3
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x04:	// 4
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x05:	// 5
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x06:	// 6
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x07:	// 7
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x08:	// 8
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x09:	// 9
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x0A:	// A
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x0B:	// B
+          running_start();
+
+          while(switch_read_enter())
+          {
+            main_main();
+          }
+
+          running_stop();
+          break;
+        case 0x0C:	// C
+          if(rotary_read_playmode() == flash_print)
+          {
+            course_print_flash();
+          }
+          else
+          {
+            running_start();
+
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
+          break;
+        case 0x0D:	// D
+          if(rotary_read_playmode() == flash_print)
+          {
+            course_print_flash();
+          }
+          else
+          {
+            running_start();
+
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
+          break;
+        case 0x0E:	// E
+          if(rotary_read_playmode() == flash_print)
+          {
+            course_print_flash();
+          }
+          else
+          {
+            running_start();
+
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
+          break;
+        case 0x0F:
+          if(rotary_read_playmode()== flash_print)
+          {
+            course_print_flash();
+          }
+          else
+          {
+            running_start();
+
+            while(switch_read_enter())
+            {
+              main_main();
+            }
+
+            running_stop();
+          }
+          break;
+        default:
+          break;
+      } // switch(rotary_value)
+		}	// if(switch_read_enter())
     HAL_Delay(500);
-  } // while(1)
+	}	// while(1)
+#endif	// !D_LED
     /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-   */
+  */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
+  * in the RCC_OscInitTypeDef structure.
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -219,9 +432,9 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK |
-                                RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
@@ -234,10 +447,10 @@ void SystemClock_Config(void)
 }
 
 /**
- * @brief ADC1 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_ADC1_Init(void)
 {
 
@@ -250,9 +463,8 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 1 */
 
   /* USER CODE END ADC1_Init 1 */
-  /** Configure the global features of the ADC (Clock, Resolution, Data
-   * Alignment and number of conversion)
-   */
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
@@ -269,9 +481,8 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_9;
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_56CYCLES;
@@ -279,135 +490,120 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = 2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = 3;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_11;
   sConfig.Rank = 4;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_15;
   sConfig.Rank = 5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_12;
   sConfig.Rank = 6;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_14;
   sConfig.Rank = 7;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_13;
   sConfig.Rank = 8;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_7;
   sConfig.Rank = 9;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = 10;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_6;
   sConfig.Rank = 11;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 12;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_5;
   sConfig.Rank = 13;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_2;
   sConfig.Rank = 14;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_4;
   sConfig.Rank = 15;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure for the selected ADC regular channel its corresponding rank in
-   * the sequencer and its sample time.
-   */
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
   sConfig.Channel = ADC_CHANNEL_3;
   sConfig.Rank = 16;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -417,13 +613,14 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
 }
 
 /**
- * @brief I2C1 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_I2C1_Init(void)
 {
 
@@ -450,13 +647,14 @@ static void MX_I2C1_Init(void)
   /* USER CODE BEGIN I2C1_Init 2 */
 
   /* USER CODE END I2C1_Init 2 */
+
 }
 
 /**
- * @brief SPI2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_SPI2_Init(void)
 {
 
@@ -487,13 +685,14 @@ static void MX_SPI2_Init(void)
   /* USER CODE BEGIN SPI2_Init 2 */
 
   /* USER CODE END SPI2_Init 2 */
+
 }
 
 /**
- * @brief TIM1 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM1_Init(void)
 {
 
@@ -529,21 +728,21 @@ static void MX_TIM1_Init(void)
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) !=
-      HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN TIM1_Init 2 */
 
   /* USER CODE END TIM1_Init 2 */
+
 }
 
 /**
- * @brief TIM3 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM3_Init(void)
 {
 
@@ -578,21 +777,21 @@ static void MX_TIM3_Init(void)
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) !=
-      HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
+
 }
 
 /**
- * @brief TIM4 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM4 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM4_Init(void)
 {
 
@@ -618,8 +817,7 @@ static void MX_TIM4_Init(void)
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) !=
-      HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
@@ -627,13 +825,11 @@ static void MX_TIM4_Init(void)
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1) !=
-      HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_2) !=
-      HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -641,13 +837,14 @@ static void MX_TIM4_Init(void)
 
   /* USER CODE END TIM4_Init 2 */
   HAL_TIM_MspPostInit(&htim4);
+
 }
 
 /**
- * @brief TIM6 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM6_Init(void)
 {
 
@@ -671,21 +868,21 @@ static void MX_TIM6_Init(void)
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) !=
-      HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN TIM6_Init 2 */
 
   /* USER CODE END TIM6_Init 2 */
+
 }
 
 /**
- * @brief TIM7 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM7 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM7_Init(void)
 {
 
@@ -709,21 +906,21 @@ static void MX_TIM7_Init(void)
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) !=
-      HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN TIM7_Init 2 */
 
   /* USER CODE END TIM7_Init 2 */
+
 }
 
 /**
- * @brief TIM10 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM10 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM10_Init(void)
 {
 
@@ -747,13 +944,14 @@ static void MX_TIM10_Init(void)
   /* USER CODE BEGIN TIM10_Init 2 */
 
   /* USER CODE END TIM10_Init 2 */
+
 }
 
 /**
- * @brief TIM11 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM11 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM11_Init(void)
 {
 
@@ -777,13 +975,14 @@ static void MX_TIM11_Init(void)
   /* USER CODE BEGIN TIM11_Init 2 */
 
   /* USER CODE END TIM11_Init 2 */
+
 }
 
 /**
- * @brief TIM14 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief TIM14 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_TIM14_Init(void)
 {
 
@@ -807,13 +1006,14 @@ static void MX_TIM14_Init(void)
   /* USER CODE BEGIN TIM14_Init 2 */
 
   /* USER CODE END TIM14_Init 2 */
+
 }
 
 /**
- * @brief USART6 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief USART6 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_USART6_UART_Init(void)
 {
 
@@ -839,11 +1039,12 @@ static void MX_USART6_UART_Init(void)
   /* USER CODE BEGIN USART6_Init 2 */
 
   /* USER CODE END USART6_Init 2 */
+
 }
 
 /**
- * Enable DMA controller clock
- */
+  * Enable DMA controller clock
+  */
 static void MX_DMA_Init(void)
 {
 
@@ -854,13 +1055,14 @@ static void MX_DMA_Init(void)
   /* DMA2_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+
 }
 
 /**
- * @brief GPIO Initialization Function
- * @param None
- * @retval None
- */
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -873,48 +1075,47 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, DRV2_PH_Pin | LED_White_Pin | LED_B_Pin,
-                    GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, DRV2_PH_Pin|LED_White_Pin|LED_B_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, SPI2_nCS_Pin | LED_Red_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, SPI2_nCS_Pin|LED_Red_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_G_Pin | LED_R_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_G_Pin|LED_R_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(DRV1_PH_GPIO_Port, DRV1_PH_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : DRV2_PH_Pin LED_White_Pin LED_B_Pin */
-  GPIO_InitStruct.Pin = DRV2_PH_Pin | LED_White_Pin | LED_B_Pin;
+  GPIO_InitStruct.Pin = DRV2_PH_Pin|LED_White_Pin|LED_B_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SW1_Pin SW2_Pin Rotary2_Pin Rotary8_Pin
-  Rotary1_Pin */
-  GPIO_InitStruct.Pin =
-      SW1_Pin | SW2_Pin | Rotary2_Pin | Rotary8_Pin | Rotary1_Pin;
+                           Rotary1_Pin */
+  GPIO_InitStruct.Pin = SW1_Pin|SW2_Pin|Rotary2_Pin|Rotary8_Pin
+                          |Rotary1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SubSens1_Pin SubSens2_Pin */
-  GPIO_InitStruct.Pin = SubSens1_Pin | SubSens2_Pin;
+  GPIO_InitStruct.Pin = SubSens1_Pin|SubSens2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SPI2_nCS_Pin LED_Red_Pin */
-  GPIO_InitStruct.Pin = SPI2_nCS_Pin | LED_Red_Pin;
+  GPIO_InitStruct.Pin = SPI2_nCS_Pin|LED_Red_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LED_G_Pin LED_R_Pin */
-  GPIO_InitStruct.Pin = LED_G_Pin | LED_R_Pin;
+  GPIO_InitStruct.Pin = LED_G_Pin|LED_R_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -940,14 +1141,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(DRV1_PH_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
 void main_init()
 {
-#if USE_LED
+  #if USE_LED
   led_init();
-#endif
+  #endif
   flash_init();
   /* switch_init, HAL_TIM_BASE_Start_IT(&htim11), rotary_init */
   tim11_init();
@@ -957,16 +1159,16 @@ void main_init()
   tim7_init();
   /* motor_init, analog_init, velotrace_init(1), tracer_init(1) */
   tim6_init();
-  /* imu のバイアス補正のための初期?��? */
+  /* imu のバイアス補正のための初期?��? */
   // if(rotary_read_playmode() == motor_free)
-  // imu_revision_init();
+    // imu_revision_init();
 }
 
 void running_start()
 {
-#if USE_LED
+  #if USE_LED
   led_start();
-#endif
+  #endif
   HAL_Delay(1000);
   led_write_rgb(0b100);
   HAL_Delay(1000);
@@ -976,34 +1178,31 @@ void running_start()
   HAL_Delay(1000);
   led_write_led(0b11, 0b00);
   led_write_rgb(0b010);
-#if D_TIM7
+  #if D_TIM7
   printf("main.c > running_start() > ");
-#endif
+  #endif
   tim7_start();
-/* encoder_set_middle, HAL_TIM_Encoder_Start, HAL_TIM_Base_Start_IT */
-#if D_PRINT
+  /* encoder_set_middle, HAL_TIM_Encoder_Start, HAL_TIM_Base_Start_IT */
+  #if D_PRINT
   printf("tim10_start()\r\n");
-#endif
+  #endif
   tim10_start();
-/* analogmin/max = analogdata.min/max, sensgettime = 0, HAL_ADC_Start_DMA,
- * samplingtime = s_error = before_error = 0, if search ( p/i/d = [0], target =
- * [0]), motor_enable = 0 */
-#if D_PRINT
+  /* analogmin/max = analogdata.min/max, sensgettime = 0, HAL_ADC_Start_DMA, samplingtime = s_error = before_error = 0, if search ( p/i/d = [0], target = [0]), motor_enable = 0 */
+  #if D_PRINT
   printf("tim6_start()\r\n");
-#endif
+  #endif
   tim6_start();
   /* imu のバイアス補正のための準備 */
   // if(rotary_read_playmode() == motor_free)
-  // imu_revision_start();
+    // imu_revision_start();
 }
 
 void running_stop()
 {
-#if USE_LED
+  #if USE_LED
   led_stop();
-#endif
-  /* HAL_TIM_Base_Stop_IT, HAL_ADC_Stop_DMA, motor_enable = 0,
-   * HAL_TIM_PWM_Stop */
+  #endif
+  /* HAL_TIM_Base_Stop_IT, HAL_ADC_Stop_DMA, motor_enable = 0, HAL_TIM_PWM_Stop */
   tim6_stop();
   /* tim7 */
   tim7_stop();
@@ -1011,25 +1210,24 @@ void running_stop()
   tim10_stop();
   /* imu バイアス補正のための終�? */
   // if(rotary_read_playmode() == motor_free)
-  // imu_revision_stop();
+    // imu_revision_stop();
   led_write_rgb(0b001);
 }
 
 void main_print_while()
 {
-  printf("////////////////////////////// WHILE "
-         "//////////////////////////////\n\r");
+	printf("////////////////////////////// WHILE //////////////////////////////\n\r");
   rotary_print_playmode();
-  print_rotary_value();
-  if (rotary_read() < 4)
+	print_rotary_value();
+  if(rotary_read() < 4)
   {
     led_write_led(0b11, 0b10);
   }
-  else if (rotary_read() < 8)
+  else if(rotary_read() < 8)
   {
     led_write_led(0b11, 0b01);
   }
-  else if (rotary_read() == 15)
+  else if(rotary_read() == 15)
   {
     led_write_led(0b11, 0b11);
   }
@@ -1042,6 +1240,17 @@ void main_print_while()
 void main_main()
 {
   main_d_print();
+	#if D_TIM10_WHILE
+	printf("////////// tim10_main() //////////\r\n");
+	tim10_main();
+	#endif
+	#if D_TIM7_WHILE
+	printf("////////// tim7_main() //////////\r\n");
+	tim7_main();
+	#endif
+	#if D_TIM6_WHILE
+	tim6_main();
+	#endif
 }
 
 void main_d_print()
@@ -1055,35 +1264,33 @@ void main_d_print()
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state
-   */
-  __disable_irq();
-  while (1)
-  {
-  }
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (1) {
+	}
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line
-  number, ex: printf("Wrong parameters value: file %s on line %d\r\n", file,
-  line) */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+

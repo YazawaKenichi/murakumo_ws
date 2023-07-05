@@ -173,22 +173,6 @@ void course_state_function() {
     __course_debug_target_speed__ = fixed_velocity_target;
     velotrace_set_target_direct(fixed_velocity_target);
   }
-  if(pm == kcm_tester)
-  {
-    //! 一定区間ごとに KCM を実行することになっている
-    Twist q_n, q;
-    Pose p_c;
-    //! 現在の速度と角速度を取得
-    q_n = localization_get_twist();
-    p_c = localization_get_pose();
-    //! 出すべき（角）速度を取得
-    q = kcm_sample(q_n, p_c);
-
-    //! （角）速度の目標値を教える
-    //! 本来ここで（角）加速度を考慮する必要が出てくる
-    velotrace_set_target_direct(q.linear.x);
-    angletrace_set_target_direct(q.angular.z * 180 / M_PI);
-  }
   course_increment_state_count();
 }
 

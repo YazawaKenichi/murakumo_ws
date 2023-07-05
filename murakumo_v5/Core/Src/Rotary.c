@@ -73,9 +73,6 @@ void rotary_print_playmode()
         case angletrace_tuning:
             printf("angletrace_tuning");
             break;
-        case kcm_tester:
-            printf("kcm_tester");
-            break;
 		case banquet:
 			printf("banquet");
 			break;

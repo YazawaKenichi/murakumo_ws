@@ -29,7 +29,6 @@ void velotrace_start()
         {
             case search:
             case accel:
-            case kcm_tester:
                 /* velotrace をロータリスイッチから切り替える時
                 target = velotrace_calc_target(rotary_read_value());
                 kp = velotrace_calc_gain_kp(rotary_read_value());

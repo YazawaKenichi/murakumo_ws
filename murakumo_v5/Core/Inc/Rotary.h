@@ -15,13 +15,12 @@ typedef enum PLAYMODE
     max_enable,             /*  3. 最速走行 */ 
     motor_free,             /*  4. モータの出力をしないまま動作させる */
     tracer_tuning,          /*  5. ライントレースのゲインチューニングが可能 */ 
-    velotrace_tuning,           /*  6. 速度制御のゲインチューニングが可能 */
-    velotrace_tuning_2,         /*  7. 速度制御のゲインチューニングが可能 */
+    velotrace_tuning,       /*  6. 速度制御のゲインチューニングが可能 */
+    velotrace_tuning_2,     /*  7. 速度制御のゲインチューニングが可能 */
     angletrace_tuning,      /*  8. 角度制御のゲインチューニングが可能 */
-    kcm_tester,                 /* 9. KANAYAMA Control Method のテストが可能*/
-    banquet,                /*  A. 宴会芸 */
-    tuning,                 /* B. センサのチューニングをするときのモード*/
-    flash_print = 15        /* F. ROM の内容を標準出力 */
+    banquet,                /*  9. 宴会芸 */
+    tuning,                 /* 10. センサのチューニングをするときのモード*/
+    flash_print = 15        /* 15. ROM の内容を標準出力 */
 } PlayMode;
 
 void rotary_init();

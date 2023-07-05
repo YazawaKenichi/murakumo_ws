@@ -15,8 +15,6 @@
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
-#include "math.h"
-
 typedef struct
 {
     /* data */
@@ -155,6 +153,5 @@ Vector3 vector3_adder(Vector3, Vector3);
 Vector3 vector3_creation(float, float, float);
 Point point_creation(float, float, float);
 Rpy rpy_creation(float, float, float);
-void twist_add_to_pose(Twist, Pose *, float);
 
 #endif

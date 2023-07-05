@@ -13,10 +13,6 @@
 
 Twist twistlist[COURSE_STATE_SIZE];
 
-/**
- * @brief twistlist を生成する
- * 
- */
 void generate_twistlist()
 {
     for(int index = 0; index < COURSE_STATE_SIZE; index++)
@@ -26,14 +22,6 @@ void generate_twistlist()
         //! 単位 [ rad / s ]
         float w = 0;
         Twist q;
-        //! 10 秒で完走
-        static const uint8_t desk_sec = 10;
-        //! 1 メートルの直線
-        static const float desk_course_length = 1;
-        //! m / s
-        v = desk_course_length / (float) desk_sec;
-        //! rad / s
-        w = 0;
         q.linear.x = v;
         q.linear.y = 0;
         q.linear.z = 0;
@@ -44,8 +32,8 @@ void generate_twistlist()
     }
 }
 
-Twist get_twistlist()
+Twist get_twistlist(uint16_t index)
 {
-    return twistlist[course_read_state_count()];
+    return twistlist[index];
 }
 

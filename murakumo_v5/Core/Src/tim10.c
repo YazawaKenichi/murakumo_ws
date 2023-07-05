@@ -9,17 +9,36 @@ uint32_t __debug_tim10_count__, __debug_tim10_count_2__;
 /* only use in main.c */
 void tim10_init()
 {
+	samplingtime_s = TIM10_TIME_MS / (float) 1000;
+	tim10_samplingtime_ms = TIM10_TIME_MS;
+	length_init(tim10_samplingtime_ms);
+	section_length_init(tim10_samplingtime_ms);
+	course_init(tim10_samplingtime_ms);
+	velotrace_init(1);
 	HAL_TIM_Base_Stop_IT(&htim10);
 }
 
 void tim10_start()
 {
+	tim10_left = 0;
+	tim10_right = 0;
+	__debug_tim10_count__ = 0;
+	__debug_tim10_count_2__ = 0;
+	course_start();
+	length_start();
+	section_length_start();
+	velotrace_start();
+	slow_start(velotrace_read_values());
 	HAL_TIM_Base_Start_IT(&htim10);
 }
 
 void tim10_stop()
 {
 	HAL_TIM_Base_Stop_IT(&htim10);
+	velotrace_stop();
+	section_length_stop();
+	length_stop();
+	course_stop();
 }
 
 void tim10_fin()
@@ -64,7 +83,6 @@ void tim10_main()
 
 //! tim10_main でのみ呼び出されるべき関数
 //! 速度制御の指令値を更新する
-//! 頻度は tim10_main と同じ頻度
 void tim10_update_values()
 {
 #if USE_SLOWSTART
