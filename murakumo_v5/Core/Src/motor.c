@@ -9,9 +9,6 @@ void motor_init()
 
 void motor_start()
 {
-    #if D_MOTOR
-    printf("HAL_TIM_PWM_Start, motor_enable(1)\r\n");
-    #endif
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);	// 50kHz (0.02ms)
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
 #if PLAY
@@ -26,14 +23,14 @@ void motor_stop()
 	HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
 }
 
-void motor_enable(uint8_t enable_)
-{
-    enable = enable_ ? 1 : 0;
-}
-
 char motor_read_enable()
 {
     return enable;
+}
+
+void motor_enable(uint8_t enable_)
+{
+    enable = enable_ ? 1 : 0;
 }
 
 void motor_set(float motor_left_, float motor_right_)

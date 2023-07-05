@@ -127,4 +127,3 @@ void flash_write_all()
 	flash_write(FLASH_SECTOR_10);
 	flash_write(FLASH_SECTOR_11);
 }
-

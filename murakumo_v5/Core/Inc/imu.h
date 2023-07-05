@@ -64,10 +64,6 @@ void imu_stop();
 void imu_update_gyro();
 void imu_update_accel();
 float imu_read_yaw();
-float imu_read_direct_yaw();
-
-//extern volatile int16_t 	xa, ya, za;
-//extern volatile int16_t 	xg, yg, zg;
 
 #endif
 

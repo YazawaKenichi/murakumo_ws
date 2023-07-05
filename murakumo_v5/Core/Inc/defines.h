@@ -22,8 +22,6 @@
 #define USE_MOTOR 1
 #define USE_SIDESENSOR 1	// Use SideSensor
 #define USE_ENCODER 1
-#define USE_ROTARY 1
-#define USE_SWITCH 1
 #define USE_LED 1
 #define USE_FLASH 1
 #define USE_IMU 1

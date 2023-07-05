@@ -2,7 +2,6 @@
 #define __ROTARY_H__
 
 #include "print.h"
-#include "defines.h"
 #include "stm32f4xx_hal.h"
 
 #define ROTARY_COUNT 16
@@ -18,17 +17,23 @@ typedef enum PLAYMODE
     velotrace_tuning,       /*  6. 速度制御のゲインチューニングが可能 */
     velotrace_tuning_2,     /*  7. 速度制御のゲインチューニングが可能 */
     angletrace_tuning,      /*  8. 角度制御のゲインチューニングが可能 */
-    banquet,                /*  9. 宴会芸 */
-    tuning,                 /* 10. センサのチューニングをするときのモード*/
+    kcm_tester, /* 9. KCM の実行 */
+    banquet,                /*  10. 宴会芸 */
+    tuning,                 /* 11. センサのチューニングをするときのモード*/
     flash_print = 15        /* 15. ROM の内容を標準出力 */
 } PlayMode;
 
 void rotary_init();
-void rotary_set_playmode();
-PlayMode rotary_read_playmode();
-void rotary_set_value();
-uint8_t rotary_read_value();
+void rotary_start();
+void rotary_stop();
+
+void rotary_update();
+
 uint8_t rotary_read();
+PlayMode rotary_read_playmode();
+
+void rotary_set_playmode();
+
 void rotary_print_playmode();
 
 #endif

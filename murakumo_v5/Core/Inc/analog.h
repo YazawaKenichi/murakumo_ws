@@ -28,28 +28,41 @@ typedef enum ANALOGMODE
     analogmode_all = 16
 } AnalogMode;
 
-void analog_print();
-void analog_array_print(uint16_t *analog_);
-void analog_rate_array_print();
-void analog_d_print();
-void analog_print_min();
-void analog_print_max();
-void analog_print_analogmode();
-void analog_set_analogmode(AnalogMode);
-AnalogMode analog_read_analogmode();
-void analog_set_on_flash(uint16_t *, uint16_t *);
-void analog_set_from_flash(uint16_t *, uint16_t *);
-void analog_set_calibrationsize(uint8_t calibrationsize_);
-uint8_t analog_read_calibrationsize();
-void analog_calibration_start();
-void analog_calibration_stop();
+//! control
 void analog_init();
 void analog_start();
 void analog_stop();
-void analog_sensor_start();
-void analog_sensor_stop();
-uint16_t analog_sensor_get(unsigned char i);
+
+void analog_dma_start();
+void analog_dma_stop();
+
+void analog_calibration_start();
+void analog_calibration_stop();
+
+//! update
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef * AdcHandle);
+
+//! read
+uint16_t analog_read(unsigned char i);
+AnalogMode analog_read_analogmode();
+uint8_t analog_read_calibrationsize();
+
+//! set
+void analog_set_analogmode(AnalogMode);
+void analog_set_on_flash(uint16_t *, uint16_t *);
+void analog_set_from_flash(uint16_t *, uint16_t *);
+void analog_set_calibrationsize(uint8_t calibrationsize_);
+
+//! function
 void analog_get_and_sort();
+
+//! print
+void analog_print();
+void analog_d_print();
+void analog_array_print(uint16_t *analog_);
+void analog_rate_array_print();
+void analog_print_min();
+void analog_print_max();
+void analog_print_analogmode();
 
 #endif

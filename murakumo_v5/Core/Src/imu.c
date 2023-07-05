@@ -9,9 +9,6 @@
 
 #include "IMU.h"
 
-// volatile int16_t xa, ya, za;
-// volatile int16_t xg, yg, zg;
-
 uint8_t initialized = 0;
 Inertial inertial;
 

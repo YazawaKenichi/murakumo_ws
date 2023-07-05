@@ -4,6 +4,7 @@
 #include "pid.h"
 #include "print.h"
 #include "Rotary.h"
+#include "math.h"
 
 #define D_ANGLETRACE 1
 #define D_ANGLETRACE_WHILE 0
@@ -24,7 +25,7 @@
 #define ANGLETRACE_GAIN_TUNING_STOP_TIME_MS 10000
 
 /* pre setting */
-void angletrace_init(uint16_t samplingtime_);   //! s_error and d_error are zero
+void angletrace_init(uint16_t samplingtime_ms);   //! s_error and d_error are zero
 void angletrace_start(); //! angletrace_init(1), angletrace_set_gain_index(), angletrace_set_target_index()
 void angletrace_stop();
 

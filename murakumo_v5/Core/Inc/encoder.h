@@ -32,16 +32,19 @@
 #define ENCODER_MIDDLE_LEFT (PULSEPERROTATE_LEFT / 2)
 #define ENCODER_MIDDLE_RIGHT (PULSEPERROTATE_RIGHT / 2)
 
-float encoder_length_left();
-float encoder_length_right();
-float encoder_length();
-void encoder_d_print();
-void encoder_set();
 void encoder_init();
-void encoder_fin();
 void encoder_start();
 void encoder_stop();
+void encoder_fin();
+
+float encoder_read();
+float encoder_read_left();
+float encoder_read_right();
+
+void encoder_set();
 void encoder_set_middle();
+
+void encoder_d_print();
 
 #endif
 

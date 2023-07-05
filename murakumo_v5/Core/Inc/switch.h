@@ -1,8 +1,6 @@
 #ifndef __SWITCH_H__
 #define __SWITCH_H__
 
-#include "print.h"
-#include "defines.h"
 #include "stm32f4xx_hal.h"
 
 typedef struct
@@ -13,13 +11,15 @@ typedef struct
     uint8_t release;
 } Switch;
 
-void switch_set_enter();
-void switch_reset_enter();
 void switch_init();
-uint8_t switch_read_enter();
+void switch_start();
+void switch_stop();
+void switch_update();
+uint8_t switch_read();
 uint8_t switch1_read();
 uint8_t switch2_read();
-uint8_t switch_read();
-void switch_enter();
+uint8_t switch_read_enter();
+void switch_set_enter();
+void switch_reset_enter();
 
 #endif

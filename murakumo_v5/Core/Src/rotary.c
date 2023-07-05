@@ -9,27 +9,7 @@ void rotary_init()
     rotary_set_value();
 }
 
-void rotary_set_playmode()
-{
-    playmode = rotary_read();
-}
-
-PlayMode rotary_read_playmode()
-{
-    return playmode;
-}
-
-void rotary_set_value()
-{
-    value = rotary_read();
-}
-
-uint8_t rotary_read_value()
-{
-    return value;
-}
-
-uint8_t rotary_read()
+void rotary_update()
 {
     uint8_t rotary_value_ = 0;
 
@@ -38,7 +18,27 @@ uint8_t rotary_read()
     rotary_value_ += (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) ? 0 : 1) << 2;
     rotary_value_ += (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_11) ? 0 : 1) << 3;
 
-    return rotary_value_;
+    value = rotary_value_;
+}
+
+uint8_t rotary_read()
+{
+    return value;
+}
+
+PlayMode rotary_read_playmode()
+{
+    return playmode;
+}
+
+void rotary_set_playmode()
+{
+    playmode = rotary_read();
+}
+
+void rotary_set_value()
+{
+    value = rotary_read();
 }
 
 void rotary_print_playmode()

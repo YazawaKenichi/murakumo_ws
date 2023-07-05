@@ -16,31 +16,18 @@ Pose pose_now;
 //! 現在速度角速度
 Twist twist_now;
 
-Pose localization_get_pose()
-{
-    return pose_now;
-}
-
-Twist localization_get_twist()
-{
-    return twist_now;
-}
-
 void localization_init()
 {
-    pose_now.position.x = 0;
-    pose_now.position.y = 0;
-    pose_now.position.z = 0;
-    pose_now.orientation.x = 0;
-    pose_now.orientation.y = 0;
-    pose_now.orientation.z = 0;
-    pose_now.orientation.w = 1;
-    twist_now.linear.x = 0;
-    twist_now.linear.y = 0;
-    twist_now.linear.z = 0;
-    twist_now.angular.x = 0;
-    twist_now.angular.x = 0;
-    twist_now.angular.x = 0;
+    localization_reset();
+}
+
+void localization_start()
+{
+    localization_reset();
+}
+
+void localization_stop()
+{
 }
 
 void odometry_update()
@@ -55,7 +42,34 @@ void odometry_update()
     twist_now.angular.z = w;
 
     //! pose の更新
-    twist_add_to_pose(twist_now, &pose_now, 0.001f);
+    twist_add_to_pose(twist_now, &pose_now, 1.0f / (float) 1000);
+}
+
+Pose localization_read_pose()
+{
+    return pose_now;
+}
+
+Twist localization_read_twist()
+{
+    return twist_now;
+}
+
+void localization_reset()
+{
+    pose_now.position.x = 0;
+    pose_now.position.y = 0;
+    pose_now.position.z = 0;
+    pose_now.orientation.x = 0;
+    pose_now.orientation.y = 0;
+    pose_now.orientation.z = 0;
+    pose_now.orientation.w = 1;
+    twist_now.linear.x = 0;
+    twist_now.linear.y = 0;
+    twist_now.linear.z = 0;
+    twist_now.angular.x = 0;
+    twist_now.angular.y = 0;
+    twist_now.angular.z = 0;
 }
 
 /**

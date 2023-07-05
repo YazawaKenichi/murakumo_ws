@@ -23,7 +23,7 @@
 #define VELOTRACE_GAIN_TUNING_STOP_TIME_MS 3000
 
 /* pre setting */
-void velotrace_init(uint16_t samplingtime_);   //! s_error and d_error are zero
+void velotrace_init(uint16_t samplingtime_ms);   //! s_error and d_error are zero
 void velotrace_start(); //! velotrace_init(1), velotrace_set_gain_index(), velotrace_set_target_index()
 void velotrace_stop();
 

@@ -14,8 +14,13 @@
 #include "imu.h"
 #include "geometry.h"
 
-Pose localization_get_pose();
-Twist localization_get_twist();
 void localization_init();
+void localization_start();
+void localization_stop();
+
 void odometry_update();
+
+Pose localization_read_pose();
+Twist localization_read_twist();
+
 void twist_add_to_pose(Twist, Pose *, float);

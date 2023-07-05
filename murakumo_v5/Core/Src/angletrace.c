@@ -38,7 +38,7 @@ void angletrace_stop()
 /* reading */
 float angletrace_read_target()
 {
-    return angletrace_pid.target;
+    return angletrace_pid.target;   //! [ rad / s ]
 }
 
 float angletrace_read_gain_kp()
@@ -64,7 +64,7 @@ void angletrace_set_target_index(unsigned short int i)
 
 void angletrace_set_target_direct(float target)
 {
-    angletrace_pid.target = target;
+    angletrace_pid.target = target; //! [ rad / s ]
 }
 
 /* gain setting */
@@ -142,7 +142,7 @@ float angletrace_calc_gain_kd(unsigned short int i)
 /* all parameter */
 void angletrace_set_values(PID *_pid)
 {
-    angletrace_pid.target = _pid->target;
+    angletrace_pid.target = _pid->target;   //! [ rad / s ]
     angletrace_pid.kp = _pid->kp;
     angletrace_pid.ki = _pid->ki;
     angletrace_pid.kd = _pid->kd;
@@ -153,13 +153,13 @@ PID* angletrace_read_values()
     return &angletrace_pid;
 }
 
-float angletrace_solve(float reference_)
+float angletrace_solve(float reference_rad)
 {
     float error;
     float d_error;
     float result;
 
-    error = reference_ - angletrace_pid.target;
+    error = reference_rad - angletrace_pid.target;
 
     d_error = (error - angletrace_before_error) / (float) (angletrace_sampling_time_ms / (float) 1000);
     angletrace_s_error += error * (float) (angletrace_sampling_time_ms / (float) 1000);
@@ -174,7 +174,7 @@ float angletrace_solve(float reference_)
 
     angletrace_before_error = error;
 
-    return result;
+    return result * 180 / M_PI;
 }
 
 void angletrace_print_values()
