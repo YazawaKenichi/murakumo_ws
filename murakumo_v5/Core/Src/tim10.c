@@ -8,26 +8,29 @@ void tim10_init()
 {
 	tim10_samplingtime_ms = TIM10_TIME_MS;
 	localization_init();
-	kcm_controller_init();
+	kcm_init();
 	velotrace_init(1);
 	angletrace_init(1);
+	motor_init();
 	HAL_TIM_Base_Stop_IT(&htim10);
 }
 
 void tim10_start()
 {
 	localization_start();
-	kcm_controller_start();
+	kcm_start();
 	velotrace_start();
 	angletrace_start();
+	motor_start();
 	HAL_TIM_Base_Start_IT(&htim10);
 }
 
 void tim10_stop()
 {
 	HAL_TIM_Base_Stop_IT(&htim10);
+	motor_stop();
 	localization_stop();
-	kcm_controller_stop();
+	kcm_stop();
 	velotrace_stop();
 	angletrace_stop();
 }
@@ -57,8 +60,6 @@ void tim10_main()
 	velotrace_set_target_direct(v);
 	angletrace_set_target_direct(w);
 
-	/* 全部 tim10 でやってしまえば良いのでは？？？ */
-
 	//! PID 指令値の計算
 	vel = velotrace_solve(encoder_read());
 	ang = angletrace_solve(imu_read_yaw() * M_PI / 180);
@@ -73,4 +74,11 @@ void tim10_main()
 
 void tim10_d_print()
 {
+#if D_TIM10
+	printf("kcm_param : q_n.v = %f, q_n.w = %f\r\npid_param : vel = %f, ang = %f\r\nmot_param : left = %f, right %f\r\n", debugger.q_n.linear.x, debugger.q_n.angular.z, debugger.vel, debugger.ang, debugger.left, debugger.right);
+#endif
+	encoder_d_print();
+	localization_d_print();
+	velotrace_d_print();
+	angletrace_d_print();
 }

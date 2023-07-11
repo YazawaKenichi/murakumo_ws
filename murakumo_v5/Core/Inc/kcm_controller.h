@@ -9,21 +9,24 @@
  * 
  */
 
-#include "motor.h"
+//! 幾何学的・運動学的な値を扱うライブラリ
 #include "geometry.h"
+//! オドメトリを取得するライブラリ
 #include "localization.h"
-#include "twistlist.h"
+
+//! テスト用
+#include "time.h"
 
 #define K_x 1
 #define K_y 1
 #define K_theta 1
-#define LOCOMOTION_SAMPLING_TIME 0.001f // [ ms ]
 
-#define LOCOMOTION_TEST 1
+void kcm_init();
+void kcm_start();
+void kcm_stop();
 
 Twist kcm_sample();
-Twist kcm_main_function(Pose, Twist);
 void kcm_reset();
-Pose pose_error(Pose, Pose);
-void pose_adder(Pose *, float, float);
-void velocity_to_compare(MotorController *, Twist);
+Twist kcm_main_function(Pose p_e, Twist q_r);
+Pose pose_error(Pose p_r, Pose p_c);
+

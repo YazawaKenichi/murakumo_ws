@@ -56,7 +56,8 @@ PID* tracer_read_values();
 
 /* calclate pid solving */
 float tracer_solve(int);
-void tracer_print_values();
+
+void tracer_d_print();
 
 /* usuage */
 /*

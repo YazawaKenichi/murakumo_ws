@@ -5,18 +5,18 @@
 #include "print.h"
 #include "rotary.h"
 
-#define D_VELOTRACE 0
+#define D_VELOTRACE 1
 #define D_VELOTRACE_WHILE 0
 
 #define VELOTRACE_STEP_SIZE 16
 
-#define VELOCITY_TARGET_MAX 3.00f    /* [m/s] */
-#define VELOCITY_TARGET_MIN 1.00f
-#define VELOCITY_KP_MAX 1000
-#define VELOCITY_KI_MAX 100
+#define VELOCITY_TARGET_MAX 0.00f    /* [m/s] */
+#define VELOCITY_TARGET_MIN 0.00f
+#define VELOCITY_KP_MAX 1
+#define VELOCITY_KI_MAX 20
 #define VELOCITY_KD_MAX 0
-#define VELOCITY_KP_MIN 1000
-#define VELOCITY_KI_MIN 100
+#define VELOCITY_KP_MIN 1
+#define VELOCITY_KI_MIN 20
 #define VELOCITY_KD_MIN 0
 
 //! スタートマーカを読んでから指定時間後に停止する
@@ -62,7 +62,8 @@ PID* velotrace_read_values();
 
 /* calclate pid solving */
 float velotrace_solve(float reference_);
-void veloctracer_print_values();
+
+void velotrace_d_print();
 
 void velotrace_gain_tuning();
 

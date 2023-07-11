@@ -40,6 +40,7 @@ void analog_calibration_start();
 void analog_calibration_stop();
 
 //! update
+void analog_update();
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef * AdcHandle);
 
 //! read

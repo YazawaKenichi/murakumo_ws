@@ -17,9 +17,10 @@ float encoder;
 
 void encoder_init()
 {
-    #if D_ENCODER
+#if D_ENCODER
+    printf("ENCODER_MIDDLE_LEFT = %7.2f, ENCODER_MIDDLE_RIGHT = %7.2f\r\n", ENCODER_MIDDLE_LEFT, ENCODER_MIDDLE_RIGHT);
     printf("LENGTHPERPULSE_LEFT = %7.2f, LENGTHPERPULSE_RIGHT = %7.2f\r\n", LENGTHPERPULSE_LEFT, LENGTHPERPULSE_RIGHT);
-    #endif
+#endif
 }
 
 void encoder_start()
@@ -32,7 +33,6 @@ void encoder_start()
 
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
 	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-	HAL_TIM_Base_Start_IT(&htim10);
 }
 
 void encoder_stop()
@@ -44,6 +44,20 @@ void encoder_stop()
 void encoder_fin()
 {
     encoder_stop();
+}
+
+void encoder_update()
+{
+    uint16_t el_now, er_now;
+
+    el_now = TIM1->CNT;
+    er_now = TIM3->CNT;
+
+    encoder_set_middle();
+
+    encoder_left = low_pass_filter(el_now - ENCODER_MIDDLE_LEFT, encoder_left, 0.25f);
+    encoder_right = low_pass_filter(-(er_now - ENCODER_MIDDLE_RIGHT), encoder_right, 0.25f);
+    encoder = low_pass_filter((encoder_left + encoder_right) / (float) 2, encoder, 0.25);
 }
 
 float encoder_read()
@@ -62,23 +76,6 @@ float encoder_read_right()
     return (float) encoder_right * (float) LENGTHPERPULSE_RIGHT;
 }
 
-/* only read tim10_update_values */
-void encoder_set()
-{
-    uint16_t el_now, er_now;
-
-    el_now = TIM1->CNT;
-    er_now = TIM3->CNT;
-    encoder_set_middle();
-
-    encoder_left = el_now - ENCODER_MIDDLE_LEFT;
-    encoder_right = -(er_now - ENCODER_MIDDLE_RIGHT);
-    //! 単位 [ cnt / sampling_time_s ]
-    //! encoder_length() で読み出しても返されるのはこの値ではないことに注意
-    encoder = (encoder_left + encoder_right) / (float) 2;
-
-}
-
 /* private */
 void encoder_set_middle()
 {
@@ -88,4 +85,9 @@ void encoder_set_middle()
 
 void encoder_d_print()
 {
+#if D_ENCODER
+    printf("TIM1->CNT = %d, TIM3->CNT = %d\r\n", TIM1->CNT, TIM3->CNT);
+    printf("encoder_left = %d, encoder_right = %d, encoder = %f\r\n", encoder_left, encoder_right, encoder);
+    printf("\x1b[2A]");
+#endif
 }

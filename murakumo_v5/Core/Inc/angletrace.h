@@ -6,19 +6,19 @@
 #include "rotary.h"
 #include "math.h"
 
-#define D_ANGLETRACE 1
+#define D_ANGLETRACE 0
 #define D_ANGLETRACE_WHILE 0
 
 #define ANGLETRACE_STEP_SIZE 16
 
 #define ANGLE_TARGET_MAX 0
-#define ANGLE_KP_MAX 4
-#define ANGLE_KI_MAX 80
+#define ANGLE_KP_MAX 1
+#define ANGLE_KI_MAX 58
 #define ANGLE_KD_MAX 0
 
 #define ANGLE_TARGET_MIN 0
-#define ANGLE_KP_MIN 4
-#define ANGLE_KI_MIN 40
+#define ANGLE_KP_MIN 1
+#define ANGLE_KI_MIN 58
 #define ANGLE_KD_MIN 0
 
 //! 指定時間後に停止する
@@ -64,7 +64,8 @@ PID* angletrace_read_values();
 
 /* calclate pid solving */
 float angletrace_solve(float reference_);
-void angletrace_print_values();
+
+void angletrace_d_print();
 
 void angletrace_gain_tuning();
 

@@ -73,6 +73,11 @@ void analog_calibration_stop()
 	flash_write(FLASH_SECTOR_8);
 }
 
+void analog_update()
+{
+	//! HAL_ADC_ConvCpltCallback が代わりを務める
+}
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef * AdcHandle)
 {
 	analog_get_and_sort();

@@ -166,222 +166,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-#if !D_LED
 	while (1)
 	{
     main_print_while();
 
 		if(switch_read_enter())
 		{
-			switch(rotary_read())
+      running_start();
+      while(switch_read_enter())
       {
-        case 0x00:
-          if(rotary_read_playmode() == calibration)
-          {
-            /* min = 4096, max = 0, sensgettime = 0, HAL_ADC_Start_DMA() */
-            analog_calibration_start();
-
-            while(switch_read_enter())
-            {
-              main_main();
-            }
-
-            /* analogmode = all, */
-            analog_calibration_stop();
-          }
-          else    // if(!(rotary_read_playmode()== calibration))
-          {
-            running_start();
-
-            while(switch_read_enter())
-            {
-              main_main();
-            }
-
-            running_stop();
-          }
-          break;	// case 0x00:
-        case 0x01:	// 1
-          running_start();
-
-          while (switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x02:	// 2
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x03:	// 3
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x04:	// 4
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x05:	// 5
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x06:	// 6
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x07:	// 7
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x08:	// 8
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x09:	// 9
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x0A:	// A
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x0B:	// B
-          running_start();
-
-          while(switch_read_enter())
-          {
-            main_main();
-          }
-
-          running_stop();
-          break;
-        case 0x0C:	// C
-          if(rotary_read_playmode() == flash_print)
-          {
-          }
-          else
-          {
-            running_start();
-
-            while(switch_read_enter())
-            {
-              main_main();
-            }
-
-            running_stop();
-          }
-          break;
-        case 0x0D:	// D
-          if(rotary_read_playmode() == flash_print)
-          {
-          }
-          else
-          {
-            running_start();
-
-            while(switch_read_enter())
-            {
-              main_main();
-            }
-
-            running_stop();
-          }
-          break;
-        case 0x0E:	// E
-          if(rotary_read_playmode() == flash_print)
-          {
-          }
-          else
-          {
-            running_start();
-
-            while(switch_read_enter())
-            {
-              main_main();
-            }
-
-            running_stop();
-          }
-          break;
-        case 0x0F:
-          if(rotary_read_playmode()== flash_print)
-          {
-          }
-          else
-          {
-            running_start();
-
-            while(switch_read_enter())
-            {
-              main_main();
-            }
-
-            running_stop();
-          }
-          break;
-        default:
-          break;
-      } // switch(rotary_value)
+        main_main();
+      }
+      running_stop();
 		}	// if(switch_read_enter())
     HAL_Delay(500);
 	}	// while(1)
-#endif	// !D_LED
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -1150,6 +949,8 @@ void running_start()
   led_write_led(0b11, 0b00);
   led_write_rgb(0b010);
 
+  //! 必ずこの順番
+  tim11_start();
   tim10_start();
 }
 
@@ -1193,6 +994,7 @@ void main_main()
 void main_d_print()
 {
   tim10_d_print();
+  tim11_d_print();
 }
 
 /* USER CODE END 4 */

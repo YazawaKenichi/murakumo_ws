@@ -30,6 +30,16 @@ void localization_stop()
 {
 }
 
+typedef struct
+{
+    float vl;
+    float vr;
+    float v;
+    float w;
+} LocalizationDebugger;
+
+LocalizationDebugger localization_debugger;
+
 void odometry_update()
 {
     float vl = encoder_read_left();
@@ -43,6 +53,12 @@ void odometry_update()
 
     //! pose の更新
     twist_add_to_pose(twist_now, &pose_now, 1.0f / (float) 1000);
+
+    //! テスト用
+    localization_debugger.vl = vl;
+    localization_debugger.vr = vr;
+    localization_debugger.v = v;
+    localization_debugger.w = w;
 }
 
 Pose localization_read_pose()
@@ -110,4 +126,11 @@ void twist_add_to_pose(Twist q_n, Pose *p_n, float dt)
     p_n->position.x = x;
     p_n->position.y = y;
     p_n->orientation.z = theta;
+}
+
+void localization_d_print()
+{
+#if D_LOCALIZATION
+    printf("eocoder_read_left = %f, encoder_read_right = %f, encoder_read = %f\r\nimu_read_yaw = %f\r\n", localization_debugger.vl, localization_debugger.vr, localization_debugger.v, localization_debugger.w);
+#endif
 }

@@ -1,6 +1,7 @@
 #include "motor.h"
 
 char enable;
+Motor mot_buf;
 
 void motor_init()
 {
@@ -9,6 +10,8 @@ void motor_init()
 
 void motor_start()
 {
+    mot_buf.left = 0;
+    mot_buf.right = 0;
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);	// 50kHz (0.02ms)
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
 #if PLAY
@@ -63,6 +66,12 @@ void motor_set(float motor_left_, float motor_right_)
         motor_left_ = 0;
         motor_right_ = 0;
     }
+
+    motor_left_ = low_pass_filter(motor_left_, mot_buf.left, 0.25f);
+    motor_right_ = low_pass_filter(motor_right_, mot_buf.right, 0.25f);
+
+    mot_buf.left = motor_left_;
+    mot_buf.right = motor_right_;
 
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, motor_left_);
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, motor_right_);

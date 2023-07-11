@@ -33,7 +33,6 @@ void sidesensor_start()
     rightmarkercount = 0;
 	markerstate = none;
 	markerstate_volatile = none;
-    // HAL_TIM_Base_Start_IT(&htim14);
 }
 
 void sidesensor_stop()

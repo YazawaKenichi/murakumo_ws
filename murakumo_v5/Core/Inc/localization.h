@@ -13,6 +13,7 @@
 #include "imu.h"
 #include "encoder.h"
 #include "geometry.h"
+#include "print.h"
 
 void localization_init();
 void localization_start();
@@ -26,3 +27,5 @@ Twist localization_read_twist();
 void localization_reset();
 
 void twist_add_to_pose(Twist, Pose *, float);
+
+void localization_d_print();

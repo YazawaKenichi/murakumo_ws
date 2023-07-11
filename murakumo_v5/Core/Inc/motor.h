@@ -4,6 +4,7 @@
 #include "defines.h"
 #include "print.h"
 #include "stm32f4xx_hal.h"
+#include "function.h"
 
 #define D_MOTOR 1
 
@@ -13,7 +14,7 @@ typedef struct
 {
     float left;
     float right;
-} MotorController;
+} Motor;
 
 void motor_start();
 void motor_stop();

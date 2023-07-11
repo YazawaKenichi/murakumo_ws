@@ -30,7 +30,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 
-#define __VERSION__ 2.2
+#define __VERSION__ 2.4
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -39,8 +39,6 @@ extern "C" {
 #include "print.h"
 #include "switch.h"
 #include "rotary.h"
-#include "analog.h"
-#include "flash.h"
 #include "tim10.h"
 #include "tim11.h"
 /* USER CODE END Includes */

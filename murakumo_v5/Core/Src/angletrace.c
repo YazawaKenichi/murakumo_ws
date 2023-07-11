@@ -1,6 +1,6 @@
 #include "angletrace.h"
 
-float angletrace_s_error;
+double angletrace_s_error;
 int angletrace_before_error;
 uint16_t angletrace_sampling_time_ms;
 uint16_t angletrace_gain_tuning_time_ms;
@@ -17,10 +17,12 @@ void angletrace_start()
     float target, kp, ki, kd;
     angletrace_s_error = 0;
     angletrace_before_error = 0;
-    target = 0;
+
+    target = angletrace_calc_target(rotary_read());
     kp = angletrace_calc_gain_kp(rotary_read());
     ki = angletrace_calc_gain_ki(rotary_read());
     kd = angletrace_calc_gain_kd(rotary_read());
+
     angletrace_set_target_direct(target);
     angletrace_set_gain_direct(kp, ki, kd);
     #if D_ANALOGTRACE
@@ -177,10 +179,10 @@ float angletrace_solve(float reference_rad)
     return result * 180 / M_PI;
 }
 
-void angletrace_print_values()
+void angletrace_d_print()
 {
 #if D_ANALOGTRACE
-	printf("velo > target = %5.3f\r\n", angletrace_read_target());
+	printf("ang > tar = %5.3f\r\n", angletrace_read_target());
 	//! printf("kp = %5.3f, ki = %5.3f, kd = %5.3f\r\n", angletrace_calc_gain_kp(rotary_read()), angletrace_calc_gain_ki(rotary_read()), angletrace_calc_gain_kd(rotary_read()));
 #endif
 }

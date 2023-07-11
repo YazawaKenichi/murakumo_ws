@@ -179,7 +179,7 @@ float tracer_solve(int reference_)
     return result;
 }
 
-void tracer_print_values()
+void tracer_d_print()
 {
 #if D_TRACER
     printf("trac > kp = %7.2f, ki = %7.2f, kd = %7.2f\r\n", tracer_pid.kp, tracer_pid.ki, tracer_pid.kd);
