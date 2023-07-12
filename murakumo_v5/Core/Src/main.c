@@ -493,7 +493,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 5210;
+  htim1.Init.Period = 5120;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -949,7 +949,7 @@ void running_start()
   led_write_led(0b11, 0b00);
   led_write_rgb(0b010);
 
-  //! 必ずこの順番
+  //! �?ずこの�?番
   tim11_start();
   tim10_start();
 }
@@ -968,6 +968,8 @@ void main_print_while()
 	printf("////////////////////////////// WHILE //////////////////////////////\n\r");
   rotary_print_playmode();
 	print_rotary_value();
+ tim10_d_print_main();
+ tim11_d_print_main();
   if(rotary_read() < 4)
   {
     led_write_led(0b11, 0b10);

@@ -21,6 +21,8 @@
 #define K_y 1
 #define K_theta 1
 
+#define DEBUG_VELOCITY 0
+
 void kcm_init();
 void kcm_start();
 void kcm_stop();

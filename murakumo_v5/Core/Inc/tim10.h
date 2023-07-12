@@ -21,5 +21,6 @@ void tim10_fin();
 void tim10_main();
 
 void tim10_d_print();
+void tim10_d_print_main();
 
 #endif

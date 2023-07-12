@@ -28,7 +28,6 @@ void kcm_stop()
 {
 }
 
-#define DEBUG_VELOCITY 50
 /**
  * @brief 実際に使ってみるときの関数
  *

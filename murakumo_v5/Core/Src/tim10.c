@@ -68,6 +68,9 @@ void tim10_main()
 	left = vel  - ang;
 	right = vel + ang;
 
+	left = vel;
+	right = vel;
+
 	//! モータ出力
 	motor_set(left, right);
 }
@@ -81,4 +84,8 @@ void tim10_d_print()
 	localization_d_print();
 	velotrace_d_print();
 	angletrace_d_print();
+}
+
+void tim10_d_print_main()
+{
 }

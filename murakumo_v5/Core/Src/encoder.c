@@ -88,6 +88,12 @@ void encoder_d_print()
 #if D_ENCODER
     printf("TIM1->CNT = %d, TIM3->CNT = %d\r\n", TIM1->CNT, TIM3->CNT);
     printf("encoder_left = %d, encoder_right = %d, encoder = %f\r\n", encoder_left, encoder_right, encoder);
-    printf("\x1b[2A]");
+    // printf("\x1b[2A]");
+#endif
+}
+
+void encoder_d_print_main()
+{
+#if D_ENCODER
 #endif
 }

@@ -6,7 +6,7 @@
 #include "stm32f4xx_hal.h"
 #include "function.h"
 
-#define D_MOTOR 1
+#define D_MOTOR 0
 
 #define PWMMAX 1000
 
