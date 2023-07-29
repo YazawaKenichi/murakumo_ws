@@ -53,7 +53,11 @@ Twist kcm_sample()
     //! 現在位置姿勢と目標位置姿勢とのギャップ
     Pose p_e;
     //! 実際に出してほしい速度と角速度
-    if (time_read() > 10)
+    if(time_read() > 1)
+    {
+        q_r.linear.x = 1;
+    }
+    else
     {
         q_r.linear.x = 0;
     }

@@ -13,12 +13,12 @@
 
 #define ANGLE_TARGET_MAX 0
 #define ANGLE_KP_MAX 1
-#define ANGLE_KI_MAX 58
+#define ANGLE_KI_MAX 20
 #define ANGLE_KD_MAX 0
 
 #define ANGLE_TARGET_MIN 0
 #define ANGLE_KP_MIN 1
-#define ANGLE_KI_MIN 58
+#define ANGLE_KI_MIN 20
 #define ANGLE_KD_MIN 0
 
 //! 指定時間後に停止する

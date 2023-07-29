@@ -44,6 +44,7 @@ void tim10_main()
 {
 	Twist q_n, q_o;
 	float v, w, vel, ang, left, right;
+	float enc;
 
 	//! 現在の位置を更新
 	odometry_update();
@@ -51,7 +52,7 @@ void tim10_main()
 	q_n = localization_read_twist();
 	//! 現在の位置から出すべき（角）速度を求める
 	q_o = kcm_sample(q_n);
-	
+
 	//! 出力すべき（角）速度
 	v = q_o.linear.x;	//! [ m / s ]
 	w = q_o.angular.z;	//! [ rad / s ]
@@ -61,15 +62,13 @@ void tim10_main()
 	angletrace_set_target_direct(w);
 
 	//! PID 指令値の計算
-	vel = velotrace_solve(encoder_read());
+	enc = encoder_read();
+	vel = velotrace_solve(enc);
 	ang = angletrace_solve(imu_read_yaw() * M_PI / 180);
 
 	//! 指令値の重ね合わせ
 	left = vel  - ang;
 	right = vel + ang;
-
-	left = vel;
-	right = vel;
 
 	//! モータ出力
 	motor_set(left, right);
@@ -78,8 +77,8 @@ void tim10_main()
 void tim10_d_print()
 {
 #if D_TIM10
-	printf("kcm_param : q_n.v = %f, q_n.w = %f\r\npid_param : vel = %f, ang = %f\r\nmot_param : left = %f, right %f\r\n", debugger.q_n.linear.x, debugger.q_n.angular.z, debugger.vel, debugger.ang, debugger.left, debugger.right);
 #endif
+	motor_d_print();
 	encoder_d_print();
 	localization_d_print();
 	velotrace_d_print();

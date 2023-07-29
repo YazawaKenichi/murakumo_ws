@@ -949,7 +949,6 @@ void running_start()
   led_write_led(0b11, 0b00);
   led_write_rgb(0b010);
 
-  //! �?ずこの�?番
   tim11_start();
   tim10_start();
 }

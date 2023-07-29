@@ -14,8 +14,12 @@ typedef enum PLAYMODE
     max_enable,             /*  3. 最速走行 */ 
     motor_free,             /*  4. モータの出力をしないまま動作させる */
     tracer_tuning,          /*  5. ライントレースのゲインチューニングが可能 */ 
-    velotrace_tuning,       /*  6. 速度制御のゲインチューニングが可能 */
-    velotrace_tuning_2,     /*  7. 速度制御のゲインチューニングが可能 */
+    velotrace_tuning,
+    velotrace_left_tuning,       /*  6. 速度制御のゲインチューニングが可能 */
+    velotrace_right_tuning,       /*  6. 速度制御のゲインチューニングが可能 */
+    velotrace_tuning_2,
+    velotrace_left_tuning_2,     /*  7. 速度制御のゲインチューニングが可能 */
+    velotrace_right_tuning_2,     /*  7. 速度制御のゲインチューニングが可能 */
     angletrace_tuning,      /*  8. 角度制御のゲインチューニングが可能 */
     kcm_tester, /* 9. KCM の実行 */
     banquet,                /*  10. 宴会芸 */

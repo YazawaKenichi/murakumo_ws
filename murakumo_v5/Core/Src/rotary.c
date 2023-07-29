@@ -61,13 +61,25 @@ void rotary_print_playmode()
         case motor_free:
             printf("motor_free");
             break;
-		case tracer_tuning:
-			printf("tracer_tuning");
-			break;
 		case velotrace_tuning:
 			printf("velotrace_tuning");
 			break;
         case velotrace_tuning_2:
+            printf("velotrace_tuning_2");
+            break;
+		case tracer_tuning:
+			printf("tracer_tuning");
+			break;
+		case velotrace_left_tuning:
+			printf("velotrace_tuning");
+			break;
+		case velotrace_right_tuning:
+			printf("velotrace_tuning");
+			break;
+        case velotrace_left_tuning_2:
+            printf("velotrace_tuning_2");
+            break;
+        case velotrace_right_tuning_2:
             printf("velotrace_tuning_2");
             break;
         case angletrace_tuning:

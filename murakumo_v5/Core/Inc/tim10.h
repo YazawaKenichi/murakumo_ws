@@ -5,13 +5,12 @@
 #include "kcm_controller.h"
 #include "velotrace.h"
 #include "angletrace.h"
-
-/* 全部 tim10 でやってしまえば良いのでは？？？ */
-#include "velotrace.h"
-#include "angletrace.h"
 #include "motor.h"
+#include "time.h"
 
 #define TIM10_TIME_MS 1 // [ ms ]
+
+#define D_TIM10 1
 
 void tim10_init();
 void tim10_start();

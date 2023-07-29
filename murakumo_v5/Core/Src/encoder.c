@@ -12,7 +12,7 @@
 #include "encoder.h"
 
 /* encoders are updated only in encoder file. */
-int16_t encoder_left, encoder_right;
+float encoder_left, encoder_right;
 float encoder;
 
 void encoder_init()
@@ -57,7 +57,7 @@ void encoder_update()
 
     encoder_left = low_pass_filter(el_now - ENCODER_MIDDLE_LEFT, encoder_left, 0.25f);
     encoder_right = low_pass_filter(-(er_now - ENCODER_MIDDLE_RIGHT), encoder_right, 0.25f);
-    encoder = low_pass_filter((encoder_left + encoder_right) / (float) 2, encoder, 0.25);
+    encoder = low_pass_filter((encoder_left + encoder_right) / (float) 2, encoder, 0.25f);
 }
 
 float encoder_read()
@@ -86,8 +86,11 @@ void encoder_set_middle()
 void encoder_d_print()
 {
 #if D_ENCODER
-    printf("TIM1->CNT = %d, TIM3->CNT = %d\r\n", TIM1->CNT, TIM3->CNT);
-    printf("encoder_left = %d, encoder_right = %d, encoder = %f\r\n", encoder_left, encoder_right, encoder);
+    printf("T1>C, T3>C, enc_le, enc_ri, encode\r\n");
+    for(uint8_t index = 0; index < 38; index++)
+    {
+        printf("%4ld, %4ld, %6.3f, %6.3f, %6.3f\r\n", TIM1 -> CNT, TIM3 -> CNT, encoder_left, encoder_right, encoder);
+    }
     // printf("\x1b[2A]");
 #endif
 }

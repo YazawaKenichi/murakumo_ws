@@ -13,17 +13,17 @@
 #define VELOCITY_TARGET_MAX 0.00f    /* [m/s] */
 #define VELOCITY_TARGET_MIN 0.00f
 #define VELOCITY_KP_MAX 2.3f
-#define VELOCITY_KI_MAX 0
+#define VELOCITY_KI_MAX 20
 #define VELOCITY_KD_MAX 0
 #define VELOCITY_KP_MIN 2.3f
-#define VELOCITY_KI_MIN 0
+#define VELOCITY_KI_MIN 20
 #define VELOCITY_KD_MIN 0
 
 //! スタートマーカを読んでから指定時間後に停止する
 #define VELOTRACE_GAIN_TUNING_STOP_TIME_MS 3000
 
 /* pre setting */
-void velotrace_init(uint16_t samplingtime_ms);   //! s_error and d_error are zero
+void velotrace_init(uint16_t samplingtime_ms);  //! s_error and d_error are zero
 void velotrace_start(); //! velotrace_init(1), velotrace_set_gain_index(), velotrace_set_target_index()
 void velotrace_stop();
 

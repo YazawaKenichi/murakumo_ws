@@ -38,10 +38,15 @@ void motor_enable(uint8_t enable_)
 
 void motor_set(float motor_left_, float motor_right_)
 {
+    motor_left_ = low_pass_filter(motor_left_, mot_buf.left, 0.25f);
+    motor_right_ = low_pass_filter(motor_right_, mot_buf.right, 0.25f);
+
+    mot_buf.left = motor_left_;
+    mot_buf.right = motor_right_;
+
     if(motor_left_ < 0)
     {
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
-        motor_left_ = motor_left_ * -1;
     }
     else
     {
@@ -51,12 +56,14 @@ void motor_set(float motor_left_, float motor_right_)
     if(motor_right_ < 0)
     {
         HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-        motor_right_ = motor_right_ * -1;
     }
     else
     {
         HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
     }
+
+    motor_left_ = fabs(motor_left_);
+    motor_right_ = fabs(motor_right_);
 
     motor_left_ = motor_left_ > PWMMAX ? PWMMAX : motor_left_;
     motor_right_ = motor_right_ > PWMMAX ? PWMMAX : motor_right_;
@@ -67,31 +74,17 @@ void motor_set(float motor_left_, float motor_right_)
         motor_right_ = 0;
     }
 
-    motor_left_ = low_pass_filter(motor_left_, mot_buf.left, 0.25f);
-    motor_right_ = low_pass_filter(motor_right_, mot_buf.right, 0.25f);
-
-    mot_buf.left = motor_left_;
-    mot_buf.right = motor_right_;
-
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, motor_left_);
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, motor_right_);
 }
 
-/* usuage */
-/*
-    run_init()
+void motor_d_print()
+{
+#if D_MOTOR
+    printf("motlef, motrig\r\n");
+    for(uint8_t index = 0; index < 30; index++)
     {
-        ...
-        tracer_init();
-        / * 記述中 * /
-        ...
+        printf("%6.3lf, %6.3lf\r\n", mot_buf.left, mot_buf.right);
     }
-
-    in_timer()
-    {
-        ...
-        motor_set(velotrace_solve(velocityvalue) + tracer_solve(sensorvalue), velotrace_solve(velocityvalue) + tracer_solve(sensorvalue));
-        ...
-    }
-*/
-
+#endif
+}
