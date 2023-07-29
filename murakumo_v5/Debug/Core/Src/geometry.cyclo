@@ -1,0 +1,4 @@
+geometry.c:22:9:vector3_adder	1
+geometry.c:33:9:vector3_creation	1
+geometry.c:42:7:point_creation	1
+geometry.c:51:5:rpy_creation	1

@@ -1,0 +1,13 @@
+section_length.c:11:6:section_length_set_sampling_time_ms	1
+section_length.c:16:6:section_length_init	1
+section_length.c:21:6:section_length_start	1
+section_length.c:28:6:section_length_stop	1
+section_length.c:33:6:section_length_fin	1
+section_length.c:38:6:section_length_reset	1
+section_length.c:44:6:section_length_buffer_reset	1
+section_length.c:51:7:section_length_read	1
+section_length.c:56:7:section_length_read_left	1
+section_length.c:61:7:section_length_read_right	1
+section_length.c:84:6:section_length_set_buffer	1
+section_length.c:92:6:section_length_update	1
+section_length.c:99:6:section_length_d_print	1

@@ -1,0 +1,5 @@
+time.c:38:6:time_update_ms	1
+time.c:48:6:time_init	1
+time.c:54:6:time_countup	2
+time.c:67:14:time_read_ms	1
+time.c:72:14:time_read_origin	1

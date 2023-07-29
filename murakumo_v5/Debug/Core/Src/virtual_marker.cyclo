@@ -1,0 +1,8 @@
+virtual_marker.c:5:6:virtual_marker_init	1
+virtual_marker.c:10:6:virtual_marker_start	1
+virtual_marker.c:16:6:virtual_marker_main	1
+virtual_marker.c:23:6:virtual_marker_stop	1
+virtual_marker.c:28:6:virtual_marker_set	1
+virtual_marker.c:34:17:virtual_marker_read_markerstate	1
+virtual_marker.c:39:17:virtual_marker_read_markerstate_volatile	1
+virtual_marker.c:50:6:virtual_marker_d_print	1

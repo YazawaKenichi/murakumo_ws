@@ -1,0 +1,9 @@
+LED.c:6:6:led_init	1
+LED.c:14:6:led_start	1
+LED.c:20:6:led_stop	1
+LED.c:26:9:led_read_current_value	1
+LED.c:31:9:led_read_current_rgb_value	1
+LED.c:36:6:led_write_led1	1
+LED.c:45:6:led_write_led2	1
+LED.c:54:6:led_write_rgb	1
+LED.c:62:6:led_write_led	3

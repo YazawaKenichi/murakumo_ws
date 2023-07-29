@@ -1,5 +1,5 @@
-print.c:3:1:__io_putchar	16	static
-print.c:9:6:print_rotary_value	8	static
-print.c:14:6:print_analog_rate	96	static
-print.c:25:6:print_bin	24	static
-print.c:48:6:print_pid	64	static
+../Core/Src/print.c:3:1:__io_putchar	16	static
+../Core/Src/print.c:9:6:print_rotary_value	8	static
+../Core/Src/print.c:14:6:print_analog_rate	96	static
+../Core/Src/print.c:25:6:print_bin	24	static
+../Core/Src/print.c:48:6:print_pid	64	static

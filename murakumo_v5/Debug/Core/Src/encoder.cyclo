@@ -1,0 +1,10 @@
+encoder.c:8:7:encoder_length	1
+encoder.c:18:7:encoder_length_left	1
+encoder.c:27:7:encoder_length_right	1
+encoder.c:36:6:encoder_d_print	1
+encoder.c:44:6:encoder_set	1
+encoder.c:59:6:encoder_init	1
+encoder.c:66:6:encoder_fin	1
+encoder.c:71:6:encoder_start	1
+encoder.c:84:6:encoder_stop	1
+encoder.c:91:6:encoder_set_middle	1

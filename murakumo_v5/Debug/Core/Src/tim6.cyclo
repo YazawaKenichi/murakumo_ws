@@ -1,0 +1,5 @@
+tim6.c:10:6:tim6_init	1
+tim6.c:18:6:tim6_start	1
+tim6.c:31:6:tim6_stop	1
+tim6.c:40:6:tim6_main	6
+tim6.c:152:6:tim6_d_print	1

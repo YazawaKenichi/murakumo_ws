@@ -1,0 +1,9 @@
+tim10.c:12:6:tim10_init	1
+tim10.c:23:6:tim10_start	1
+tim10.c:37:6:tim10_stop	1
+tim10.c:46:6:tim10_fin	1
+tim10.c:53:6:tim10_main	3
+tim10.c:88:6:tim10_update_values	1
+tim10.c:101:7:tim10_read_left	1
+tim10.c:106:7:tim10_read_right	1
+tim10.c:111:6:tim10_d_print	1

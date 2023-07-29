@@ -1,0 +1,9 @@
+Switch.c:5:6:switch_set_enter	1
+Switch.c:10:6:switch_reset_enter	1
+Switch.c:15:6:switch_main_emergency	1
+Switch.c:20:6:switch_init	1
+Switch.c:25:9:switch_read_enter	1
+Switch.c:30:9:switch1_read	1
+Switch.c:35:9:switch2_read	1
+Switch.c:40:9:switch_read	1
+Switch.c:50:6:switch_enter	3
