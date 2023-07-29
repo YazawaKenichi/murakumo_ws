@@ -233,11 +233,17 @@ $$
 $$
 \begin{equation}
 \begin{array}{l}
-p_r(t)
-=\begin{bmatrix}x_r(t)\\y_r(t)\\\theta_r(t)\end{bmatrix}
-=\begin{bmatrix}V_rt\\0\\0\end{bmatrix}\\
+p_r(t)=\begin{bmatrix}x_r(t)\\
+y_r(t)\\
+\theta_r(t)\end{bmatrix}=\begin{bmatrix}V_rt\\
+0\\
+0
+\end{bmatrix}\\
 and\\
-q_r(t)=\begin{bmatrix}v_r(t)\\\omega_r(t)\end{bmatrix} = \begin{bmatrix}V_r\\0\end{bmatrix}
+q_r(t)=\begin{bmatrix}v_r(t)\\
+\omega_r(t)\end{bmatrix} = \begin{bmatrix}V_r\\
+0
+\end{bmatrix}
 \end{array}
 \end{equation}
 $$
@@ -254,16 +260,28 @@ and\\
 \end{equation}
 $$
 
-> 命題 3：条件 (14) および (15) の下で、
-> 
-> $$
-> \begin{equation}
-> \dot{p_c}
-> =\begin{bmatrix}\dot{x}_c\\\dot{y}_c\\\dot{\theta}_c\end{bmatrix}=\begin{bmatrix}-K_x&&0&&0\\0&&0&&V_r\\0&&-V_rK_y&&-V_rK_\theta\end{bmatrix}\begin{bmatrix}x_c-V_tt\\y_c\\\theta_c\end{bmatrix}+\begin{bmatrix}V_r\\0\\0\end{bmatrix}
-> \end{equation}
-> $$
+> 命題 3：条件 (14) および (15) の下で、以下の式が成立する
 
-証明 式 (11) を式 (4) に代入すると、
+$$
+\begin{equation}
+\dot{p_c}=\begin{bmatrix}\dot{x}_c\\
+\dot{y}_c\\
+\dot{\theta}_c\end{bmatrix}=\begin{bmatrix}-K_x&&0&&0\\
+0&&0&&V_r\\
+0&&-V_rK_y&&-V_rK_\theta
+\end{bmatrix}
+\begin{bmatrix}x_c-V_tt\\
+y_c\\
+\theta_c\end{bmatrix}+\begin{bmatrix}V_r\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+$$
+
+証明
+
+式 (11) を式 (4) に代入すると、
 
 $$
 \begin{equation}\dot{p_c}=T_e^-1(AT_e-\dot{T_e})(p_c-p_r)+\dot{p}_r\end{equation}
