@@ -266,13 +266,17 @@ $$
 \begin{equation}
 \dot{p_c}=\begin{bmatrix}\dot{x}_c\\
 \dot{y}_c\\
-\dot{\theta}_c\end{bmatrix}=\begin{bmatrix}-K_x&&0&&0\\
-0&&0&&V_r\\
-0&&-V_rK_y&&-V_rK_\theta
+\dot{\theta}_c\end{bmatrix}=\begin{bmatrix}-K_x && 0 && 0\\
+0 && 0 && V_r\\
+0 && -V_rK_y && -V_rK_\theta
 \end{bmatrix}
 \begin{bmatrix}x_c-V_tt\\
 y_c\\
-\theta_c\end{bmatrix}+\begin{bmatrix}V_r\\
+\theta_c
+\end{bmatrix}
++
+\begin{bmatrix}
+V_r\\
 0\\
 0
 \end{bmatrix}
