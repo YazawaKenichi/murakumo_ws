@@ -1,5 +1,5 @@
 ---
-name: 'Investigation '
+name: "\U0001F914 Investigation"
 about: 議論と調査が必要になりそうな今後の課題
 title: "[Investigation] "
 labels: help wanted
