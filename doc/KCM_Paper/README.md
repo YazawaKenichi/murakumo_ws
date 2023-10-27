@@ -129,7 +129,11 @@ $v_c$ と $w_c$ をそれぞれ $v(p_e, q_r)$ と $v(p_e, q_r)$ で置き換え�
 
 $$
 \begin{equation}
-q = \begin{bmatrix} v \\ \omega \\ \end{bmatrix} = \begin{bmatrix}v(p_e, q_r)\\ \omega(p_e, q_r)\end{bmatrix}=\begin{bmatrix}v_r\cos{\theta_e}+K_xx_e\\ \omega_r + v_r(K_yy_e+K_\theta\sin{\theta_e})\end{bmatrix}
+q = \begin{bmatrix} v \\
+\omega \\
+\end{bmatrix} = \begin{bmatrix}v(p_e, q_r)\\
+\omega(p_e, q_r)\end{bmatrix}=\begin{bmatrix}v_r\cos{\theta_e}+K_xx_e\\
+\omega_r + v_r(K_yy_e+K_\theta\sin{\theta_e})\end{bmatrix}
 \end{equation}
 $$
 
@@ -149,7 +153,7 @@ $$
 
 この制御規則 (8) の健全性は、次の命題によって確立されます。
 
-> 命題１：制御 mle (8) を使用すると、$p_ = 0$ は基準速度 $v_r > 0$ の安定平衡点です。
+> 命題１：制御規則 (8) を使用すると、$p_e = 0$ は基準速度 $v_r > 0$ の安定平衡点となる。
 
 証明：リアプノフ関数の候補としてスカラー関数 $V$ を提案しよう [9]：
 
@@ -220,20 +224,26 @@ a_0 = K_xK_yv_r^2+\omega_r^2K_\theta v_r
 \end{equation}
 $$
 
-すべての係数 $a_i$ は正であり、$a_1a_2-a_0a_3 > 0$ であるため、ラウス-フルウィッツ基準により、aU 根の実部は負になります。 したがって、[9] の 223 ページの系 41 によって、命題は証明されました。□
+すべての係数 $a_i$ が正で $a_1a_2-a_0a_3 > 0$ であるため、ラウス・ハーヴィッツ基準によれば、すべての根の実部は負になります。 したがって、[9] の 223 ページの系 41 により、命題は証明されました。□
 
 ## 4. Effects of Control Parameters
 
-前のセクションでは、$K_x$、$K_y$、および $K_\theta$ のパラメーター値の任意の組み合わせに対してシステムが安定であることを示しました。 ただし、ロボットの非振動性であるが遅すぎない応答が必要であるため、最適なパラメーター セットを 6 番目に設定する必要があります。 分析を単純化するために、基準姿勢が $x$ 軸上を正の方向に一定の速度 $V_r$ で移動している状況のみを考えます。
+前のセクションでは、$K_x$、$K_y$、および $K_\theta$ のパラメーター値の任意の組み合わせに対してシステムが安定していることを実証しました。 ただし、ロボットの非振動性ではあるが、遅すぎない応答が必要なため、オプションのパラメーター セットを見つける必要があります。 解析を単純化するために、基準姿勢が $x$ 軸上で正の方向に一定速度 $V_r$ で移動している状況のみを考慮します：
 
 $$
 \begin{equation}
 \begin{array}{l}
-p_r(t)
-=\begin{bmatrix}x_r(t)\\y_r(t)\\\theta_r(t)\end{bmatrix}
-=\begin{bmatrix}V_rt\\0\\0\end{bmatrix}\\
+p_r(t)=\begin{bmatrix}x_r(t)\\
+y_r(t)\\
+\theta_r(t)\end{bmatrix}=\begin{bmatrix}V_rt\\
+0\\
+0
+\end{bmatrix}\\
 and\\
-q_r(t)=\begin{bmatrix}v_r(t)\\\omega_r(t)\end{bmatrix} = \begin{bmatrix}V_r\\0\end{bmatrix}
+q_r(t)=\begin{bmatrix}v_r(t)\\
+\omega_r(t)\end{bmatrix} = \begin{bmatrix}V_r\\
+0
+\end{bmatrix}
 \end{array}
 \end{equation}
 $$
@@ -250,16 +260,32 @@ and\\
 \end{equation}
 $$
 
-> 命題 3：条件 (14) および (15) の下で、
-> 
-> $$
-> \begin{equation}
-> \dot{p_c}
-> =\begin{bmatrix}\dot{x}_c\\\dot{y}_c\\\dot{\theta}_c\end{bmatrix}=\begin{bmatrix}-K_x&&0&&0\\0&&0&&V_r\\0&&-V_rK_y&&-V_rK_\theta\end{bmatrix}\begin{bmatrix}x_c-V_tt\\y_c\\\theta_c\end{bmatrix}+\begin{bmatrix}V_r\\0\\0\end{bmatrix}
-> \end{equation}
-> $$
+> 命題 3：条件 (14) および (15) の下で、以下の式が成立する
 
-証明 式 (11) を式 (4) に代入すると、
+$$
+\begin{equation}
+\dot{p_c}=\begin{bmatrix}\dot{x}_c\\
+\dot{y}_c\\
+\dot{\theta}_c\end{bmatrix}=\begin{bmatrix}-K_x && 0 && 0\\
+0 && 0 && V_r\\
+0 && -V_rK_y && -V_rK_\theta
+\end{bmatrix}
+\begin{bmatrix}x_c-V_tt\\
+y_c\\
+\theta_c
+\end{bmatrix}
++
+\begin{bmatrix}
+V_r\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+$$
+
+証明
+
+式 (11) を式 (4) に代入すると、
 
 $$
 \begin{equation}\dot{p_c}=T_e^-1(AT_e-\dot{T_e})(p_c-p_r)+\dot{p}_r\end{equation}
