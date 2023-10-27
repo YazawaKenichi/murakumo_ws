@@ -1,7 +1,12 @@
 #ifndef __TIM10_H__
 #define __TIM10_H__
 
-#include "locomotion.h"
+#include "localization.h"
+#include "kcm_controller.h"
+#include "velotrace.h"
+#include "angletrace.h"
+#include "motor.h"
+#include "time.h"
 
 #define TIM10_TIME_MS 1 // [ ms ]
 
