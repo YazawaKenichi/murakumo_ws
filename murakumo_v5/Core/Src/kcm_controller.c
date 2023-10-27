@@ -52,14 +52,44 @@ Twist kcm_sample()
 
     //! 現在位置姿勢と目標位置姿勢とのギャップ
     Pose p_e;
+
     //! 実際に出してほしい速度と角速度
-    if(time_read() > 1)
+    /*
+    // 半径 500 mm の円
+    const float all_time = 10;
+    const float all_radius = 500;
+    const float all_length = all_radius * 2 * M_PI;
+    q_r.linear.x = all_length / (float) all_time;
+    q_r.angular.z = 2 * M_PI / 
+    */
+    // s 字
+    const float all_time = 10;
+    const float all_length = 1000;
+    float now_time_s = time_read();
+    float section_length = all_length / (float) 4;
+    float section_time = all_time / (float) 4;
+
+    q_r.linear.x = section_length / (float) section_time;
+    if(now_time_s < 1 * section_time) 
     {
-        q_r.linear.x = 1;
+        q_r.angular.z = 0;
+    }
+    else if(now_time_s < 2 * section_time)
+    {
+        q_r.angular.z = M_PI / 4 / section_time;
+    }
+    else if(now_time_s < 3 * section_time)
+    {
+        q_r.angular.z = - M_PI / 4 / section_time;
+    }
+    else if(now_time_s < 4 * section_time)
+    {
+        q_r.angular.z = 0;
     }
     else
     {
         q_r.linear.x = 0;
+        q_r.angular.z = 0;
     }
 
     //! 現在の位置を取得

@@ -17,9 +17,11 @@
 //! テスト用
 #include "time.h"
 
-#define K_x 1
-#define K_y 1
-#define K_theta 1
+//#define K 0.001f
+#define K 0
+#define K_x K
+#define K_y K
+#define K_theta K
 
 #define DEBUG_VELOCITY 0
 
