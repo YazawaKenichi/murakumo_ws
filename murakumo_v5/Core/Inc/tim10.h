@@ -1,6 +1,7 @@
 #ifndef __TIM10_H__
 #define __TIM10_H__
 
+#include "explore.h"
 #include "locomotion.h"
 
 #define TIM10_TIME_MS 1 // [ ms ]
