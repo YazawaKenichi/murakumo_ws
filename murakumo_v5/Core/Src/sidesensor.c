@@ -47,6 +47,9 @@ SideSensorState sidesensor_read_markerstate()
 
 SideSensorState sidesensor_read_markerstate_volatile()
 {
+	SideSensorState _markerstate_volatile;
+	_markerstate_volatile = markerstate_volatile;
+	markerstate_volatile = none;
 	return markerstate_volatile;
 }
 
@@ -93,7 +96,6 @@ void sidesensor_main()
 	unsigned char subsens;
 
 	subsens = sidesensor_read();
-	markerstate_volatile = none;
 
 	if(subsens != subsensbuf)
 	{

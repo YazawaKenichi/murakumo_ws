@@ -4,6 +4,7 @@
 #include "print.h"
 #include "switch.h"
 #include "rotary.h"
+#include "sidesensor.h"
 #include "defines.h"
 #include "analog.h"
 #include "encoder.h"

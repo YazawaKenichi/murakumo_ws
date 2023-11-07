@@ -9,15 +9,17 @@ void tim11_init()
     time_init();
     switch_init();
     rotary_init();
+    sidesensor_init();
     analog_init();
     encoder_init();
     imu_init();
-	HAL_TIM_Base_Start_IT(&htim11);	// 1ms	// ROTARY SWITCH
+    HAL_TIM_Base_Start_IT(&htim11);	// 1ms	// ROTARY SWITCH
 }
 
 void tim11_start()
 {
     time_start();
+    sidesensor_start();
     analog_start();
     encoder_start();
     imu_start();
@@ -27,6 +29,7 @@ void tim11_start()
 void tim11_stop()
 {
     time_stop();
+    sidesensor_stop();
     analog_stop();
     encoder_stop();
     imu_stop();
@@ -39,6 +42,7 @@ void tim11_main()
     time_update(0.001f);
     switch_update();
     rotary_update();
+    sidesensor_main();
     if(tim11_started == 1)
     {
         analog_update();

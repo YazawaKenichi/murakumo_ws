@@ -10,8 +10,8 @@
 
 #define VELOTRACE_STEP_SIZE 16
 
-#define VELOCITY_TARGET_MAX 0.00f    /* [m/s] */
-#define VELOCITY_TARGET_MIN 0.00f
+#define VELOCITY_TARGET_MAX 1.00f    /* [m/s] */
+#define VELOCITY_TARGET_MIN 1.00f
 #define VELOCITY_KP_MAX 2.3f
 #define VELOCITY_KI_MAX 20
 #define VELOCITY_KD_MAX 0

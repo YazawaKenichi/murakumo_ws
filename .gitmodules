@@ -1,0 +1,3 @@
+[submodule "murakumo_v5/Core/Src/data_smoothing"]
+	path = murakumo_v5/Core/Src/data_smoothing
+	url = https://github.com/yazawakenichi/data_smoothing

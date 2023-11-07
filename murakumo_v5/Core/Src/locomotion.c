@@ -45,16 +45,14 @@ void locomotion_fin()
  */
 void locomotion_main()
 {
-	Twist q_n, q_o;
+	Twist q_o;
 	float v, w, vel, ang, left, right;
 	float enc;
 
-	//! 現在の位置を更新
+	//! 実際の位置を更新
 	odometry_update();
-	//! 現在の位置を取得
-	q_n = localization_read_twist();
-	//! 現在の位置から出すべき（角）速度を求める
-	q_o = kcm_sample(q_n);
+	//! 実際の位置から出すべき（角）速度を求める
+	q_o = kcm_sample();
 
 	//! 出力すべき（角）速度
 	v = q_o.linear.x;	//! [ m / s ]

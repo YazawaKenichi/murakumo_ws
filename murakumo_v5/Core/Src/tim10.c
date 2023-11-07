@@ -40,7 +40,7 @@ void tim10_main()
 		case pm_explore:
 			explore_main();
 		case pm_shortcut:
-			locomotion_start();
+			shortcut_main();
 		default :
 	}
 }

@@ -13,6 +13,8 @@
 
 //! 目標位置姿勢
 Pose p_reference;
+//! 目標速度角速度
+Twist q_reference;
 
 void kcm_init()
 {
@@ -37,12 +39,6 @@ Twist kcm_sample()
 {
     //! 目標速度角速度
     Twist q_r;
-    q_r.linear.x = DEBUG_VELOCITY;
-    q_r.linear.y = 0;
-    q_r.linear.z = 0;
-    q_r.angular.x = 0;
-    q_r.angular.y = 0;
-    q_r.angular.z = 0;
 
     //! 出力速度角速度
     Twist q;
@@ -53,56 +49,20 @@ Twist kcm_sample()
     //! 現在位置姿勢と目標位置姿勢とのギャップ
     Pose p_e;
 
-    //! 実際に出してほしい速度と角速度
-    /*
-    // 半径 500 mm の円
-    const float all_time = 10;
-    const float all_radius = 500;
-    const float all_length = all_radius * 2 * M_PI;
-    q_r.linear.x = all_length / (float) all_time;
-    q_r.angular.z = 2 * M_PI / 
-    */
-    // s 字
-    const float all_time = 10;
-    const float all_length = 1000;
-    float now_time_s = time_read();
-    float section_length = all_length / (float) 4;
-    float section_time = all_time / (float) 4;
-
-    q_r.linear.x = section_length / (float) section_time;
-    if(now_time_s < 1 * section_time) 
-    {
-        q_r.angular.z = 0;
-    }
-    else if(now_time_s < 2 * section_time)
-    {
-        q_r.angular.z = M_PI / 4 / section_time;
-    }
-    else if(now_time_s < 3 * section_time)
-    {
-        q_r.angular.z = - M_PI / 4 / section_time;
-    }
-    else if(now_time_s < 4 * section_time)
-    {
-        q_r.angular.z = 0;
-    }
-    else
-    {
-        q_r.linear.x = 0;
-        q_r.angular.z = 0;
-    }
-
-    //! 現在の位置を取得
-    p_c = localization_read_pose();
-
-    //! 現在出すべき速度角速度
-    /* 出すべき（角）速度をどうにかして与える */
-    //! q_r = {1, 0, 0, 0, 0, 0};
-    //! 速度角速度から現在いるべき座標の取得
+    /********** 本来 「こういう 位置姿勢・速度角速度 を描いてほしい」 の計算 **********/
+    //! 目標速度・角速度の取得
+    q_r = kcm_read_twist_reference();
+    //! 速度 q_r で進んだ時の位置 p_reference の更新
     twist_add_to_pose(q_r, &p_reference, 0.001f);
 
-    //! p_r には現在いるべき目標座標が入る
+    /********** でも 「実際はどういう 位置姿勢・速度角速度なの？」 の計算 **********/
+    //! 実際のの位置を取得
+    p_c = localization_read_pose();
+
+    //! p_e に理想と現実のギャップが代入される
     p_e = pose_error(p_reference, p_c);
+
+    /********** 「じゃあどうしたら良いの？」 の計算 **********/
     //! 出力するべき（角）速度
     q = kcm_main_function(p_e, q_r);
 
@@ -163,4 +123,14 @@ Pose pose_error(Pose p_r, Pose p_c)
     p_e.position.y = p_r.position.y - p_c.position.y;
     p_e.orientation.z = p_r.orientation.z - p_c.orientation.z;
     return p_e;
+}
+
+void kcm_set_twist_reference(Twist _q)
+{
+    q_reference = _q;
+}
+
+Twist kcm_read_twist_reference()
+{
+    return q_reference;
 }

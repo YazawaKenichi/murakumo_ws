@@ -1,20 +1,20 @@
 /**
- * @file explore.c
- * @author YAZAWA Kenichi (s21c1036hn@gmail.com)
- * @brief 
- * @version 1.0
- * @date 2023-10-30
  * 
- * Copyright 2023 YAZAWA Kenichi
+ * @file explore.c
+ * 
+ * SPDX-FileCopyrightText: 2023 YAZAWA Kenichi <s21c1036hn@gmail.com>
+ * SPDX-License-Identifier: MIT-LICENSE
  * 
  */
 
 #include "explore.h"
 
-uint16_t course_state_index;
+uint8_t sampling_time_ms;
+uint8_t logging_count;
 
-void explore_init();
+void explore_init(uint8_t _sampling_time_ms);
 {
+    sampling_time_ms = _sampling_time_ms;
     flash_init();
     linetrace_init();
 }
@@ -30,8 +30,10 @@ void explore_start()
 
 void explore_main()
 {
+    explore_opening();
     linetrace_main();
     explore_logging();
+    explore_ending();
 }
 
 void explore_stop()
@@ -67,13 +69,16 @@ void explore_logging()
     encoderdata -> right[course_state_index] += _right;
     imudata -> yaw[course_state_index] += _w;
 
-    //! ロギング距離
-    if(_v >= SAMPLING_THRESHOLD)
+    logging_count++;
+
+    //! ロギング間隔
+    if(logging_count * (0.001f * sampling_time_ms) >= COURSE_SAMPLING_TIME)
     {
-        increment_course_state_index();
+        course_increment_state_index();
         encoder_data->left[course_state_index] = 0;
         encoder_data->right[course_state_index] = 0;
         imudata->yaw[course_state_index] = 0;
+        logging_count = 0;
     }
 }
 
@@ -83,11 +88,18 @@ void logging_save()
     flash_write(FLASH_SECTOR_10);
 }
 
-void increment_course_state_index()
+void explore_opening()
 {
-    course_state_index++;
-    if(course_state_index >= COURSE_STATE_SIZE - 1)
+    if(sidesensor_read_markerstate_volatile() == start)
     {
-        course_state_index = COURSE_STATE_SIZE - 1;
+        course_reset_state_index();
+    }
+}
+
+void explore_ending()
+{
+    if(sidesensor_read_markerstate() == stop)
+    {
+        switch_reset_enter();
     }
 }
