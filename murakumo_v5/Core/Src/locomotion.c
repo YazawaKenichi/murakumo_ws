@@ -39,6 +39,10 @@ void locomotion_fin()
 {
 }
 
+/**
+ * @brief KCM にしたがってモータ制御を行う
+ * 
+ */
 void locomotion_main()
 {
 	Twist q_n, q_o;

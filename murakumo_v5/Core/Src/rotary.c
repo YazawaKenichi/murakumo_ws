@@ -46,50 +46,23 @@ void rotary_print_playmode()
 	printf("playmode = ");
 	switch(rotary_read_playmode())
 	{
-		case calibration:
+		case pm_calibration:
 			printf("calibration");
 			break;
-		case search:
-			printf("search");
+		case pm_explore:
+			printf("explore");
 			break;
-		case accel:
+		case pm_shortcut:
+			printf("shortcut");
+			break;
+		case pm_accel:
 			printf("accel");
 			break;
-		case max_enable:
-			printf("max_enable");
-			break;
-        case motor_free:
-            printf("motor_free");
+        case pm_free:
+            printf("free");
             break;
-		case velotrace_tuning:
-			printf("velotrace_tuning");
-			break;
-        case velotrace_tuning_2:
-            printf("velotrace_tuning_2");
-            break;
-		case tracer_tuning:
-			printf("tracer_tuning");
-			break;
-		case velotrace_left_tuning:
-			printf("velotrace_tuning");
-			break;
-		case velotrace_right_tuning:
-			printf("velotrace_tuning");
-			break;
-        case velotrace_left_tuning_2:
-            printf("velotrace_tuning_2");
-            break;
-        case velotrace_right_tuning_2:
-            printf("velotrace_tuning_2");
-            break;
-        case angletrace_tuning:
-            printf("angletrace_tuning");
-            break;
-		case banquet:
-			printf("banquet");
-			break;
-		case flash_print:
-			printf("flash_print");
+		case pm_print:
+			printf("print");
 			break;
 		default:
 			printf("unknown playmode...");

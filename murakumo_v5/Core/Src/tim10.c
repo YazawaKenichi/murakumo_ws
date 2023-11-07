@@ -33,12 +33,14 @@ void tim10_fin()
 
 void tim10_main()
 {
-	switch()
+	PlayMode pm;
+	pm = rotary_read_playmode()
+	switch(pm)
 	{
-		case :
+		case pm_explore:
 			explore_main();
-		case :
-			locomotion_main();
+		case pm_shortcut:
+			locomotion_start();
 		default :
 	}
 }
