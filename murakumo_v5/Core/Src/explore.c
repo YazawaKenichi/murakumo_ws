@@ -11,7 +11,7 @@
 
 #include "explore.h"
 
-Sampling temporary;
+uint16_t course_state_index;
 
 void explore_init();
 {
@@ -21,33 +21,73 @@ void explore_init();
 
 void explore_start()
 {
-    temporary.t = 0.001;
-    temporary.v = 0;
-    temporary.w = 0;
+    course_state_index = 0;
+    encoder_data->left[course_state_index] = 0;
+    encoder_data->right[course_state_index] = 0;
+    imudata->yaw[course_state_index] = 0;
     linetrace_start();
 }
 
 void explore_main()
 {
-    //! 進んだ距離を積算
-    temporary.v += encoder_read() * temporary.t;
-    //! 曲がった角度を積算
-    temporary.w += imu_read_yaw() * temporary.t;
-    //! サンプリング距離を超過した時
-    if(temporary.v >= SAMPLING_THRESHOLD)
-    {
-        float v = temporary.v;
-        float w = temporary.w;
-    }
     linetrace_main();
+    explore_logging();
 }
 
 void explore_stop()
 {
+    logging_clear();
+    logging_save();
     linetrace_stop();
 }
 
 void explore_fin()
 {
     linetrace_fin();
+}
+
+void logging_clear()
+{
+    flash_erase(FLASH_SECTOR_9);
+    flash_erase(FLASH_SECTOR_10);
+}
+
+void explore_logging()
+{
+    float _left, _right, _v, _w;
+
+    //! データ取得
+    _left = encoder_read_left() * 0.001;
+    _right = encoder_read_right() * 0.001;
+    _w = imu_read_yaw() * 0.001;
+    _v = (_left + _right) / 2;
+
+    //! ロギング用積分
+    encoderdata -> left[course_state_index] += _left;
+    encoderdata -> right[course_state_index] += _right;
+    imudata -> yaw[course_state_index] += _w;
+
+    //! ロギング距離
+    if(_v >= SAMPLING_THRESHOLD)
+    {
+        increment_course_state_index();
+        encoder_data->left[course_state_index] = 0;
+        encoder_data->right[course_state_index] = 0;
+        imudata->yaw[course_state_index] = 0;
+    }
+}
+
+void logging_save()
+{
+    flash_write(FLASH_SECTOR_9);
+    flash_write(FLASH_SECTOR_10);
+}
+
+void increment_course_state_index()
+{
+    course_state_index++;
+    if(course_state_index >= COURSE_STATE_SIZE - 1)
+    {
+        course_state_index = COURSE_STATE_SIZE - 1;
+    }
 }

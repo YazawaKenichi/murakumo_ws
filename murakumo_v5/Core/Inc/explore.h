@@ -18,17 +18,15 @@
 #include "velotrace.h"
 #include "motor.h"
 
-typedef struct
-{
-    float t;
-    float v;
-    float w;
-} Sampling;
+//! ロギング距離 [ m ]
+#define SAMPLING_THRESHOLD 0.01f
 
 void explore_init();
 void explore_start();
 void explore_main();
 void explore_stop();
 void explore_fin();
+
+void explore_logging();
 
 #endif
