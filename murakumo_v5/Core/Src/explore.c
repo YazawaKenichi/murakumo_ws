@@ -9,12 +9,12 @@
 
 #include "explore.h"
 
-uint8_t sampling_time_ms;
+uint8_t explore_sampling_time_ms;
 uint8_t logging_count;
 
 void explore_init(uint8_t _sampling_time_ms)
 {
-    sampling_time_ms = _sampling_time_ms;
+    explore_sampling_time_ms = _sampling_time_ms;
     flash_init();
     linetrace_init();
 }
@@ -23,6 +23,7 @@ void explore_start()
 {
     uint16_t index;
     index = course_read_state_index();
+    printf("explore_start : index = %d\r\n", index);
     encoderdata.left[index] = 0;
     encoderdata.right[index] = 0;
     imudata.yaw[index] = 0;
@@ -57,13 +58,16 @@ void logging_clear()
 
 void explore_logging()
 {
-    float _left, _right, _v, _w;
+    float _left, _right;
+    // float _v;
+    float _w;
 
     //! データ取得
     _left = encoder_read_left() * 0.001;
     _right = encoder_read_right() * 0.001;
     _w = imu_read_yaw() * 0.001;
-    _v = (_left + _right) / 2;
+    // _v = (_left + _right) / 2;
+    
 
     //! ロギング用積分
     uint16_t index;
@@ -75,7 +79,7 @@ void explore_logging()
     logging_count++;
 
     //! ロギング間隔
-    if(logging_count * (0.001f * sampling_time_ms) >= COURSE_SAMPLING_TIME)
+    if(logging_count * (0.001f * explore_sampling_time_ms) >= COURSE_SAMPLING_TIME)
     {
         course_increment_state_index();
         index = course_read_state_index();

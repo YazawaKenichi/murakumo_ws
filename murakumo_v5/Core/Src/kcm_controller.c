@@ -1,5 +1,5 @@
 /**
- * @file locomotion.c
+ * @file kcm_controller.c
  * @author YAZAWA Kenichi (s21c1036hn@gmail.com)
  * @brief KANAYAMA Control Method
  * @version 1.0

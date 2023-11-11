@@ -17,6 +17,8 @@
 #include "velotrace.h"
 #include "angletrace.h"
 #include "motor.h"
+#include "geometry.h"
+#include "math.h"
 
 void locomotion_init();
 void locomotion_start();

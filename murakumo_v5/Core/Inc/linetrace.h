@@ -18,6 +18,15 @@
 #include "velotrace.h"
 #include "motor.h"
 
+/* analog short でトレースするか long でトレースするか判断用の定数 */
+#define CLOSS_IGNORE_THRESHOLD 500
+#define SHORT_MIDDLE_SENSOR 6
+
+/* analogmode_long が指定された時のライントレースゲイン値 */
+#define LINETRACE_LONG_KP 0.2f
+#define LINETRACE_LONG_KI 0
+#define LINETRACE_LONG_KD 0.0045f
+
 void linetrace_init();
 void linetrace_start();
 void linetrace_main();

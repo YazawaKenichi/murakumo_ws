@@ -11,14 +11,14 @@
 
 uint16_t course_state_index;
 
-void course_reset_state_index()
-{
-    course_state_index = 0;
-}
-
 uint16_t course_read_state_index()
 {
     return course_state_index;
+}
+
+void course_reset_state_index()
+{
+    course_state_index = 0;
 }
 
 void course_increment_state_index()

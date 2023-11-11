@@ -13,12 +13,14 @@ typedef enum PLAYMODE
      * 1. 探索
      * 2. ショートカット
      * 3. 加減速
+     * 4. モータフリー
      * F. 標準出力
      */
     pm_calibration,
     pm_explore,
     pm_shortcut,
     pm_accel,
+    pm_free,
     pm_print = 15
 } PlayMode;
 

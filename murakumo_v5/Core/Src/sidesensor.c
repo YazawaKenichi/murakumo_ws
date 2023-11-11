@@ -50,7 +50,7 @@ SideSensorState sidesensor_read_markerstate_volatile()
 	SideSensorState _markerstate_volatile;
 	_markerstate_volatile = markerstate_volatile;
 	markerstate_volatile = none;
-	return markerstate_volatile;
+	return _markerstate_volatile;
 }
 
 void sidesensor_right()

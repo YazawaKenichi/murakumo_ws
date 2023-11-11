@@ -9,12 +9,14 @@
  * 
  */
 
+#include "locomotion.h"
+
 void locomotion_init()
 {
     localization_init();
     kcm_init();
     velotrace_init(1);
-    angletrace_init();
+    angletrace_init(1);
 }
 
 void locomotion_start()

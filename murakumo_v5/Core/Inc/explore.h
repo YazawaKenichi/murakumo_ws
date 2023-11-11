@@ -12,6 +12,7 @@
 #ifndef __EXPLORE_H__
 #define __EXPLORE_H__
 
+#include "switch.h"
 #include "encoder.h"
 #include "imu.h"
 #include "course.h"

@@ -11,10 +11,8 @@
 
 #include "linetrace.h"
 
-void linetrace_init();
+void linetrace_init()
 {
-    analog_init();
-    encoder_init();
     tracer_init(1);
     velotrace_init(1);
     motor_init();
@@ -22,8 +20,7 @@ void linetrace_init();
 
 void linetrace_start()
 {
-    analog_start();
-    encoder_start();
+    analog_set_analogmode(analogmode_short);
     tracer_start();
     velotrace_start();
     motor_start();
@@ -53,8 +50,6 @@ void linetrace_main()
 
 void linetrace_stop()
 {
-    analog_stop();
-    encoder_stop();
     tracer_stop();
     velotrace_stop();
     motor_stop();
@@ -68,29 +63,28 @@ int linetrace_read_direction()
 {
     uint16_t analog_left, analog_right;
     uint16_t short_middle;
+    unsigned char i_count, i_start;
 
     analog_left = 0;
     analog_right = 0;
 
-    switch(analog_read_analogmode())
+    AnalogMode am;
+    am = analog_read_analogmode();
+
+    if(am == analogmode_short)
     {
-        case analogmode_calibrating:
-            break;
-        case analogmode_short:
-            i_count = 12;
-            i_start = 0;
-            break;
-        case analogmode_long:
-            i_count = 4;
-            i_start = 12;
-            break;
-        case analogmode_all:
-            i_count = 16;
-            i_start = 0;
-            break;
-        default:
-            /* Unknown Analog Mode */
-            break;
+        i_count = 12;
+        i_start = 0;
+    }
+    if(am == analogmode_long)
+    {
+        i_count = 4;
+        i_start = 12;
+    }
+    if(am == analogmode_all)
+    {
+        i_count = 16;
+        i_start = 0;
     }
 
     for(unsigned char i = i_start; i < (i_count + i_start); i++)
@@ -105,7 +99,7 @@ int linetrace_read_direction()
         }
         if(i < SHORT_MIDDLE_SENSOR)
         {
-            short_middle = analogl + analogr;
+            short_middle = analog_left + analog_right;
         }
     }
 
@@ -113,11 +107,11 @@ int linetrace_read_direction()
     {
         analog_left = 3 * (analog_read(12) + analog_read(14));
         analog_right = 3 * (analog_read(13) + analog_read(15));
-        linetrace_tracer_set_gain_long();
+        linetrace_set_gain_long();
     }
     else
     {
-        linetrace_tracer_set_gain_short();
+        linetrace_set_gain_short();
     }
 
     return analog_left - analog_right;
@@ -131,16 +125,16 @@ float linetrace_read_velocity()
     return _velocity;
 }
 
-void linetrace_tracer_set_gain_short()
+void linetrace_set_gain_short()
 {
     tracer_set_gain_default();
 }
 
-void linetrace_tracer_set_gain_long()
+void linetrace_set_gain_long()
 {
     float kp, ki, kd;
-    kp = linetrace_LONG_KP;
-    ki = linetrace_LONG_KI;
-    kd = linetrace_LONG_KD;
+    kp = LINETRACE_LONG_KP;
+    ki = LINETRACE_LONG_KI;
+    kd = LINETRACE_LONG_KD;
     tracer_set_gain_direct(kp, ki, kd);
 }

@@ -1,10 +1,10 @@
 #include "tim11.h"
 
-uint8_t rotary_value;
 uint8_t tim11_started;
 
 void tim11_init()
 {
+    printf("tim11_init()\r\n");
     tim11_started = 0;
     time_init();
     switch_init();

@@ -53,7 +53,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define __VERSION__ 2.4
+#define __MURAKUMO__ 2.4
 /* USER CODE END EM */
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
@@ -128,6 +128,7 @@ extern UART_HandleTypeDef huart6;
 #define DRV1_EN_GPIO_Port GPIOB
 #define DRV2_EN_Pin GPIO_PIN_7
 #define DRV2_EN_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 void main_init();
