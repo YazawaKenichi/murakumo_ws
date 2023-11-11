@@ -4,6 +4,7 @@
 /* lengths is updated only in tim10 file. */
 unsigned int tim10_samplingtime_ms;
 PlayMode tim10_playmode;
+uint16_t tim10_flash_print_index;
 
 /* only use in main.c */
 void tim10_init()
@@ -33,6 +34,10 @@ void tim10_start()
 			printf("tim10_start : shortcut\r\n");
 			shortcut_start();
 			break;
+		case pm_print:
+			printf("tim10_start : print\r\n");
+			tim10_flash_print_start();
+			break;
 		default :
 			printf("tim10_start : default\r\n");
 			break;
@@ -53,6 +58,9 @@ void tim10_stop()
 			break;
 		case pm_shortcut:
 			shortcut_stop();
+			break;
+		case pm_print:
+			tim10_flash_print_stop();
 			break;
 		default:
 			break;
@@ -77,6 +85,9 @@ void tim10_main()
 		case pm_shortcut:
 			shortcut_main();
 			break;
+		case pm_print:
+			tim10_flash_print_main();
+			break;
 		default :
 			break;
 	}
@@ -90,5 +101,39 @@ void tim10_d_print()
 }
 
 void tim10_d_print_main()
+{
+}
+
+void tim10_flash_print_start()
+{
+	tim10_flash_print_index = 0;
+	flash_init();
+	switch(rotary_read())
+	{
+		case 14:
+			smoothing(imudata.yaw, COURSE_STATE_SIZE, ADJACENT);
+			break;
+		default:
+			break;
+	}
+}
+
+void tim10_flash_print_main()
+{
+	float raw;
+	switch(rotary_read())
+	{
+		case 15:
+		case 14:
+			raw = imudata.yaw[tim10_flash_print_index];
+			break;
+		default:
+			break;
+	}
+	printf("%lf\r\n", raw);
+	tim10_flash_print_index++;
+}
+
+void tim10_flash_print_stop()
 {
 }

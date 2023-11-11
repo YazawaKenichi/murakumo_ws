@@ -9,6 +9,7 @@
  * 
  */
 
+#if 0
 #include "twistlist.h"
 
 Twist twistlist[COURSE_STATE_SIZE];
@@ -37,3 +38,4 @@ Twist get_twistlist(uint16_t index)
     return twistlist[index];
 }
 
+#endif

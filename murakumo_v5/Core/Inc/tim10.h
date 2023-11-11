@@ -1,6 +1,7 @@
 #ifndef __TIM10_H__
 #define __TIM10_H__
 
+#include "print.h"
 #include "rotary.h"
 #include "explore.h"
 #include "shortcut.h"
@@ -19,5 +20,9 @@ void tim10_main();
 
 void tim10_d_print();
 void tim10_d_print_main();
+
+void tim10_flash_print_start();
+void tim10_flash_print_main();
+void tim10_flash_print_stop();
 
 #endif

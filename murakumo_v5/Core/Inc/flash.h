@@ -25,7 +25,8 @@
 #define FLASH_SECTOR_10_START_ADDRESS 0x080C0000
 #define FLASH_SECTOR_11_START_ADDRESS 0x080E0000
 
-#define COURSE_STATE_SIZE 6000  // 6000 = 60 [ m ] / COURSE_SAMPLING_LENGTH [ m ]
+#define COURSE_STATE_SIZE 15000                 // 6000 = 60 [ m ] / COURSE_SAMPLING_LENGTH [ m ]
+#define COURSE_STATE_SIZE_ENCODER 1
 
 #ifndef CALIBRATIONSIZE
 #define CALIBRATIONSIZE 16
@@ -39,15 +40,8 @@ typedef struct
 
 typedef struct
 {
-    uint16_t course_state_count_max;
-    float radius[COURSE_STATE_SIZE];
-    float marker[COURSE_STATE_SIZE];
-} CourseData;
-
-typedef struct
-{
-    float left[COURSE_STATE_SIZE];
-    float right[COURSE_STATE_SIZE];
+    float left[COURSE_STATE_SIZE_ENCODER];
+    float right[COURSE_STATE_SIZE_ENCODER];
 } EncoderData;
 
 typedef struct
@@ -69,7 +63,6 @@ void flash_read_all();
 void flash_write_all();
 
 extern AnalogData analogdata;
-extern CourseData coursedata;
 extern EncoderData encoderdata;
 extern ImuData imudata;
 

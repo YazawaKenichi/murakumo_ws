@@ -24,15 +24,8 @@ void shortcut_init(uint8_t _sampling_time_ms)
 void shortcut_start()
 {
     shortcut_count = 0;
-    printf("----- Debug Line 01 -----\r\n");
     smoothing(imudata.yaw, COURSE_STATE_SIZE, ADJACENT);
-    printf("----- Debug Line 02 -----\r\n");
-    smoothing(encoderdata.left, COURSE_STATE_SIZE, ADJACENT);
-    printf("----- Debug Line 03 -----\r\n");
-    smoothing(encoderdata.right, COURSE_STATE_SIZE, ADJACENT);
-    printf("----- Debug Line 04 -----\r\n");
     locomotion_start();
-    printf("----- Debug Line 05 -----\r\n");
 }
 
 void shortcut_main()

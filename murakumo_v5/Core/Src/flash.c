@@ -18,7 +18,6 @@
 AnalogData analogdata;
 EncoderData encoderdata;
 ImuData imudata;
-CourseData coursedata;
 
 const uint32_t start_address = 0x080E0000;
 const uint32_t end_address = 0x080FFFFF;
@@ -70,10 +69,12 @@ void flash_write(unsigned sector_num)
 		flash_writting(FLASH_SECTOR_10_START_ADDRESS, (uint8_t *) &imudata, sizeof(ImuData));
 	}
 
+ /*
 	if(sector_num == FLASH_SECTOR_11)
 	{
 		flash_writting(FLASH_SECTOR_11_START_ADDRESS, (uint8_t *) &coursedata, sizeof(CourseData));
 	}
+*/
 
 	HAL_FLASH_Lock();
 }
@@ -99,11 +100,13 @@ void flash_read(unsigned sector_num)
 		flash_reading(FLASH_SECTOR_10_START_ADDRESS, (uint8_t *) &imudata, sizeof(ImuData));
 	}
 
+ /*
 	//! CourseData : Sector11
 	if(sector_num == FLASH_SECTOR_11)
 	{
 		flash_reading(FLASH_SECTOR_11_START_ADDRESS, (uint8_t *) &coursedata, sizeof(CourseData));
 	}
+*/
 }
 
 /* flash_read called only this method. */
