@@ -17,6 +17,6 @@
 
 void course_increment_state_index();
 
-extern uint16_t course_state_index;
+uint16_t course_state_index;
 
 #endif

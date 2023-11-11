@@ -33,4 +33,6 @@ Twist kcm_sample();
 void kcm_reset();
 Twist kcm_main_function(Pose p_e, Twist q_r);
 Pose pose_error(Pose p_r, Pose p_c);
+void kcm_set_twist_reference(Twist _q);
+Twist kcm_read_twist_reference();
 

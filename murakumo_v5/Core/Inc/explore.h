@@ -12,13 +12,16 @@
 #ifndef __EXPLORE_H__
 #define __EXPLORE_H__
 
+#include "encoder.h"
+#include "imu.h"
+#include "course.h"
 #include "flash.h"
 #include "linetrace.h"
 
 //! ロギング距離 [ m ]
 #define SAMPLING_THRESHOLD 0.01f
 
-void explore_init();
+void explore_init(uint8_t);
 void explore_start();
 void explore_main();
 void explore_stop();
@@ -28,6 +31,8 @@ void logging_clear();
 void explore_logging();
 void logging_save();
 
-void increment_course_state_index();
+void explore_opening();
+void explore_ending();
 
 #endif
+

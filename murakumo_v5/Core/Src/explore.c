@@ -12,7 +12,7 @@
 uint8_t sampling_time_ms;
 uint8_t logging_count;
 
-void explore_init(uint8_t _sampling_time_ms);
+void explore_init(uint8_t _sampling_time_ms)
 {
     sampling_time_ms = _sampling_time_ms;
     flash_init();
@@ -21,10 +21,11 @@ void explore_init(uint8_t _sampling_time_ms);
 
 void explore_start()
 {
-    course_state_index = 0;
-    encoder_data->left[course_state_index] = 0;
-    encoder_data->right[course_state_index] = 0;
-    imudata->yaw[course_state_index] = 0;
+    uint16_t index;
+    index = course_read_state_index();
+    encoderdata.left[index] = 0;
+    encoderdata.right[index] = 0;
+    imudata.yaw[index] = 0;
     linetrace_start();
 }
 
@@ -65,9 +66,11 @@ void explore_logging()
     _v = (_left + _right) / 2;
 
     //! ロギング用積分
-    encoderdata -> left[course_state_index] += _left;
-    encoderdata -> right[course_state_index] += _right;
-    imudata -> yaw[course_state_index] += _w;
+    uint16_t index;
+    index = course_read_state_index();
+    encoderdata.left[index] += _left;
+    encoderdata.right[index] += _right;
+    imudata.yaw[index] += _w;
 
     logging_count++;
 
@@ -75,9 +78,10 @@ void explore_logging()
     if(logging_count * (0.001f * sampling_time_ms) >= COURSE_SAMPLING_TIME)
     {
         course_increment_state_index();
-        encoder_data->left[course_state_index] = 0;
-        encoder_data->right[course_state_index] = 0;
-        imudata->yaw[course_state_index] = 0;
+        index = course_read_state_index();
+        encoderdata.left[index] = 0;
+        encoderdata.right[index] = 0;
+        imudata.yaw[index] = 0;
         logging_count = 0;
     }
 }

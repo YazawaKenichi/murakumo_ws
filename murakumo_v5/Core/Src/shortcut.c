@@ -70,8 +70,8 @@ void shortcut_set_kcm_twist_reference(float v, float w)
 
 void shortcut_read_twist_reference(float *v, float *w)
 {
-    float _left = encoder_data->left[course_state_index];
-    float _right = encoder_data->right[course_state_index];
+    float _left = encoderdata->left[course_state_index];
+    float _right = encoderdata->right[course_state_index];
     float _v = (_left + _right) / 2;
     float _w = imudata->yaw[course_state_index];
     *v = _v;
