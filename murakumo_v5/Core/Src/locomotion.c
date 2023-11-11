@@ -11,12 +11,15 @@
 
 #include "locomotion.h"
 
-void locomotion_init()
+uint8_t locomotion_sampling_time_ms;
+
+void locomotion_init(uint8_t _locomotion_sampling_time_ms)
 {
+	locomotion_sampling_time_ms = _locomotion_sampling_time_ms;
     localization_init();
     kcm_init();
-    velotrace_init(1);
-    angletrace_init(1);
+    velotrace_init(locomotion_sampling_time_ms);
+    angletrace_init(locomotion_sampling_time_ms);
 }
 
 void locomotion_start()

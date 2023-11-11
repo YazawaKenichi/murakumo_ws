@@ -6,7 +6,7 @@
 #include "flash.h"
 #include "function.h"
 
-#define D_ANALOG 0
+#define D_ANALOG 1
 
 #define ANALOG_CALIBRATION_IN_WHILE 0
 #define ATTACH_LONGSENSOR 0	// use normal sensor and long sensor
@@ -32,12 +32,10 @@ typedef enum ANALOGMODE
 void analog_init();
 void analog_start();
 void analog_stop();
+void analog_fin();
 
 void analog_dma_start();
 void analog_dma_stop();
-
-void analog_calibration_start();
-void analog_calibration_stop();
 
 //! update
 void analog_update();
@@ -50,12 +48,14 @@ uint8_t analog_read_calibrationsize();
 
 //! set
 void analog_set_analogmode(AnalogMode);
-void analog_set_on_flash(uint16_t *, uint16_t *);
-void analog_set_from_flash(uint16_t *, uint16_t *);
 void analog_set_calibrationsize(uint8_t calibrationsize_);
+void analog_reset_minmax();
+void analog_read_minmax(uint16_t *, uint16_t *);
+void analog_set_minmax(uint16_t *, uint16_t *);
 
 //! function
 void analog_get_and_sort();
+void analog_update_minmax();
 
 //! print
 void analog_print();

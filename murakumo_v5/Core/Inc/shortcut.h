@@ -28,5 +28,6 @@ void shortcut_stop();
 void shortcut_fin();
 void shortcut_set_kcm_twist_reference(float v, float w);
 void shortcut_read_twist_reference(float *v, float *w);
+void shortcut_d_print();
 
 #endif

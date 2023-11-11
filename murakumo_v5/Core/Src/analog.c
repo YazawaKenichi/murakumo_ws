@@ -21,7 +21,11 @@ void analog_init()
     {
         Error_Handler();
     }
+	analog_set_minmax(analogdata.min, analogdata.max);
+	analog_print_max();
+	analog_print_min();
 }
+
 void analog_start()
 {
     analog_dma_start();
@@ -30,6 +34,10 @@ void analog_start()
 void analog_stop()
 {
     analog_dma_stop();
+}
+
+void analog_fin()
+{
 }
 
 void analog_dma_start()
@@ -44,33 +52,6 @@ void analog_dma_start()
 void analog_dma_stop()
 {
     HAL_ADC_Stop_DMA(&hadc1);
-}
-
-void analog_calibration_start()
-{
-	analog_set_analogmode(analogmode_all);
-    for(unsigned char i = 0; CALIBRATIONSIZE > i; i++)
-    {
-        analogmax[i] = 0;
-        analogmin[i] = 4096;
-    }
-	analog_print_max();
-	analog_print_min();
-	analog_dma_start();
-}
-
-void analog_calibration_stop()
-{
-	/* analog_calibration_stop */
-	analog_set_analogmode(analogmode_all);
-	/* HAL_ADC_Stop_DMA */
-	analog_stop();
-	analog_print_max();
-	analog_print_min();
-	/* analogdata.min/max = analogmin/max */
-	analog_set_on_flash(analogdata.min, analogdata.max);
-	//! FLASH_SECTOR_8 is AnalogData
-	flash_write(FLASH_SECTOR_8);
 }
 
 void analog_update()
@@ -113,7 +94,7 @@ void analog_set_analogmode(AnalogMode analogmode_)
 	analogmode = analogmode_;
 }
 
-void analog_set_on_flash(uint16_t *analogmin_, uint16_t *analogmax_)
+void analog_read_minmax(uint16_t *analogmin_, uint16_t *analogmax_)
 {
 	for(unsigned int i = 0; i < CALIBRATIONSIZE; i++)
 	{
@@ -122,13 +103,22 @@ void analog_set_on_flash(uint16_t *analogmin_, uint16_t *analogmax_)
 	}
 }
 
-void analog_set_from_flash(uint16_t *analogmin_, uint16_t *analogmax_)
+void analog_set_minmax(uint16_t *analogmin_, uint16_t *analogmax_)
 {
 	for(unsigned int i = 0; i < CALIBRATIONSIZE; i++)
 	{
 		analogmin[i] = *(analogmin_ + i);
 		analogmax[i] = *(analogmax_ + i);
 	}
+}
+
+void analog_reset_minmax()
+{
+    for(unsigned char i = 0; CALIBRATIONSIZE > i; i++)
+    {
+        analogmax[i] = 0;
+        analogmin[i] = 4096;
+    }
 }
 
 void analog_set_calibrationsize(uint8_t calibrationsize_)
@@ -158,9 +148,6 @@ void analog_get_and_sort()
 			/* get middle */
 			analog[index] = analogbuffers[(int) SENSGETCOUNT / 2][index];
 			
-			/* get max and min */
-			analogmax[index] = (analogmax[index] < analog[index]) ? analog[index] : analogmax[index];
-			analogmin[index] = (analogmin[index] > analog[index]) ? analog[index] : analogmin[index];
 		}
 	}
 
@@ -170,6 +157,16 @@ void analog_get_and_sort()
 		analogbuffers[sensgettime][index] = analograw[index];
 	}
 	sensgettime++;
+}
+
+void analog_update_minmax()
+{
+	/* get max and min */
+	for(unsigned int index = 0; index < CALIBRATIONSIZE; index++)
+	{
+		analogmax[index] = (analogmax[index] < analog[index]) ? analog[index] : analogmax[index];
+		analogmin[index] = (analogmin[index] > analog[index]) ? analog[index] : analogmin[index];
+	}
 }
 
 void analog_array_print(uint16_t *analog_)
@@ -203,7 +200,7 @@ void analog_rate_array_print()
 void analog_d_print()
 {
 #if D_ANALOG
-	analog_print_analogmode();
+	//analog_print_analogmode();
 	analog_rate_array_print();
 	// analog_array_print(analog);
 #endif

@@ -35,5 +35,7 @@ void logging_save();
 void explore_opening();
 void explore_ending();
 
+void explore_d_print();
+
 #endif
 

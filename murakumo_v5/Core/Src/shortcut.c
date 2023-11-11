@@ -17,7 +17,8 @@ uint8_t shortcut_count;
 void shortcut_init(uint8_t _sampling_time_ms)
 {
     shortcut_sampling_time_ms = _sampling_time_ms;
-    locomotion_init();
+    flash_init();
+    locomotion_init(shortcut_sampling_time_ms);
 }
 
 void shortcut_start()
@@ -36,7 +37,6 @@ void shortcut_start()
 
 void shortcut_main()
 {
-    /*
     float v, w;
     //! 目標速度と目標角速度を取得
     shortcut_read_twist_reference(&v, &w);
@@ -53,7 +53,6 @@ void shortcut_main()
         course_increment_state_index();
         shortcut_count = 0;
     }
-    */
 }
 
 void shortcut_stop()
@@ -90,4 +89,8 @@ void shortcut_read_twist_reference(float *v, float *w)
     float _w = imudata.yaw[index];
     *v = _v;
     *w = _w;
+}
+
+void shortcut_d_print()
+{
 }

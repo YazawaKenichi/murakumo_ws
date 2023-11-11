@@ -20,7 +20,7 @@
 #include "geometry.h"
 #include "math.h"
 
-void locomotion_init();
+void locomotion_init(uint8_t);
 void locomotion_start();
 void locomotion_stop();
 void locomotion_fin();

@@ -27,7 +27,7 @@
 #define LINETRACE_LONG_KI 0
 #define LINETRACE_LONG_KD 0.0045f
 
-void linetrace_init();
+void linetrace_init(uint8_t);
 void linetrace_start();
 void linetrace_main();
 void linetrace_stop();
@@ -37,5 +37,7 @@ int linetrace_read_direction();
 float linetrace_read_velocity();
 void linetrace_set_gain_short();
 void linetrace_set_gain_long();
+
+void linetrace_d_print();
 
 #endif

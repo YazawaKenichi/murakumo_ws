@@ -11,16 +11,23 @@
 
 #include "linetrace.h"
 
-void linetrace_init()
+uint8_t linetrace_sampling_time_ms;
+
+void linetrace_init(uint8_t _linetrace_sampling_time_ms)
 {
-    tracer_init(1);
-    velotrace_init(1);
+    linetrace_sampling_time_ms = _linetrace_sampling_time_ms;
+    analog_init();
+    encoder_init();
+    tracer_init(linetrace_sampling_time_ms);
+    velotrace_init(linetrace_sampling_time_ms);
     motor_init();
 }
 
 void linetrace_start()
 {
     analog_set_analogmode(analogmode_short);
+    analog_start();
+    encoder_start();
     tracer_start();
     velotrace_start();
     motor_start();
@@ -50,9 +57,11 @@ void linetrace_main()
 
 void linetrace_stop()
 {
+    motor_stop();
     tracer_stop();
     velotrace_stop();
-    motor_stop();
+    analog_stop();
+    encoder_stop();
 }
 
 void linetrace_fin()
@@ -63,7 +72,6 @@ int linetrace_read_direction()
 {
     uint16_t analog_left, analog_right;
     uint16_t short_middle;
-    unsigned char i_count, i_start;
 
     analog_left = 0;
     analog_right = 0;
@@ -73,34 +81,33 @@ int linetrace_read_direction()
 
     if(am == analogmode_short)
     {
-        i_count = 12;
-        i_start = 0;
+        analog_left = 
+        analog_read(0)
+        + analog_read(2)
+        + analog_read(4)
+        + analog_read(6)
+        + analog_read(8)
+        + analog_read(10);
+        analog_right = 
+        analog_read(1)
+        + analog_read(3)
+        + analog_read(5)
+        + analog_read(7)
+        + analog_read(9)
+        + analog_read(11);
+        short_middle = 
+        analog_read(0)
+         + analog_read(1)
+         + analog_read(2)
+         + analog_read(3)
+         + analog_read(4)
+         + analog_read(5);
     }
     if(am == analogmode_long)
     {
-        i_count = 4;
-        i_start = 12;
     }
     if(am == analogmode_all)
     {
-        i_count = 16;
-        i_start = 0;
-    }
-
-    for(unsigned char i = i_start; i < (i_count + i_start); i++)
-    {
-        if(i % 2 == 0)
-        {
-            analog_left += analog_read(i);
-        }
-        else
-        {
-            analog_right += analog_read(i);
-        }
-        if(i < SHORT_MIDDLE_SENSOR)
-        {
-            short_middle = analog_left + analog_right;
-        }
     }
 
     if(short_middle <= CLOSS_IGNORE_THRESHOLD * SHORT_MIDDLE_SENSOR)
@@ -137,4 +144,10 @@ void linetrace_set_gain_long()
     ki = LINETRACE_LONG_KI;
     kd = LINETRACE_LONG_KD;
     tracer_set_gain_direct(kp, ki, kd);
+}
+
+void linetrace_d_print()
+{
+    analog_rate_array_print();
+    velotrace_d_print();
 }

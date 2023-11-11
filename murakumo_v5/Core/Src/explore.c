@@ -16,7 +16,7 @@ void explore_init(uint8_t _sampling_time_ms)
 {
     explore_sampling_time_ms = _sampling_time_ms;
     flash_init();
-    linetrace_init();
+    linetrace_init(explore_sampling_time_ms);
 }
 
 void explore_start()
@@ -40,9 +40,9 @@ void explore_main()
 
 void explore_stop()
 {
+    linetrace_stop();
     logging_clear();
     logging_save();
-    linetrace_stop();
 }
 
 void explore_fin()
@@ -110,4 +110,9 @@ void explore_ending()
     {
         switch_reset_enter();
     }
+}
+
+void explore_d_print()
+{
+    linetrace_d_print();
 }

@@ -4,8 +4,9 @@
 #include "rotary.h"
 #include "explore.h"
 #include "shortcut.h"
+#include "calibration.h"
 
-#define TIM10_TIME_MS 2 // [ ms ]
+#define TIM10_TIME_MS 1 // [ ms ]
 
 #define D_TIM10 1
 
