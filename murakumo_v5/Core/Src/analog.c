@@ -147,7 +147,9 @@ void analog_get_and_sort()
 
 			/* get middle */
 			analog[index] = analogbuffers[(int) SENSGETCOUNT / 2][index];
-			
+
+			analogmax[index] = (analogmax[index] < analog[index]) ? analog[index] : analogmax[index];
+			analogmin[index] = (analogmin[index] > analog[index]) ? analog[index] : analogmin[index];
 		}
 	}
 
