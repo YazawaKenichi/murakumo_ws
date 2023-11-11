@@ -163,7 +163,7 @@ c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externalt
 c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
                               ./Core/Src/analog.o (__aeabi_d2uiz)
 c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
-                              ./Core/Src/IMU.o (__aeabi_d2f)
+                              ./Core/Inc/data_smoothing/smoothing.o (__aeabi_d2f)
 c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
                               ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o (__aeabi_uldivmod)
 c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_fixdfdi.o)
@@ -189,6 +189,189 @@ Discarded input sections
  .ARM.exidx     0x0000000000000000       0x10 c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
  .ARM.attributes
                 0x0000000000000000       0x1c c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .group         0x0000000000000000        0xc ./Core/Inc/data_smoothing/smoothing.o
+ .text          0x0000000000000000        0x0 ./Core/Inc/data_smoothing/smoothing.o
+ .data          0x0000000000000000        0x0 ./Core/Inc/data_smoothing/smoothing.o
+ .bss           0x0000000000000000        0x0 ./Core/Inc/data_smoothing/smoothing.o
+ .text.smoothing
+                0x0000000000000000      0x18e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_info    0x0000000000000000      0x17e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_abbrev  0x0000000000000000       0xa4 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_aranges
+                0x0000000000000000       0x20 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_ranges  0x0000000000000000       0x10 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x442 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0xa78 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x8e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x51 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x103 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x6a ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x1df ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x52 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x1e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x3c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x34 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x97 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x341 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0xfd ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x43 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x34 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x58 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x71 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x12a ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x52 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x52 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0xd5 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x3d ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x145 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x2ad ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x2e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x2f ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0xd9 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000     0x102d ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x11f ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000    0x1426d ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x6d ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000     0x3666 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x56 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x8a7 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x9fe ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x116 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x130 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0xa5 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x174 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x287 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x5f ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x236 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0xb5b ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x38b ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x176 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0xf9 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x12c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x21e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x2e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x1b5 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0xd6 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x11a ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x7e ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x89 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x225 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x8d1 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x47 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x295 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x12d ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x82 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x35 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x20 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000      0x19b ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x4c ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x28 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_macro   0x0000000000000000       0x34 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_line    0x0000000000000000      0xaad ./Core/Inc/data_smoothing/smoothing.o
+ .debug_str     0x0000000000000000    0xcc62e ./Core/Inc/data_smoothing/smoothing.o
+ .comment       0x0000000000000000       0x51 ./Core/Inc/data_smoothing/smoothing.o
+ .debug_frame   0x0000000000000000       0x40 ./Core/Inc/data_smoothing/smoothing.o
+ .ARM.attributes
+                0x0000000000000000       0x34 ./Core/Inc/data_smoothing/smoothing.o
  .group         0x0000000000000000        0xc ./Core/Src/IMU.o
  .group         0x0000000000000000        0xc ./Core/Src/IMU.o
  .group         0x0000000000000000        0xc ./Core/Src/IMU.o
@@ -279,6 +462,84 @@ Discarded input sections
                 0x0000000000000000       0xb4 ./Core/Src/IMU.o
  .bss.inertial_angular_z_buffer
                 0x0000000000000000        0x4 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0xa78 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x2ad ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x2e ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x2f ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x8e ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x51 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x103 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x6a ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x1df ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0xd9 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000     0x102d ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x11f ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000    0x1426d ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x6d ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000     0x3666 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x8a7 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x9fe ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x116 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x130 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0xa5 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x174 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x287 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x5f ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x236 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0xb5b ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x38b ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x176 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0xf9 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x12c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x21e ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x2e ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x1b5 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0xd6 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x11a ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x7e ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x89 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x225 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x8d1 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x47 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x295 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x12d ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x82 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x52 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x1e ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x3c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x34 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x43 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x34 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x58 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x71 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x12a ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x341 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x19b ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x35 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x52 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x52 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0xd5 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x3d ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000      0x145 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x20 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x1c ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x28 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000000       0x34 ./Core/Src/IMU.o
  .group         0x0000000000000000        0xc ./Core/Src/LED.o
  .group         0x0000000000000000        0xc ./Core/Src/LED.o
  .group         0x0000000000000000        0xc ./Core/Src/LED.o
@@ -469,7 +730,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x1e ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x3c ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x34 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000000       0x16 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000000       0x97 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000      0x341 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000000       0xfd ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x10 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x16 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x43 ./Core/Src/Rotary.o
@@ -504,6 +768,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000    0x1426d ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x6d ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000     0x3666 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000000       0x56 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000      0x8a7 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000      0x9fe ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000      0x116 ./Core/Src/Rotary.o
@@ -537,6 +802,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x10 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x1c ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000      0x19b ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000000       0x4c ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x28 ./Core/Src/Rotary.o
  .debug_macro   0x0000000000000000       0x34 ./Core/Src/Rotary.o
  .group         0x0000000000000000        0xc ./Core/Src/Switch.o
@@ -8862,6 +9128,7 @@ Linker script and memory map
 LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
 LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+LOAD ./Core/Inc/data_smoothing/smoothing.o
 LOAD ./Core/Src/IMU.o
 LOAD ./Core/Src/LED.o
 LOAD ./Core/Src/Rotary.o
@@ -11482,179 +11749,96 @@ LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_ranges  0x0000000000001908      0x158 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_ranges  0x0000000000001a60      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_macro    0x0000000000000000    0x29bf0
+.debug_macro    0x0000000000000000     0xaa22
  .debug_macro   0x0000000000000000      0x43f ./Core/Src/IMU.o
- .debug_macro   0x000000000000043f      0xa78 ./Core/Src/IMU.o
- .debug_macro   0x0000000000000eb7      0x2ad ./Core/Src/IMU.o
- .debug_macro   0x0000000000001164       0x2e ./Core/Src/IMU.o
- .debug_macro   0x0000000000001192       0x2f ./Core/Src/IMU.o
- .debug_macro   0x00000000000011c1       0x22 ./Core/Src/IMU.o
- .debug_macro   0x00000000000011e3       0x8e ./Core/Src/IMU.o
- .debug_macro   0x0000000000001271       0x51 ./Core/Src/IMU.o
- .debug_macro   0x00000000000012c2      0x103 ./Core/Src/IMU.o
- .debug_macro   0x00000000000013c5       0x6a ./Core/Src/IMU.o
- .debug_macro   0x000000000000142f      0x1df ./Core/Src/IMU.o
- .debug_macro   0x000000000000160e       0x1c ./Core/Src/IMU.o
- .debug_macro   0x000000000000162a       0x22 ./Core/Src/IMU.o
- .debug_macro   0x000000000000164c       0xd9 ./Core/Src/IMU.o
- .debug_macro   0x0000000000001725     0x102d ./Core/Src/IMU.o
- .debug_macro   0x0000000000002752      0x11f ./Core/Src/IMU.o
- .debug_macro   0x0000000000002871    0x1426d ./Core/Src/IMU.o
- .debug_macro   0x0000000000016ade       0x6d ./Core/Src/IMU.o
- .debug_macro   0x0000000000016b4b     0x3666 ./Core/Src/IMU.o
- .debug_macro   0x000000000001a1b1      0x174 ./Core/Src/IMU.o
- .debug_macro   0x000000000001a325       0x5c ./Core/Src/IMU.o
- .debug_macro   0x000000000001a381      0x8a7 ./Core/Src/IMU.o
- .debug_macro   0x000000000001ac28      0x9fe ./Core/Src/IMU.o
- .debug_macro   0x000000000001b626      0x116 ./Core/Src/IMU.o
- .debug_macro   0x000000000001b73c      0x130 ./Core/Src/IMU.o
- .debug_macro   0x000000000001b86c       0xa5 ./Core/Src/IMU.o
- .debug_macro   0x000000000001b911      0x174 ./Core/Src/IMU.o
- .debug_macro   0x000000000001ba85      0x287 ./Core/Src/IMU.o
- .debug_macro   0x000000000001bd0c       0x5f ./Core/Src/IMU.o
- .debug_macro   0x000000000001bd6b      0x236 ./Core/Src/IMU.o
- .debug_macro   0x000000000001bfa1      0xb5b ./Core/Src/IMU.o
- .debug_macro   0x000000000001cafc      0x38b ./Core/Src/IMU.o
- .debug_macro   0x000000000001ce87      0x176 ./Core/Src/IMU.o
- .debug_macro   0x000000000001cffd       0xf9 ./Core/Src/IMU.o
- .debug_macro   0x000000000001d0f6      0x12c ./Core/Src/IMU.o
- .debug_macro   0x000000000001d222      0x21e ./Core/Src/IMU.o
- .debug_macro   0x000000000001d440       0x2e ./Core/Src/IMU.o
- .debug_macro   0x000000000001d46e      0x1b5 ./Core/Src/IMU.o
- .debug_macro   0x000000000001d623       0xd6 ./Core/Src/IMU.o
- .debug_macro   0x000000000001d6f9      0x11a ./Core/Src/IMU.o
- .debug_macro   0x000000000001d813       0x7e ./Core/Src/IMU.o
- .debug_macro   0x000000000001d891       0x89 ./Core/Src/IMU.o
- .debug_macro   0x000000000001d91a      0x225 ./Core/Src/IMU.o
- .debug_macro   0x000000000001db3f      0x8d1 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e410       0x47 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e457      0x295 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e6ec      0x12d ./Core/Src/IMU.o
- .debug_macro   0x000000000001e819       0x82 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e89b       0x52 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e8ed       0x1e ./Core/Src/IMU.o
- .debug_macro   0x000000000001e90b       0x3c ./Core/Src/IMU.o
- .debug_macro   0x000000000001e947       0x34 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e97b       0x16 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e991       0x43 ./Core/Src/IMU.o
- .debug_macro   0x000000000001e9d4       0x34 ./Core/Src/IMU.o
- .debug_macro   0x000000000001ea08       0x10 ./Core/Src/IMU.o
- .debug_macro   0x000000000001ea18       0x58 ./Core/Src/IMU.o
- .debug_macro   0x000000000001ea70       0x71 ./Core/Src/IMU.o
- .debug_macro   0x000000000001eae1       0x1c ./Core/Src/IMU.o
- .debug_macro   0x000000000001eafd      0x12a ./Core/Src/IMU.o
- .debug_macro   0x000000000001ec27      0x341 ./Core/Src/IMU.o
- .debug_macro   0x000000000001ef68      0x19b ./Core/Src/IMU.o
- .debug_macro   0x000000000001f103       0x52 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f155       0x1c ./Core/Src/IMU.o
- .debug_macro   0x000000000001f171       0x35 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f1a6       0x10 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f1b6       0x10 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f1c6       0x1c ./Core/Src/IMU.o
- .debug_macro   0x000000000001f1e2       0x52 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f234       0x22 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f256       0x10 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f266       0x52 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f2b8       0xd5 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f38d       0x1c ./Core/Src/IMU.o
- .debug_macro   0x000000000001f3a9       0x3d ./Core/Src/IMU.o
- .debug_macro   0x000000000001f3e6       0x16 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f3fc      0x145 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f541       0x16 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f557       0x20 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f577       0x10 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f587       0x1c ./Core/Src/IMU.o
- .debug_macro   0x000000000001f5a3       0x28 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f5cb       0x34 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f5ff       0xa6 ./Core/Src/IMU.o
- .debug_macro   0x000000000001f6a5      0x224 ./Core/Src/LED.o
- .debug_macro   0x000000000001f8c9      0x430 ./Core/Src/Rotary.o
- .debug_macro   0x000000000001fcf9       0x4c ./Core/Src/Rotary.o
- .debug_macro   0x000000000001fd45       0x94 ./Core/Src/Rotary.o
- .debug_macro   0x000000000001fdd9       0x16 ./Core/Src/Rotary.o
- .debug_macro   0x000000000001fdef       0x57 ./Core/Src/Rotary.o
- .debug_macro   0x000000000001fe46       0x97 ./Core/Src/Rotary.o
- .debug_macro   0x000000000001fedd       0xfd ./Core/Src/Rotary.o
- .debug_macro   0x000000000001ffda       0x56 ./Core/Src/Rotary.o
- .debug_macro   0x0000000000020030       0x4c ./Core/Src/Rotary.o
- .debug_macro   0x000000000002007c      0x436 ./Core/Src/Switch.o
- .debug_macro   0x00000000000204b2      0x42c ./Core/Src/analog.o
- .debug_macro   0x00000000000208de      0x4a9 ./Core/Src/course.o
- .debug_macro   0x0000000000020d87       0x88 ./Core/Src/course.o
- .debug_macro   0x0000000000020e0f       0x10 ./Core/Src/course.o
- .debug_macro   0x0000000000020e1f       0x46 ./Core/Src/course.o
- .debug_macro   0x0000000000020e65       0x10 ./Core/Src/course.o
- .debug_macro   0x0000000000020e75       0x52 ./Core/Src/course.o
- .debug_macro   0x0000000000020ec7       0x28 ./Core/Src/course.o
- .debug_macro   0x0000000000020eef       0x28 ./Core/Src/course.o
- .debug_macro   0x0000000000020f17      0x229 ./Core/Src/defines.o
- .debug_macro   0x0000000000021140      0x42f ./Core/Src/encoder.o
- .debug_macro   0x000000000002156f       0x40 ./Core/Src/encoder.o
- .debug_macro   0x00000000000215af      0x4a9 ./Core/Src/fixed_section.o
- .debug_macro   0x0000000000021a58      0x430 ./Core/Src/flash.o
- .debug_macro   0x0000000000021e88       0x2e ./Core/Src/flash.o
- .debug_macro   0x0000000000021eb6       0x16 ./Core/Src/flash.o
- .debug_macro   0x0000000000021ecc       0xf1 ./Core/Src/function.o
- .debug_macro   0x0000000000021fbd       0x1b ./Core/Src/geometry.o
- .debug_macro   0x0000000000021fd8      0x43f ./Core/Src/length.o
- .debug_macro   0x0000000000022417      0x52a ./Core/Src/main.o
- .debug_macro   0x0000000000022941       0x16 ./Core/Src/main.o
- .debug_macro   0x0000000000022957       0x40 ./Core/Src/main.o
- .debug_macro   0x0000000000022997       0x3a ./Core/Src/main.o
- .debug_macro   0x00000000000229d1       0x40 ./Core/Src/main.o
- .debug_macro   0x0000000000022a11       0x16 ./Core/Src/main.o
- .debug_macro   0x0000000000022a27       0x3a ./Core/Src/main.o
- .debug_macro   0x0000000000022a61       0x1c ./Core/Src/main.o
- .debug_macro   0x0000000000022a7d      0x113 ./Core/Src/main.o
- .debug_macro   0x0000000000022b90      0x441 ./Core/Src/motor.o
- .debug_macro   0x0000000000022fd1      0x42c ./Core/Src/print.o
- .debug_macro   0x00000000000233fd      0x4b2 ./Core/Src/revision.o
- .debug_macro   0x00000000000238af       0x16 ./Core/Src/revision.o
- .debug_macro   0x00000000000238c5      0x44f ./Core/Src/section_length.o
- .debug_macro   0x0000000000023d14      0x43d ./Core/Src/sidesensor.o
- .debug_macro   0x0000000000024151      0x4d7 ./Core/Src/slow.o
- .debug_macro   0x0000000000024628       0x10 ./Core/Src/slow.o
- .debug_macro   0x0000000000024638       0x3a ./Core/Src/slow.o
- .debug_macro   0x0000000000024672      0x52a ./Core/Src/stm32f4xx_hal_msp.o
- .debug_macro   0x0000000000024b9c      0x534 ./Core/Src/stm32f4xx_it.o
- .debug_macro   0x00000000000250d0      0x221 ./Core/Src/syscalls.o
- .debug_macro   0x00000000000252f1      0x12c ./Core/Src/syscalls.o
- .debug_macro   0x000000000002541d       0x16 ./Core/Src/syscalls.o
- .debug_macro   0x0000000000025433       0x16 ./Core/Src/syscalls.o
- .debug_macro   0x0000000000025449       0x29 ./Core/Src/syscalls.o
- .debug_macro   0x0000000000025472       0x10 ./Core/Src/syscalls.o
- .debug_macro   0x0000000000025482      0x241 ./Core/Src/syscalls.o
- .debug_macro   0x00000000000256c3       0x10 ./Core/Src/syscalls.o
- .debug_macro   0x00000000000256d3      0x189 ./Core/Src/syscalls.o
- .debug_macro   0x000000000002585c       0x16 ./Core/Src/syscalls.o
- .debug_macro   0x0000000000025872       0xce ./Core/Src/syscalls.o
- .debug_macro   0x0000000000025940       0xff ./Core/Src/sysmem.o
- .debug_macro   0x0000000000025a3f      0x23b ./Core/Src/sysmem.o
- .debug_macro   0x0000000000025c7a      0x220 ./Core/Src/system_stm32f4xx.o
- .debug_macro   0x0000000000025e9a      0x4e5 ./Core/Src/tim10.o
- .debug_macro   0x000000000002637f       0x10 ./Core/Src/tim10.o
- .debug_macro   0x000000000002638f      0x44a ./Core/Src/tim11.o
- .debug_macro   0x00000000000267d9      0x508 ./Core/Src/tim6.o
- .debug_macro   0x0000000000026ce1      0x4e1 ./Core/Src/tim7.o
- .debug_macro   0x00000000000271c2       0x1b ./Core/Src/time.o
- .debug_macro   0x00000000000271dd      0x43b ./Core/Src/tracer.o
- .debug_macro   0x0000000000027618       0x3a ./Core/Src/tracer.o
- .debug_macro   0x0000000000027652      0x43b ./Core/Src/velotrace.o
- .debug_macro   0x0000000000027a8d       0x4c ./Core/Src/velotrace.o
- .debug_macro   0x0000000000027ad9      0x4d0 ./Core/Src/virtual_marker.o
- .debug_macro   0x0000000000027fa9      0x27a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_macro   0x0000000000028223      0x21b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
- .debug_macro   0x000000000002843e      0x21a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_macro   0x0000000000028658      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_macro   0x0000000000028878      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o
- .debug_macro   0x0000000000028a98      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o
- .debug_macro   0x0000000000028cb8      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_macro   0x0000000000028ed8      0x261 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_macro   0x0000000000029139      0x23e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_macro   0x0000000000029377      0x229 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o
- .debug_macro   0x00000000000295a0      0x21b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_macro   0x00000000000297bb      0x21a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_macro   0x00000000000299d5      0x21b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_macro   0x000000000000043f      0x174 ./Core/Src/IMU.o
+ .debug_macro   0x00000000000005b3       0x5c ./Core/Src/IMU.o
+ .debug_macro   0x000000000000060f       0x52 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000661       0x1c ./Core/Src/IMU.o
+ .debug_macro   0x000000000000067d       0xa6 ./Core/Src/IMU.o
+ .debug_macro   0x0000000000000723      0x224 ./Core/Src/LED.o
+ .debug_macro   0x0000000000000947      0x430 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000d77       0x4c ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000dc3       0x94 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000e57       0x57 ./Core/Src/Rotary.o
+ .debug_macro   0x0000000000000eae      0x436 ./Core/Src/Switch.o
+ .debug_macro   0x00000000000012e4      0x42c ./Core/Src/analog.o
+ .debug_macro   0x0000000000001710      0x4a9 ./Core/Src/course.o
+ .debug_macro   0x0000000000001bb9       0x88 ./Core/Src/course.o
+ .debug_macro   0x0000000000001c41       0x10 ./Core/Src/course.o
+ .debug_macro   0x0000000000001c51       0x46 ./Core/Src/course.o
+ .debug_macro   0x0000000000001c97       0x10 ./Core/Src/course.o
+ .debug_macro   0x0000000000001ca7       0x52 ./Core/Src/course.o
+ .debug_macro   0x0000000000001cf9       0x28 ./Core/Src/course.o
+ .debug_macro   0x0000000000001d21       0x28 ./Core/Src/course.o
+ .debug_macro   0x0000000000001d49      0x229 ./Core/Src/defines.o
+ .debug_macro   0x0000000000001f72      0x42f ./Core/Src/encoder.o
+ .debug_macro   0x00000000000023a1       0x40 ./Core/Src/encoder.o
+ .debug_macro   0x00000000000023e1      0x4a9 ./Core/Src/fixed_section.o
+ .debug_macro   0x000000000000288a      0x430 ./Core/Src/flash.o
+ .debug_macro   0x0000000000002cba       0x2e ./Core/Src/flash.o
+ .debug_macro   0x0000000000002ce8       0x16 ./Core/Src/flash.o
+ .debug_macro   0x0000000000002cfe       0xf1 ./Core/Src/function.o
+ .debug_macro   0x0000000000002def       0x1b ./Core/Src/geometry.o
+ .debug_macro   0x0000000000002e0a      0x43f ./Core/Src/length.o
+ .debug_macro   0x0000000000003249      0x52a ./Core/Src/main.o
+ .debug_macro   0x0000000000003773       0x16 ./Core/Src/main.o
+ .debug_macro   0x0000000000003789       0x40 ./Core/Src/main.o
+ .debug_macro   0x00000000000037c9       0x3a ./Core/Src/main.o
+ .debug_macro   0x0000000000003803       0x40 ./Core/Src/main.o
+ .debug_macro   0x0000000000003843       0x16 ./Core/Src/main.o
+ .debug_macro   0x0000000000003859       0x3a ./Core/Src/main.o
+ .debug_macro   0x0000000000003893       0x1c ./Core/Src/main.o
+ .debug_macro   0x00000000000038af      0x113 ./Core/Src/main.o
+ .debug_macro   0x00000000000039c2      0x441 ./Core/Src/motor.o
+ .debug_macro   0x0000000000003e03      0x42c ./Core/Src/print.o
+ .debug_macro   0x000000000000422f      0x4b2 ./Core/Src/revision.o
+ .debug_macro   0x00000000000046e1       0x16 ./Core/Src/revision.o
+ .debug_macro   0x00000000000046f7      0x44f ./Core/Src/section_length.o
+ .debug_macro   0x0000000000004b46      0x43d ./Core/Src/sidesensor.o
+ .debug_macro   0x0000000000004f83      0x4d7 ./Core/Src/slow.o
+ .debug_macro   0x000000000000545a       0x10 ./Core/Src/slow.o
+ .debug_macro   0x000000000000546a       0x3a ./Core/Src/slow.o
+ .debug_macro   0x00000000000054a4      0x52a ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_macro   0x00000000000059ce      0x534 ./Core/Src/stm32f4xx_it.o
+ .debug_macro   0x0000000000005f02      0x221 ./Core/Src/syscalls.o
+ .debug_macro   0x0000000000006123      0x12c ./Core/Src/syscalls.o
+ .debug_macro   0x000000000000624f       0x16 ./Core/Src/syscalls.o
+ .debug_macro   0x0000000000006265       0x16 ./Core/Src/syscalls.o
+ .debug_macro   0x000000000000627b       0x29 ./Core/Src/syscalls.o
+ .debug_macro   0x00000000000062a4       0x10 ./Core/Src/syscalls.o
+ .debug_macro   0x00000000000062b4      0x241 ./Core/Src/syscalls.o
+ .debug_macro   0x00000000000064f5       0x10 ./Core/Src/syscalls.o
+ .debug_macro   0x0000000000006505      0x189 ./Core/Src/syscalls.o
+ .debug_macro   0x000000000000668e       0x16 ./Core/Src/syscalls.o
+ .debug_macro   0x00000000000066a4       0xce ./Core/Src/syscalls.o
+ .debug_macro   0x0000000000006772       0xff ./Core/Src/sysmem.o
+ .debug_macro   0x0000000000006871      0x23b ./Core/Src/sysmem.o
+ .debug_macro   0x0000000000006aac      0x220 ./Core/Src/system_stm32f4xx.o
+ .debug_macro   0x0000000000006ccc      0x4e5 ./Core/Src/tim10.o
+ .debug_macro   0x00000000000071b1       0x10 ./Core/Src/tim10.o
+ .debug_macro   0x00000000000071c1      0x44a ./Core/Src/tim11.o
+ .debug_macro   0x000000000000760b      0x508 ./Core/Src/tim6.o
+ .debug_macro   0x0000000000007b13      0x4e1 ./Core/Src/tim7.o
+ .debug_macro   0x0000000000007ff4       0x1b ./Core/Src/time.o
+ .debug_macro   0x000000000000800f      0x43b ./Core/Src/tracer.o
+ .debug_macro   0x000000000000844a       0x3a ./Core/Src/tracer.o
+ .debug_macro   0x0000000000008484      0x43b ./Core/Src/velotrace.o
+ .debug_macro   0x00000000000088bf       0x4c ./Core/Src/velotrace.o
+ .debug_macro   0x000000000000890b      0x4d0 ./Core/Src/virtual_marker.o
+ .debug_macro   0x0000000000008ddb      0x27a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_macro   0x0000000000009055      0x21b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
+ .debug_macro   0x0000000000009270      0x21a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_macro   0x000000000000948a      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_macro   0x00000000000096aa      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o
+ .debug_macro   0x00000000000098ca      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o
+ .debug_macro   0x0000000000009aea      0x220 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_macro   0x0000000000009d0a      0x261 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_macro   0x0000000000009f6b      0x23e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_macro   0x000000000000a1a9      0x229 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o
+ .debug_macro   0x000000000000a3d2      0x21b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_macro   0x000000000000a5ed      0x21a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_macro   0x000000000000a807      0x21b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
 .debug_line     0x0000000000000000    0x2920d
  .debug_line    0x0000000000000000      0xb81 ./Core/Src/IMU.o

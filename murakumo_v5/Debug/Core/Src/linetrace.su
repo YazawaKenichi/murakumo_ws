@@ -1,0 +1,10 @@
+../Core/Src/linetrace.c:16:6:linetrace_init	16	static
+../Core/Src/linetrace.c:26:6:linetrace_start	8	static
+../Core/Src/linetrace.c:36:6:linetrace_main	40	static
+../Core/Src/linetrace.c:58:6:linetrace_stop	8	static
+../Core/Src/linetrace.c:67:6:linetrace_fin	4	static
+../Core/Src/linetrace.c:71:5:linetrace_read_direction	24	static
+../Core/Src/linetrace.c:127:7:linetrace_read_velocity	16	static
+../Core/Src/linetrace.c:135:6:linetrace_set_gain_short	8	static
+../Core/Src/linetrace.c:140:6:linetrace_set_gain_long	24	static
+../Core/Src/linetrace.c:149:6:linetrace_d_print	8	static

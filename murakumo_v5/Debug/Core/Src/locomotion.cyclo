@@ -1,0 +1,6 @@
+locomotion.c:16:6:locomotion_init	1
+locomotion.c:25:6:locomotion_start	1
+locomotion.c:34:6:locomotion_stop	1
+locomotion.c:43:6:locomotion_fin	1
+locomotion.c:51:6:locomotion_main	1
+locomotion.c:83:6:locomotion_d_print	1

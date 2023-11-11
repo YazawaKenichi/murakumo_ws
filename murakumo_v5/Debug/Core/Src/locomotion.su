@@ -1,0 +1,6 @@
+../Core/Src/locomotion.c:16:6:locomotion_init	16	static
+../Core/Src/locomotion.c:25:6:locomotion_start	8	static
+../Core/Src/locomotion.c:34:6:locomotion_stop	8	static
+../Core/Src/locomotion.c:43:6:locomotion_fin	4	static
+../Core/Src/locomotion.c:51:6:locomotion_main	64	static
+../Core/Src/locomotion.c:83:6:locomotion_d_print	8	static

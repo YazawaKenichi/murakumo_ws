@@ -1,0 +1,9 @@
+kcm_controller.c:19:6:kcm_init	1
+kcm_controller.c:24:6:kcm_start	1
+kcm_controller.c:29:6:kcm_stop	1
+kcm_controller.c:38:7:kcm_sample	1
+kcm_controller.c:72:6:kcm_reset	1
+kcm_controller.c:91:7:kcm_main_function	1
+kcm_controller.c:119:6:pose_error	1
+kcm_controller.c:128:6:kcm_set_twist_reference	1
+kcm_controller.c:133:7:kcm_read_twist_reference	1

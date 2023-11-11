@@ -1,0 +1,6 @@
+../Core/Src/calibration.c:12:6:calibration_init	8	static
+../Core/Src/calibration.c:18:6:calibration_start	8	static
+../Core/Src/calibration.c:27:6:calibration_main	8	static
+../Core/Src/calibration.c:32:6:calibration_stop	8	static
+../Core/Src/calibration.c:48:6:calibration_fin	4	static
+../Core/Src/calibration.c:52:6:calibration_d_print	4	static

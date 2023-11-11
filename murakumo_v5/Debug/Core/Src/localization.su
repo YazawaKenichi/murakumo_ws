@@ -1,0 +1,9 @@
+../Core/Src/localization.c:19:6:localization_init	8	static
+../Core/Src/localization.c:24:6:localization_start	8	static
+../Core/Src/localization.c:29:6:localization_stop	4	static
+../Core/Src/localization.c:43:6:odometry_update	48	static
+../Core/Src/localization.c:64:6:localization_read_pose	24	static
+../Core/Src/localization.c:69:7:localization_read_twist	24	static
+../Core/Src/localization.c:74:6:localization_reset	4	static
+../Core/Src/localization.c:97:6:twist_add_to_pose	56	static
+../Core/Src/localization.c:131:6:localization_d_print	4	static

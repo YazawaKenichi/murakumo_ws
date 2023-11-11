@@ -1,0 +1,9 @@
+../Core/Src/kcm_controller.c:19:6:kcm_init	8	static
+../Core/Src/kcm_controller.c:24:6:kcm_start	8	static
+../Core/Src/kcm_controller.c:29:6:kcm_stop	4	static
+../Core/Src/kcm_controller.c:38:7:kcm_sample	184	static
+../Core/Src/kcm_controller.c:72:6:kcm_reset	4	static
+../Core/Src/kcm_controller.c:91:7:kcm_main_function	96	static
+../Core/Src/kcm_controller.c:119:6:pose_error	56	static
+../Core/Src/kcm_controller.c:128:6:kcm_set_twist_reference	12	static
+../Core/Src/kcm_controller.c:133:7:kcm_read_twist_reference	24	static

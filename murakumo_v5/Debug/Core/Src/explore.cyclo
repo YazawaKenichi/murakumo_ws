@@ -1,0 +1,11 @@
+explore.c:15:6:explore_init	1
+explore.c:22:6:explore_start	1
+explore.c:33:6:explore_main	1
+explore.c:41:6:explore_stop	1
+explore.c:48:6:explore_fin	1
+explore.c:53:6:logging_clear	1
+explore.c:59:6:explore_logging	2
+explore.c:93:6:logging_save	1
+explore.c:99:6:explore_opening	2
+explore.c:107:6:explore_ending	2
+explore.c:115:6:explore_d_print	1

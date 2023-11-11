@@ -1,3 +1,4 @@
+"./Core/Inc/data_smoothing/smoothing.o"
 "./Core/Src/IMU.o"
 "./Core/Src/LED.o"
 "./Core/Src/Rotary.o"

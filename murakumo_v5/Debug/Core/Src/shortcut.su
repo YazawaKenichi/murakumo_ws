@@ -1,0 +1,8 @@
+../Core/Src/shortcut.c:17:6:shortcut_init	16	static
+../Core/Src/shortcut.c:24:6:shortcut_start	8	static
+../Core/Src/shortcut.c:31:6:shortcut_main	16	static
+../Core/Src/shortcut.c:51:6:shortcut_stop	8	static
+../Core/Src/shortcut.c:56:6:shortcut_fin	4	static
+../Core/Src/shortcut.c:60:6:shortcut_set_kcm_twist_reference	48	static
+../Core/Src/shortcut.c:75:6:shortcut_read_twist_reference	40	static
+../Core/Src/shortcut.c:87:6:shortcut_d_print	4	static
