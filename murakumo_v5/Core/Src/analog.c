@@ -44,9 +44,9 @@ void analog_rate_array_print()
 void analog_d_print()
 {
 #if D_ANALOG
-	analog_print_analogmode();
+	//analog_print_analogmode();
 	analog_rate_array_print();
-	// analog_array_print(analog);
+	analog_array_print(analog);
 #endif
 }
 
@@ -76,9 +76,11 @@ void analog_print_analogmode()
 
 void analog_print()
 {
+	#if 0
 	printf("analog_print\r\n");
 	printf("sensgettime = %2d\r\n", sensgettime);
 	analog_print_analogmode();
+	#endif
 	analog_array_print(analog);
 }
 
