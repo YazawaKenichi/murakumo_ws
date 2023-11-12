@@ -5,6 +5,8 @@ float velotrace_before_error;
 uint16_t velotrace_sampling_time_ms;
 uint16_t velotrace_gain_tuning_time_ms;
 PID velotrace_pid;
+float __velotrace_debug_reference__;
+float __velotrace_debug_result__;
 
 /* pre setting */
 void velotrace_init(uint16_t samplingtime_ms)
@@ -167,13 +169,16 @@ float velotrace_solve(float reference_)
 
     velotrace_before_error = error;
 
+    __velotrace_debug_reference__ = reference_;
+    __velotrace_debug_result__ = result;
+
     return result;
 }
 
 void velotrace_d_print()
 {
 #if D_VELOTRACE
-	printf("velo > target = %5.3f\r", velotrace_read_target());
+	printf("velo > target = %5.3f, kp = %5.3f, ki = %5.3f, kd = %5.3f, reference = %5.3f, solve = %5.3f\r", velotrace_read_target(), velotrace_pid.kp, velotrace_pid.ki, velotrace_pid.kd, __velotrace_debug_reference__, __velotrace_debug_result__);
 #endif
 }
 

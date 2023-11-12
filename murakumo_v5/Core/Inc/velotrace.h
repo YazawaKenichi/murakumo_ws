@@ -5,7 +5,7 @@
 #include "print.h"
 #include "rotary.h"
 
-#define D_VELOTRACE 0
+#define D_VELOTRACE 1
 #define D_VELOTRACE_WHILE 0
 
 #define VELOTRACE_STEP_SIZE 16

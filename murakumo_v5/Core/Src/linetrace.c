@@ -148,6 +148,7 @@ void linetrace_set_gain_long()
 
 void linetrace_d_print()
 {
-    analog_rate_array_print();
+    //analog_rate_array_print();
+    //analog_array_print();
     velotrace_d_print();
 }

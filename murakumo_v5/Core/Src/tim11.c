@@ -54,6 +54,7 @@ void tim11_main()
 
 void tim11_d_print()
 {
+    encoder_d_print();
 }
 
 void tim11_d_print_main()

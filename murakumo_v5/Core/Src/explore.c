@@ -22,6 +22,7 @@ void explore_init(uint8_t _sampling_time_ms)
 void explore_start()
 {
     uint16_t index;
+    course_reset_state_index();
     index = course_read_state_index();
     printf("explore_start : index = %d\r\n", index);
     encoderdata.left[index] = 0;
