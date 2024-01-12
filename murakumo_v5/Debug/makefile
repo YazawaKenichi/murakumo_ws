@@ -53,6 +53,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 murakumo_v5.list \
 
+OBJCOPY_BIN += \
+murakumo_v5.bin \
+
 
 # All Target
 all: main-build
@@ -76,12 +79,17 @@ murakumo_v5.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+murakumo_v5.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "murakumo_v5.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout murakumo_v5.elf murakumo_v5.list murakumo_v5.map
+	-$(RM) default.size.stdout murakumo_v5.bin murakumo_v5.elf murakumo_v5.list murakumo_v5.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
