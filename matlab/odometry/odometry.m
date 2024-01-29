@@ -119,4 +119,3 @@ function glaph_plot(x, y)
 
     disp("plot ... OK");
 end
-
