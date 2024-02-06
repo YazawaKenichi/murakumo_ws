@@ -1,25 +1,11 @@
-% エンコーダと IMU で自分の位置を記憶する %
+% ループを用いた積分 VS 状態遷移関数を用いた積分 %
+% エンコーダ や IMU のデータから X, Y オドメトリを出力 %
 
 FILEPATH = "mini_enc";
 IMU_FILEPATH = "mini_imu";
+OUT = "Data";
 
-filepath = FILEPATH;
-
-% enc %
-imu_filepath = "";
-[x, y, q] = main(filepath, imu_filepath);
-% glaph_plot(x, y);
-
-% imu %
-imu_filepath = IMU_FILEPATH;
-[x, y, q] = main(filepath, imu_filepath);
-glaph_plot(x, y);
-
-legend("enc", "imu", "nan", "nan"); %
-xlabel("x [ m ]");
-ylabel("y [ m ]");
-
-hold off;
+compare_transition_and_roop(FILEPATH, IMU_FILEPATH, OUT)
 
 function P_t = f(P_t_1, u_t, Dt)
     x_t_1 = P_t_1(1);
@@ -39,7 +25,7 @@ function P_t = f(P_t_1, u_t, Dt)
     P_t = [x_t, y_t, t_t];
 end
 
-function [x, y, theta] = main(filename, imu_filename)
+function [x, y, theta] = roop(filename, imu_filename)
     use_imu = 1;
     if imu_filename == ""
         use_imu = 0;
@@ -61,7 +47,7 @@ function [x, y, theta] = main(filename, imu_filename)
     % omega の配列を計算 %
     if use_imu
         imu_datas = readmatrix(imu_filename);
-        w = imu_datas(:, 2) * pi / 180
+        w = imu_datas(:, 2) * pi / 180;
     else
         tread = 0.1;    % 単位 [ m ] %
         w = - (vl - vr) / tread;    % 単位 [ rad / s = ( m / s ) / m ] %
@@ -74,15 +60,69 @@ function [x, y, theta] = main(filename, imu_filename)
     % 指令値行列 %
     u = [v, w];
     % オドメトリ配列の計算 %
-    for t = 2:length(x)
+    for t = 1:length(x) - 1
         %%% オドメトリの計算 %%%
-        P(t, :) = f(P(t - 1, :), u(t, :), Dt);
+        x(t + 1) = x(t) + v(t + 1) * cos(theta(t)) * Dt;
+        y(t + 1) = y(t) + v(t + 1) * sin(theta(t)) * Dt;
+        theta(t + 1) = theta(t) + w(t + 1);
+    end
+end
+
+function [x, y, theta] = state_transition(filename, imu_filename, out)
+    use_imu = 1;
+    if imu_filename == ""
+        use_imu = 0;
+    end
+    % ファイルから左足の速度と右足の速度を取得 %
+    datas = readmatrix(filename);
+    datas(:, 1);
+    % 結果保存変数 %
+    x = zeros([length(datas(:, 1)) 1]);
+    y = zeros([length(datas(:, 1)) 1]);
+    theta = zeros([length(x) 1]);
+    P = [x, y, theta];
+    % 速度指令値のリスト %
+    vl = datas(:, 2);
+    vr = datas(:, 3);
+    v = (vl + vr) / 2;
+    % 計算周期を入力 %
+    Dt = 1;
+    % omega の配列を計算 %
+    if use_imu
+        imu_datas = readmatrix(imu_filename);
+        w = imu_datas(:, 2) * pi / 180;
+    else
+        tread = 0.1;    % 単位 [ m ] %
+        w = - (vl - vr) / tread;    % 単位 [ rad / s = ( m / s ) / m ] %
+        % ローパスフィルタを通す
+        for k = 2 : length(w)
+            w(k) = lpf(w(k - 1), w(k), 0.25);
+        end
+        w;
+    end
+    % 指令値行列 %
+    u = [v, w];
+    % オドメトリ配列の計算 %
+    for t = 1:length(x) - 1
+        %%% オドメトリの計算 %%%
+        P(t + 1, :) = f(P(t, :), u(t + 1, :), Dt);
 
         %%% 値の保存 %%%
-        x(t) = P(t, 1);
-        y(t) = P(t, 2);
-        theta(t) = P(t, 3);
+        x(t + 1) = P(t + 1, 1);
+        y(t + 1) = P(t + 1, 2);
+        theta(t + 1) = P(t + 1, 3);
     end
+    tx = zeros([length(x) 1]);
+    ty = zeros([length(y) 1]);
+    tt = zeros([length(theta) 1]);
+    for i = 1 : length(x) - 1
+        tx(i + 1) = 1000 * (x(i + 1) - x(i));
+        ty(i + 1) = 1000 * (y(i + 1) - y(i));
+        tt(i + 1) = 1000 * (theta(i + 1) - theta(i));
+    end
+    tP = [tx, ty, tt];
+    save_plot(tP, out)
+    % save_plot(P, out) %
 end
 
 function ret = lpf(prev, ref, gamma)
@@ -119,3 +159,22 @@ function glaph_plot(x, y)
 
     disp("plot ... OK");
 end
+
+function compare_transition_and_roop(filepath, imu_filepath, out)
+    [x, y, q] = roop(filepath, imu_filepath);
+    glaph_plot(x, y);
+
+    [x, y, q] = state_transition(filepath, imu_filepath, out);
+    glaph_plot(x, y);
+
+    legend("roop", "transition", "nan", "nan"); %
+    xlabel("x [ m ]");
+    ylabel("y [ m ]");
+
+    hold off;
+end
+
+function save_plot(A, path)
+    writematrix(A, path)
+end
+

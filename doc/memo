@@ -1,0 +1,97 @@
+# 前置き
+ここに書いてあることは雑なメモ。
+
+頭の中を整理するために書いてるので間違っていることも書き出して、まとまってから修正することもある。
+
+# flash に保存するべきデータ
+## 結論
+- x, y 座標
+
+x 座標の導出
+
+## 間違いなく必要なもの
+- センサのキャリブレーションに用いる値
+
+## どの形で保存すればいいのか考える必要があるもの
+- センサの生データ
+    - 右足の速度
+    - 左足の速度
+    - imu yaw
+- x, y 座標
+    - 藤澤さんはこれだと思う
+- 平滑化された座標
+
+### 前回の位置姿勢 $\textbf{P}_{t-1}(x_{t-1}, y_{t-1}, \theta_{t-1})$ と、現在の制御指令 $u_t(v_t, \omega_t)$ から、時刻 $t$ における位置姿勢 $\textbf{P}_t(x_t, y_t, \theta_t)$ を導出
+
+【前提】
+
+- 制御指令 $u(v, \omega)$ の変更は離散時刻ごと
+- $\Delta t$ 秒間において $\textbf{P}_t(x_t, y_t, \theta_t), u_t(v_t, \omega_t)$ は一定の値
+
+#### 積分として計算
+![image](https://github.com/YazawaKenichi/murakumo_ws/assets/37500115/b0890e25-c346-4be4-9a7f-03cd2c54cae2)
+
+![image](https://github.com/YazawaKenichi/murakumo_ws/assets/37500115/e0f58d29-c7e4-4ab0-90fb-597744e7c15a)
+
+数学的に正義なのはこの (3.5), (3.6) 式
+
+実際の動作を数学的に解く場合はこちらの式が優れているだろう。
+
+しかし実際のプログラミングにおいて積分を実装するのは困難。
+
+#### 状態方程式として計算
+積分記号を用いて表された式を解くことで、プログラムとしての実装が簡単になる。
+
+![image](https://github.com/YazawaKenichi/murakumo_ws/assets/37500115/7a700728-7730-4a29-8500-fe1a40ed3347)
+
+![image](https://github.com/YazawaKenichi/murakumo_ws/assets/37500115/40294831-2621-4151-ade7-d1d450639712)
+
+重要なのは
+
+> $u_t$ によって $x_{t-1}$ から $x_t$ に遷移する
+
+ということ。
+
+つまり 式 (3.9) の条件では
+
+$$
+x_t - x_{t-1} = u_t
+$$
+
+とすることができ、
+
+*この後に何か書きたかったんだと思うんだけど思い出せない*
+
+とにかく
+
+``` Python
+def state_transition(cls, nu, omega, time, pose):
+    t0 = pose[2]
+    if math.fabs(omega) < 1e-10:
+        # 角速度がほぼゼロの時 ( \omega_t = 0 )
+        return pose + np.array([
+            nu * math.cos(t0),  # v_t cos{\theta_{t-1}}
+            nu * math.sin(t0),  # v_t sin{\theta_{t-1}}
+            omega               # \omega_t
+            ]) * time
+    else:
+        # 角速度が十分ゼロではないといえる時 ( \omega_t \neq 0 )
+        return pose + np.array([
+            nu / omega * ( math.sin(t0 + omega * time) - math.sin(t0)), # v_t \omega_t^{-1} ( \sin{\theta_{t-1} + \omega_t \Delta t} - \sin{\theta_{t - 1}}})
+            nu / omega * (-math.cos(t0 + omega * time) + math.cos(t0)), # v_t \omega_t^{-1} (-\cos{\theta_{t-1} + \omega_t \Delta t} + \cos{\theta_{t - 1}}})
+            omega * time                                                # \omega_t \Delta t
+            ])
+```
+
+$$
+v_t cos(\theta_{t-1}) \\
+v_t sin(\theta_{t-1}) \\
+\omega_t \\
+$$
+
+$$
+v_t \omega_t^{-1} ( \sin(\theta_{t-1} + \omega_t \Delta t) - \sin(\theta_{t - 1})) \\
+v_t \omega_t^{-1} (-\cos(\theta_{t-1} + \omega_t \Delta t) + \cos(\theta_{t - 1})) \\
+\omega_t \Delta t \\
+$$
+

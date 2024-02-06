@@ -18,6 +18,8 @@
 #include "course.h"
 #include "flash.h"
 #include "linetrace.h"
+#include "geometry.h"
+#include "math.h"
 
 //! ロギング距離 [ m ]
 #define SAMPLING_THRESHOLD 0.01f
@@ -29,6 +31,7 @@ void explore_stop();
 void explore_fin();
 
 void logging_clear();
+Pose state_transition(Twist ut, float theta_before);
 void explore_logging();
 void logging_save();
 
