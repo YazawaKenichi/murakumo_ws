@@ -6,7 +6,7 @@
 IMU = "mini_imu";
 ENC = "mini_enc";
 
-adj = 25;
+adj = 5;
 path = "test.csv";
 
 [P, datas] = state_transition(ENC, IMU);
@@ -96,28 +96,32 @@ end
 function Pr = smoothing(dP, adj)
     if adj ~= 0
         size_ = length(dP(:, 1));
-        from = 1 + adj;
-        to = size_ - adj;
-        buf = zeros([adj 1]);
-        for i = from : to
-            s = 0;
-            % バッファ部の加算 %
-            for j = 1 : adj
-                s = s + buf(j);
+        for xyt = 1 : length(dP(1, :))
+            datas = dP(:, xyt);
+            from = 1 + adj;
+            to = size_ - adj;
+            buf = zeros([adj xyt]);
+            for i = from : to
+                s = 0;
+                % バッファ部の加算 %
+                for j = 1 : adj
+                    s = s + buf(j);
+                end
+                % 元配列部の加算 %
+                for j = i : i + adj
+                    s = s + datas(j);
+                end
+                % バッファの要素シフト %
+                for j = 1 : adj - 1
+                    buf(j) = buf(j + 1);
+                end
+                buf(adj) = datas(i);
+                % 平均値の計算 %
+                ave = s / (2 * adj + 1);
+                % 平均値の格納 %
+                datas(i) = ave;
             end
-            % 元配列部の加算 %
-            for j = i : i + adj
-                s = s + dP(j);
-            end
-            % バッファの要素シフト %
-            for j = 1 : adj - 1
-                buf(j) = buf(j + 1);
-            end
-            buf(adj) = dP(i);
-            % 平均値の計算 %
-            ave = s / (2 * adj + 1);
-            % 平均値の格納 %
-            dP(i) = ave;
+            dP(:, xyt) = datas;
         end
     end
     Pr = dP;
@@ -191,6 +195,7 @@ function csv(path, datas, P, dP, Pr, adj)
     Prx = Pr(:, 1);
     Pry = Pr(:, 2);
     codes = [Dl, Dr, Dw, Px, Py, dPx, dPy, Prx, Pry];
+    codes = [Px, Py, dPx, dPy, Prx, Pry];
     writematrix(codes, path);
 end
 
